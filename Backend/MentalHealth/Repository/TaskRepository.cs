@@ -12,7 +12,7 @@ public class TaskRepository : IRepository<UserTask>
         _context = context;
     }
 
-    public async Task Add(UserTask entity)
+    public async Task Add(UserTask? entity)
     {
         using (_context)
         {
@@ -21,7 +21,7 @@ public class TaskRepository : IRepository<UserTask>
         }
     }
 
-    public async Task<UserTask> Get(long id)
+    public async Task<UserTask?> Get(long id)
     {
         using (_context)
         {
@@ -29,7 +29,7 @@ public class TaskRepository : IRepository<UserTask>
         }
     }
 
-    public async Task<IEnumerable<UserTask>> GetAll()
+    public async Task<IEnumerable<UserTask?>> GetAll()
     {
         using (_context)
         {
@@ -47,8 +47,16 @@ public class TaskRepository : IRepository<UserTask>
         }
     }
 
-    public Task Delete(long id)
+    public async Task Delete(long id)
     {
-        throw new NotImplementedException();
+        using (_context)
+        {
+            var task = await Get(id);
+            if (task != null)
+            {
+                _context.UserTasks.Remove(task);
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }
