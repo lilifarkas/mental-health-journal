@@ -1,4 +1,5 @@
 ﻿using MentalHealth.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace MentalHealth.Repository;
 
@@ -15,22 +16,28 @@ public class TaskRepository : IRepository<UserTask>
     {
         using (_context)
         {
-            await _context.Tasks.AddAsync(entity);
+            await _context.UserTasks.AddAsync(entity);
             await _context.SaveChangesAsync();
         }
     }
 
-    public Task<UserTask> Get(long id)
+    public async Task<UserTask> Get(long id)
     {
-        throw new NotImplementedException();
+        using (_context)
+        {
+            return await _context.UserTasks.FindAsync(id);
+        }
     }
 
-    public Task<IEnumerable<UserTask>> GetAll()
+    public async Task<IEnumerable<UserTask>> GetAll()
     {
-        throw new NotImplementedException();
+        using (_context)
+        {
+            return await _context.UserTasks.ToListAsync();
+        }
     }
 
-    public Task Update(long id, UserTask entity)
+    public Task Update(UserTask entity)
     {
         throw new NotImplementedException();
     }
