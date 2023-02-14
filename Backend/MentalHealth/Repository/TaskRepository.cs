@@ -37,9 +37,14 @@ public class TaskRepository : IRepository<UserTask>
         }
     }
 
-    public Task Update(UserTask entity)
+    public async Task Update(UserTask entity)
     {
-        throw new NotImplementedException();
+        using (_context)
+        {
+            var task = await Get(entity.ID);
+            _context.UserTasks.Entry(task).CurrentValues.SetValues(entity);
+            await _context.SaveChangesAsync();
+        }
     }
 
     public Task Delete(long id)
