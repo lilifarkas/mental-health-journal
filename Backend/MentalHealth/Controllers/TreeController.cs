@@ -17,7 +17,7 @@ public class TreeController : Controller
     private readonly IRepository<Tree> _treeRepository;
     
     [HttpGet]
-    public async Task<List<Tree>> GetAllTrees()
+    public async Task<IEnumerable<Tree>> GetAllTrees()
     {
         return await _treeRepository.GetAll();
     }
@@ -35,9 +35,9 @@ public class TreeController : Controller
     }
 
     [HttpPut("/{id}")]
-    public void UpdateTreeById(long id, [FromBody] Tree updatedTree)
+    public void UpdateTreeById([FromBody] Tree updatedTree)
     {
-        _treeRepository.Update(id,updatedTree);
+        _treeRepository.Update(updatedTree);
     }
 
     [HttpDelete("/{id}")]
