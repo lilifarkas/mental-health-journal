@@ -41,22 +41,26 @@ public class UserRepository : IRepository<User>
     {
         using (_context)
         {
-            var task = await Get(entity.ID);
-            _context.Users.Entry(task).CurrentValues.SetValues(entity);
-            await _context.SaveChangesAsync();
+            var user = await _context.Users.FindAsync(id);
+            if (user != null)
+            {
+                user.Name = entity.Name;
+                user.Password = entity.Password;
+                user.Email = entity.Email;
+                user.Points = entity.Points;
+
+                await _context.SaveChangesAsync();
+            }
         }
     }
 
     public async Task Delete(long id)
     {
-        using (_context)
+        var user = await _context.Users.FindAsync(id);
+        if (user != null)
         {
-            var task = await Get(id);
-            if (task != null)
-            {
-                _context.Users.Remove(task);
-                await _context.SaveChangesAsync();
-            }
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
         }
     }
 }
