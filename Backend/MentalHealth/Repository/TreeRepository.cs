@@ -1,4 +1,5 @@
 using MentalHealth.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace MentalHealth.Repository;
@@ -14,31 +15,49 @@ public class TreeRepository : IRepository<Tree>
     
     public async Task Add(Tree entity)
     {
-        await _context.Trees.AddAsync(entity);
+        await using (_context)
+        {
+            await _context.Trees.AddAsync(entity);
+            await _context.SaveChangesAsync();
+        }
     }
 
-    public Task<Tree> Get(long id)
+    public async Task<Tree> Get(long id)
     {
-        return Task.FromResult(_context.Trees.First(tree => tree.ID == id));
+        await using (_context)
+        {
+            return await _context.Trees.FindAsync(id);
+        }
     }
 
-    public Task<IEnumerable<Tree>> GetAll()
+    public async Task<IEnumerable<Tree>> GetAll()
     {
-        return Task.FromResult(_context.Trees);
+        await using (_context)
+        {
+            return await _context.Trees.ToListAsync();
+        }
+    }
+    
+    public async Task Update(Tree entity)
+    {
+        await using (_context)
+        {
+            var task = await Get(entity.ID);
+            _context.Trees.Entry(task).CurrentValues.SetValues(entity);
+            await _context.SaveChangesAsync();
+        }
     }
 
-    public Task Update(long id, Tree entity)
+    public async Task Delete(long id)
     {
-        var tree = _context.Trees.First(tree => tree.ID == id);
-        tree.Name = entity.Name;
-        tree.Progress = entity.Progress;
-        return Task.CompletedTask;
-    }
-
-    public Task Delete(long id)
-    {
-        var tree = _context.Trees.First(tree => tree.ID == id);
-        _context.Trees.Remove(tree);
-        return Task.CompletedTask;
+        await using (_context)
+        {
+            var task = await Get(id);
+            if (task != null)
+            {
+                _context.Trees.Remove(task);
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }
