@@ -38,4 +38,9 @@ public class UserTaskController : ControllerBase
         await _repository.Update(task);
     }
 
+    [HttpDelete("{taskID}")]
+    public async Task DeleteUserTask(long taskID)
+    {
+        await _repository.Delete(taskID);
+    }
 }
