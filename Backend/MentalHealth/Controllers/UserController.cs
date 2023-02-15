@@ -32,10 +32,10 @@ public class UserController: ControllerBase
         return await _repository.GetAll();
     }
     
-    [HttpPut("/users/update/{id}")]
+    [HttpPut("/users/update/")]
     public async Task UpdateUser(long id, [FromBody] User user)
     {
-        await _repository.Update(id, user);
+        await _repository.Update(user);
     }
     
     [HttpDelete("/users/delete/{id}")]
