@@ -6,5 +6,6 @@ namespace MentalHealth;
 public class MentalHealthContext : DbContext
 {
     public DbSet<UserTask> Tasks { get; set; }
+    public DbSet<User> Users { get; set; }
     
 }
