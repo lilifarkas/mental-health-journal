@@ -1,9 +1,13 @@
-﻿namespace MentalHealth.Models.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace MentalHealth.Models.Entities
 {
 	public class MoodTracker
 	{
-		public DateTime CreateDate;
-		public int MoodValue;
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		public long ID { get; set; }
+		public DateTime CreateDate = DateTime.Now;
+		public int MoodValue { get; set; }
 
 		public Dictionary<int, string> EmotionsDictionary = new Dictionary<int, string>()
 		{
@@ -28,9 +32,5 @@
 				"In terms of the circumplex model, this would be characterized by a strongly positive valence and relatively high arousal." 
 			},
 		};
-		public MoodTracker()
-		{
-
-		}
 	}
 }
