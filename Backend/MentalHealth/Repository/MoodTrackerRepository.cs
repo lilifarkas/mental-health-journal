@@ -14,11 +14,10 @@ namespace MentalHealth.Repository
 			_context = context;
 		}
 
-		public async Task<MoodTracker> Add(MoodTracker entity)
+		public async Task Add(MoodTracker entity)
 		{
 			_context.MoodTracker.Add(entity);
 			await _context.SaveChangesAsync();
-			return entity;
 		}
 
 		public async Task<MoodTracker> Get(long id)
@@ -31,12 +30,12 @@ namespace MentalHealth.Repository
 			return await _context.MoodTracker.ToListAsync();
 		}
 
-		public async Task<MoodTracker> Update(long id, MoodTracker entity)
+		public async Task Update(MoodTracker entity)
 		{
 			throw new NotImplementedException();
 		}
 
-		public async Task<MoodTracker> Delete(long id)
+		public async Task Delete(long id)
 		{
 			throw new NotImplementedException();
 		}
