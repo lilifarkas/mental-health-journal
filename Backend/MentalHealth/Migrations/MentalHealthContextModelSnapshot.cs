@@ -34,7 +34,7 @@ namespace MentalHealth.Migrations
                      b.HasKey("ID");
 
                     b.ToTable("Tracker");
-                )};
+                });
 
             modelBuilder.Entity("MentalHealth.Models.Entities.User", b =>
                 {
