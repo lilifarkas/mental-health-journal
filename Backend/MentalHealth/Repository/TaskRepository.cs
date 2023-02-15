@@ -12,7 +12,7 @@ public class TaskRepository : IRepository<UserTask>
         _context = context;
     }
 
-    public async Task Add(UserTask? entity)
+    public async Task Add(UserTask entity)
     {
         await using (_context)
         {
@@ -42,8 +42,11 @@ public class TaskRepository : IRepository<UserTask>
         await using (_context)
         {
             var task = await Get(entity.ID);
-            _context.UserTasks.Entry(task).CurrentValues.SetValues(entity);
-            await _context.SaveChangesAsync();
+            if (task != null)
+            {
+                _context.UserTasks.Entry(task).CurrentValues.SetValues(entity);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 
