@@ -16,10 +16,25 @@ namespace MentalHealth.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.2")
+
+                .HasAnnotation("ProductVersion", "7.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+
+            modelBuilder.Entity("MentalHealth.Models.Entities.MoodTracker", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
+                    
+                     b.HasKey("ID");
+
+                    b.ToTable("Tracker");
+                )};
 
             modelBuilder.Entity("MentalHealth.Models.Entities.User", b =>
                 {
