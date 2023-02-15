@@ -6,6 +6,7 @@ namespace MentalHealth.Repository;
 public class UserRepository : IRepository<User>
 {
     private readonly MentalHealthContext _context;
+    private IRepository<User> _repositoryImplementation;
 
     public UserRepository(MentalHealthContext context)
     {
@@ -14,7 +15,7 @@ public class UserRepository : IRepository<User>
     
     public async Task Add(User entity)
     {
-        using (_context)
+        await using (_context)
         {
             await _context.Users.AddAsync(entity);
             await _context.SaveChangesAsync();
@@ -23,7 +24,7 @@ public class UserRepository : IRepository<User>
 
     public async Task<User?> Get(long id)
     {
-        using (_context)
+        await using (_context)
         {
             return await _context.Users.FindAsync(id);
         }
@@ -31,17 +32,17 @@ public class UserRepository : IRepository<User>
 
     public async Task<IEnumerable<User>> GetAll()
     {
-        using (_context)
+        await using (_context)
         {
             return await _context.Users.ToListAsync();
         }
     }
-
-    public async Task Update(long id, User entity)
+    
+    public async Task Update(User entity)
     {
-        using (_context)
+        await using (_context)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.Users.FindAsync(entity.ID);
             if (user != null)
             {
                 user.Name = entity.Name;
