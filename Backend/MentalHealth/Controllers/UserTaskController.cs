@@ -27,8 +27,15 @@ public class UserTaskController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<IEnumerable<UserTask>> GetAllTasks()
+    public async Task<IEnumerable<UserTask>> GetAllUserTasks()
     {
-        return await _repository.GetAll();;
+        return await _repository.GetAll();
     }
+
+    [HttpPut]
+    public async Task UpdateUserTask([FromBody] UserTask task)
+    {
+        await _repository.Update(task);
+    }
+
 }
