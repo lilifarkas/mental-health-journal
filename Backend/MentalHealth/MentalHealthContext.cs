@@ -5,9 +5,10 @@ namespace MentalHealth;
 
 public class MentalHealthContext : DbContext
 {
-    public DbSet<UserTask> Tasks { get; set; }
-    
-    public MentalHealthContext(DbContextOptions<MentalHealthContext> options) : base(options)
+    public MentalHealthContext(DbContextOptions<MentalHealthContext> options): base(options)
     {
+        
     }
+    public DbSet<UserTask> Tasks { get; set; }
+    public DbSet<User> Users { get; set; }
 }
