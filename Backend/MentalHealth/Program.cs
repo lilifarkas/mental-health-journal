@@ -13,7 +13,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<MentalHealthContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddScoped<TaskRepository>();
+builder.Services.AddScoped<TreeRepository>();
 
 var app = builder.Build();
 
