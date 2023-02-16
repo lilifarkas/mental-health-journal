@@ -8,11 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace MentalHealth.Controllers
 {
 	[ApiController, Route("/mood")]
-	public class MoodController
+	public class MoodController : ControllerBase
 	{
-		private IRepository<MoodTracker> _repository { get; }
+		private readonly MoodTrackerRepository _repository;
 
-		public MoodController([FromServices] IRepository<MoodTracker> repository)
+		public MoodController(MoodTrackerRepository repository)
 		{
 			_repository = repository;
 		}
