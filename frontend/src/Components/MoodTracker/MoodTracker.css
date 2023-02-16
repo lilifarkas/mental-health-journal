@@ -1,0 +1,20 @@
+.mood-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(5px);
+  height: 200px;
+  width: 100%;
+}
+.mood-container input{
+  width: 50px;
+  height: 50px;
+}
+.mood-container form {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2rem;
+  width: 50%;
+}
+
