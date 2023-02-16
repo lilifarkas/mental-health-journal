@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate, NavLink, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './Login.css'
 
 export default function Login() {
