@@ -84,7 +84,6 @@ export default function Login() {
       loader.style.visibility = 'hidden';
     }, 2000);
     setLoading(false)
-    navigate('/main');
   }
 
   return (
@@ -103,7 +102,7 @@ export default function Login() {
           <div className="form-floating mb-3">
             <input onChange={(e) => setEmail(e.target.value)} type="email" className="form-control" id="floatingInput" placeholder="name@example.com" />
             <label className='input-label' htmlFor="floatingInput">Email address</label>
-            <div class="invalid-feedback">
+            <div className="invalid-feedback">
               Please choose a username.
             </div>
           </div>
@@ -127,7 +126,7 @@ export default function Login() {
               Register
             </NavLink> */}
           </button>
-          {/* {valid === true && navigate("/main")} */}
+          {valid === true && navigate("/main")}
           {/* {valid === true && navigate("/login")} */}
           <button type='button' onClick={() => AbortFunction()} id='cancelBtn' className='btn btn-secondary'>Cancel</button>
         </form>
