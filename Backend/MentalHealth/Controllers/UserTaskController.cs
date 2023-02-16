@@ -18,30 +18,30 @@ public class UserTaskController : ControllerBase
     [HttpPost]
     public async Task AddUserTask(UserTask userTask)
     {
-        await _service.AddUserTask(userTask);
+        await _service.AddToDb(userTask);
     }
 
     [HttpGet("{taskID}")]
     public async Task<UserTask> GetUserTask(long taskID)
     {
-        return await _service.GetUserTask(taskID);
+        return await _service.GetFromDb(taskID);
     }
     
     [HttpGet]
     public async Task<IEnumerable<UserTask>> GetAllUserTasks()
     {
-        return await _service.AllUserTasks();
+        return await _service.GetAllFromDb();
     }
     
     [HttpPut]
     public async Task UpdateUserTask([FromBody] UserTask task)
     {
-        await _service.UpdateUserTask(task);
+        await _service.UpdateInDb(task);
     }
     
     [HttpDelete("{taskID}")]
     public async Task DeleteUserTask(long taskID)
     {
-        await _service.DeleteUserTask(taskID);
+        await _service.DeleteFromDb(taskID);
     }
 }
