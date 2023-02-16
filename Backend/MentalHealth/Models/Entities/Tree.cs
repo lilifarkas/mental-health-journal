@@ -6,17 +6,10 @@ namespace MentalHealth.Models.Entities;
 public class Tree
 {
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public long ID { get; }
+    public long ID { get; set; }
     public string Name { get; set; }
     public User Owner { get; }
     public TreeType Type { get; set; }
     public int Progress { get; set; }
-
-    public Tree(string name, User owner, TreeType type)
-    {
-        Name = name;
-        Owner = owner;
-        Type = type;
-        Progress = 0;
-    }
+    public ICollection<User> Users { get; set; }
 }
