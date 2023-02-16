@@ -18,31 +18,31 @@ public class UserController: ControllerBase
     [HttpPost("/users/add")]
     public async Task AddNewUser([FromBody] User user)
     {
-        await _service.AddUser(user);
+        await _service.AddToDb(user);
     }
     
     [HttpGet("/users/{id}")]
     public async Task<User?> GetUserById(long id)
     {
-        return await _service.GetUser(id);
+        return await _service.GetFromDb(id);
     }
     
     [HttpGet]
     public async Task<IEnumerable<User>> GetAllUser()
     {
-        return await _service.AllUsers();
+        return await _service.GetAllFromDb();
     }
     
     [HttpPut("/users/update/")]
     public async Task UpdateUser(long id, [FromBody] User user)
     {
-        await _service.UpdateUser(user);
+        await _service.UpdateInDb(user);
     }
     
     [HttpDelete("/users/delete/{id}")]
     public async Task DeleteUser(long id)
     {
-        await _service.DeleteUser(id);
+        await _service.DeleteFromDb(id);
     }
 
     [HttpGet("{userID}/allTasks")]
