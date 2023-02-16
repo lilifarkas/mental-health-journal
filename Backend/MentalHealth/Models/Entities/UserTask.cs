@@ -7,4 +7,5 @@ public class UserTask
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public long ID { get; set; }
     public string TaskName { get; set; }
+    public ICollection<User> Users { get; set; }
 }
