@@ -32,7 +32,10 @@ export default function Login() {
 
   async function RegisterUser(e) {
     e.preventDefault();
-    let response = await fetch('https://localhost:5001/users/add', {
+    console.log(`Name: ${userName}`)
+    console.log(`Email: ${email}`)
+    console.log(`pw: ${password}`)
+    let response = await fetch('https://localhost:7270/users/add', {
       body: JSON.stringify({
         "Name": userName,
         "Password": password,
@@ -60,12 +63,12 @@ export default function Login() {
         <form className='needs-validation' onSubmit={(e) => RegisterUser(e)} noValidate>
           <div className="form-floating mb-3">
             <input onChange={(e) => setUserName(e.target.value)} type="text" className="form-control" id='floatingUsername' placeholder="Username" />
-            <label  className='input-label' htmlFor="floatingInput">Username</label>
+            <label className='input-label' htmlFor="floatingInput">Username</label>
           </div>
 
           <div className="form-floating mb-3">
             <input onChange={(e) => setEmail(e.target.value)} type="email" className="form-control" id="floatingInput" placeholder="name@example.com" />
-            <label  className='input-label' htmlFor="floatingInput">Email address</label>
+            <label className='input-label' htmlFor="floatingInput">Email address</label>
             <div class="invalid-feedback">
               Please choose a username.
             </div>
@@ -80,7 +83,7 @@ export default function Login() {
             </div>
             <div className="input-group form-floating mb-3 pw">
               <input onChange={(e) => setPasswordConfirm(e.target.value)} type={pwType} className="form-control" id="button-addon2" placeholder="Confirm Password" />
-              <label  className='input-label' htmlFor="button-addon2">Confirm Password</label>
+              <label className='input-label' htmlFor="button-addon2">Confirm Password</label>
               <span className="input-group-text" id="basic-addon1">
                 <button type='submit' className="btn" onClick={(e) => ChangePasswordType(e)}><img src={eyeType} /></button>
               </span>
