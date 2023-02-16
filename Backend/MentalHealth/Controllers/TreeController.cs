@@ -9,12 +9,12 @@ namespace MentalHealth.Controllers;
 [ApiController, Route("/tree")]
 public class TreeController : Controller
 {
-    public TreeController(IRepository<Tree> treeRepository)
+    private readonly IRepository<Tree> _treeRepository;
+    public TreeController(TreeRepository treeRepository)
     {
         _treeRepository = treeRepository;
     }
 
-    private readonly IRepository<Tree> _treeRepository;
     
     [HttpGet]
     public async Task<IEnumerable<Tree>> GetAllTrees()
