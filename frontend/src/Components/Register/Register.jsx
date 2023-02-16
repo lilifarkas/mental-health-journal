@@ -32,7 +32,7 @@ export default function Login() {
 
   async function RegisterUser(e) {
     e.preventDefault();
-    let response = await fetch('https://localhost:5001/registration', {
+    let response = await fetch('https://localhost:5001/users/add', {
       body: JSON.stringify({
         "Name": userName,
         "Password": password,
@@ -57,27 +57,30 @@ export default function Login() {
     <>
       <div className='RegisterContainer'>
         <h1 className='header mb-5 center'>Create Account</h1>
-        <form onSubmit={(e) => RegisterUser(e)}>
+        <form className='needs-validation' onSubmit={(e) => RegisterUser(e)} noValidate>
           <div className="form-floating mb-3">
             <input onChange={(e) => setUserName(e.target.value)} type="text" className="form-control" id='floatingUsername' placeholder="Username" />
-            <label htmlFor="floatingInput">Username</label>
+            <label  className='input-label' htmlFor="floatingInput">Username</label>
           </div>
 
           <div className="form-floating mb-3">
             <input onChange={(e) => setEmail(e.target.value)} type="email" className="form-control" id="floatingInput" placeholder="name@example.com" />
-            <label htmlFor="floatingInput">Email address</label>
+            <label  className='input-label' htmlFor="floatingInput">Email address</label>
+            <div class="invalid-feedback">
+              Please choose a username.
+            </div>
           </div>
           <div className='password-fields'>
             <div className="form-floating mb-3 pw">
               <input onChange={(e) => setPassword(e.target.value)} type={pwType} className="form-control" id="button-addon1" placeholder="Password" />
-              <label htmlFor="button-addon1">Password</label>
+              <label className='input-label' htmlFor="button-addon1">Password</label>
               {/* <span className="input-group-text" id="basic-addon1">
             <button className="btn" onClick={(e) => ChangePasswordType(e)}><img src={eyeType} /></button>
           </span> */}
             </div>
             <div className="input-group form-floating mb-3 pw">
               <input onChange={(e) => setPasswordConfirm(e.target.value)} type={pwType} className="form-control" id="button-addon2" placeholder="Confirm Password" />
-              <label htmlFor="button-addon2">Confirm Password</label>
+              <label  className='input-label' htmlFor="button-addon2">Confirm Password</label>
               <span className="input-group-text" id="basic-addon1">
                 <button type='submit' className="btn" onClick={(e) => ChangePasswordType(e)}><img src={eyeType} /></button>
               </span>
