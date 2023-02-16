@@ -10,6 +10,6 @@ public class User
     public string Password { get; set; }
     public string Email { get; set; }
     public int Points { get; set; }
-    public ICollection<Tree> Trees { get; set; }
-    public ICollection<UserTask> UserTasks { get; set; }
+    public virtual ICollection<Tree>? Trees { get; set; }
+    public virtual ICollection<UserTask>? UserTasks { get; set; }
 }
