@@ -11,7 +11,7 @@ function LandingPage() {
                 <p className="slogan">Your personal mental wellness companion</p>
             </header>
             <header className="header-two">
-                <div className="container text-center">
+                <div className="container1 text-center">
                     <h1 className="text">Our app is designed to support you on your journey to a happier and healthier mind.
                         With daily affirmations and a journal for your thoughts
                         we aim to help you prioritize your mental health and self-care.
@@ -19,7 +19,7 @@ function LandingPage() {
                     
                     <p className="buttons">
                         <button className="btn button">
-                        <NavLink  className="button-text" to="/users">
+                        <NavLink  className="button-text" to="/registration">
                         SIGN UP
                         </NavLink>
                         </button>
