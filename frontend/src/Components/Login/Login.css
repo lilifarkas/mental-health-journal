@@ -1,0 +1,52 @@
+body {
+    background-image: src('./img/eye');
+}
+
+.LoginContainer {
+    position: absolute;
+    left: 50%;
+    margin: 20px;
+    transform: translate(-50%, 0);
+    width: 40%;
+    border: 2px solid green;
+    border-radius: 7px 7px 7px 7px;
+    padding: 60px;
+    backdrop-filter: blur(3px);
+}
+
+.center {
+    position: relative;
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus {
+    outline: none;
+}
+
+.form-contol:focus,
+.form-contol:active:focus,
+.form-contol.active:focus,
+.form-contol.focus,
+.form-contol:active.focus,
+.form-contol.active.focus {
+    outline: none;
+}
+
+.form-control {
+    border: 1px dashed green;
+
+}
+
+.form-control:hover {
+    border: 2px solid green;
+}
+
+.form-control:focus {
+    outline: none !important;
+    border: 2px solid green;
+    background-color: rgba(102, 181, 104, 0.455);
+}
