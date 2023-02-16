@@ -8,6 +8,12 @@ import eyeslash from './img/eye-slash.svg';
 
 export default function Login() {
 
+  let loader = document.querySelector('.loadingContainer');
+  let regContainer = document.querySelector('.RegisterContainer');
+  let cancelButton = document.querySelector('.btn-secondary');
+  const controller = new AbortController();
+  const { signal } = controller;
+
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
@@ -15,8 +21,8 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [pwType, setPwType] = useState('password');
   const [eyeType, setEyeType] = useState(eye);
-  const [pwStatus, setPwStatus] = useState(2);
-  const [btnVisibility, setBtnVisibility] = useState('visible');
+  const [valid, setValid] = useState(false);
+  const [loading, setLoading] = useState(false);
 
 
   function ChangePasswordType() {
@@ -30,35 +36,62 @@ export default function Login() {
     }
   }
 
+  let timeoutId;
+  function AbortFunction() {
+    controller.abort();
+    clearTimeout(timeoutId)
+    loader.style.visibility = 'hidden';
+    cancelButton.style.visibility = 'hidden';
+  }
+
+
   async function RegisterUser(e) {
+    setLoading(true);
     e.preventDefault();
-    console.log(`Name: ${userName}`)
-    console.log(`Email: ${email}`)
-    console.log(`pw: ${password}`)
-    let response = await fetch('https://localhost:7270/users/add', {
-      body: JSON.stringify({
-        "Name": userName,
-        "Password": password,
-        "Email": email,
-        "Points": 0
-      }),
-      method: "POST",
-      headers: { 'Content-Type': 'application/json' }
-    })
-    let result = await response.json();
-    if (result.ok) {
-      console.log(`Name: ${result.Name}`)
-      console.log(`Email: ${result.Email}`)
-      console.log(`Points: ${result.Points}`)
-    }
-    else {
-      console.warn("Something went wrong! Please try again later");
-    }
+    cancelButton.style.visibility = 'visible';
+    loader.style.visibility = 'visible';
+    timeoutId = setTimeout(async () => {
+      try {
+        const response = await fetch('https://localhost:7270/users/add', {
+          signal,
+          body: JSON.stringify({
+            "Name": userName,
+            "Password": password,
+            "Email": email,
+            "Points": 0
+          }),
+          method: "POST",
+          headers: { 'Content-Type': 'application/json' }
+        });
+        let result = await response.text();
+
+        if (result.includes("200") || response.ok) {
+          console.log(`Success!`);
+          setValid(true);
+        }
+        else {
+          console.warn(`Something went wrong! Please try again later\nERROR:\n ${result}`);
+        }
+      }
+      catch (error) {
+        if (error.name === 'AbortError') {
+          console.log('Fetch request was cancelled by the user');
+        } else {
+          console.error(`ERROR: ${error}`);
+        }
+      }
+      cancelButton.style.visibility = 'hidden';
+      loader.style.visibility = 'hidden';
+    }, 2000);
+    setLoading(false)
   }
 
   return (
     <>
       <div className='RegisterContainer'>
+        <div className='loadingContainer'>
+          <span className="loader"></span>
+        </div>
         <h1 className='header mb-5 center'>Create Account</h1>
         <form className='needs-validation' onSubmit={(e) => RegisterUser(e)} noValidate>
           <div className="form-floating mb-3">
@@ -77,15 +110,12 @@ export default function Login() {
             <div className="form-floating mb-3 pw">
               <input onChange={(e) => setPassword(e.target.value)} type={pwType} className="form-control" id="button-addon1" placeholder="Password" />
               <label className='input-label' htmlFor="button-addon1">Password</label>
-              {/* <span className="input-group-text" id="basic-addon1">
-            <button className="btn" onClick={(e) => ChangePasswordType(e)}><img src={eyeType} /></button>
-          </span> */}
             </div>
             <div className="input-group form-floating mb-3 pw">
               <input onChange={(e) => setPasswordConfirm(e.target.value)} type={pwType} className="form-control" id="button-addon2" placeholder="Confirm Password" />
               <label className='input-label' htmlFor="button-addon2">Confirm Password</label>
               <span className="input-group-text" id="basic-addon1">
-                <button type='submit' className="btn" onClick={(e) => ChangePasswordType(e)}><img src={eyeType} /></button>
+                <button type='button' className="btn" onClick={(e) => ChangePasswordType(e)}><img src={eyeType} /></button>
               </span>
             </div>
           </div>
@@ -95,7 +125,11 @@ export default function Login() {
               <span className="sr-only"></span>
             </div>
           }
-          <button type="submit" style={{ visibility: { btnVisibility } }} id='submitBtn' className="btn btn-success">Register</button>
+          <button type="submit" style={{ visibility: { btnVisibility } }} id='submitBtn' className="btn btn-success">
+            <NavLink  className="button-text" to="/main">
+              Register
+            </NavLink>
+          </button>
         </form>
       </div>
     </>

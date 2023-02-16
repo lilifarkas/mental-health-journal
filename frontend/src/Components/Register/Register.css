@@ -5,17 +5,25 @@ body {
     background-position: center center;
 }
 
+h1 {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+    color: white;
+    text-align: center;
+}
+
 .RegisterContainer {
-    top: 20%;
+    top: 15%;
     position: absolute;
-    left: 25%;
+    left: 50%;
     margin: 20px;
     transform: translate(-50%, 0);
     width: 40%;
     border: 2px solid green;
     border-radius: 7px 7px 7px 7px;
     padding: 60px;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(7px);
 }
 
 .center {
@@ -50,13 +58,13 @@ body {
 }
 
 .form-control:focus+.input-label {
-    color: rgb(0, 0, 0);
+    color: green;
 }
 
 .form-control:focus {
     outline: none !important;
     border: 2px solid green;
-    background-color: rgba(117, 211, 120, 0.207);
+    background-color: rgba(255, 255, 255, 0.711);
 }
 
 .pw {
@@ -66,4 +74,53 @@ body {
 .password-fields {
     display: flex;
     flex-direction: row;
+}
+
+/* .loader {
+    display: block;
+    position: relative;
+    height: 12px;
+    width: 80%;
+    border: 1px solid #fff;
+    border-radius: 10px;
+    overflow: hidden;
+} */
+
+#cancelBtn {
+    margin-left: 20px;
+    visibility: hidden;
+}
+
+/*LOADING*/
+
+.loadingContainer {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+    visibility: hidden;
+    z-index: 99;
+}
+
+.loader {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: inline-block;
+    border-top: 3px solid #258d2c;
+    border-right: 3px solid transparent;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
