@@ -89,6 +89,9 @@ export default function Login() {
   return (
     <>
       <div className='RegisterContainer'>
+        <div className='loadingContainer'>
+          <span className="loader"></span>
+        </div>
         <h1 className='header mb-5 center'>Create Account</h1>
         <form className='needs-validation' onSubmit={(e) => RegisterUser(e)} noValidate>
           <div className="form-floating mb-3">
