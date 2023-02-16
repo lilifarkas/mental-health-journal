@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MentalHealth.Migrations
 {
     [DbContext(typeof(MentalHealthContext))]
-    [Migration("20230216172650_initMigration")]
+    [Migration("20230216212753_initMigration")]
     partial class initMigration
     {
         /// <inheritdoc />
