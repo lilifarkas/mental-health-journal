@@ -17,6 +17,7 @@ builder.Services.AddDbContext<MentalHealthContext>(options =>
 builder.Services.AddScoped<MoodTrackerRepository>();
 builder.Services.AddScoped<TreeRepository>();
 builder.Services.AddScoped<TaskRepository>();
+builder.Services.AddScoped<UserRepository>();
 
 
 var app = builder.Build();
