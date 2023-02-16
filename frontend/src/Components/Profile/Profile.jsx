@@ -53,14 +53,15 @@ function Profile() {
     function UserList() {
         const userWithBiggestId = users.sort((a, b) => b.id - a.id)[0];
         console.log(userWithBiggestId)
-        
+
+        return users.map((user) => {
             return (
                 <User
-                    record={userWithBiggestId}
-                    key={userWithBiggestId.id}
+                    record={user}
+                    key={user.id}
                 />
             );
-        
+        });
     }
 
     return (
