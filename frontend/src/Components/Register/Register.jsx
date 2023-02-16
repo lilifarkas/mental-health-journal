@@ -36,6 +36,15 @@ export default function Login() {
     }
   }
 
+  let timeoutId;
+  function AbortFunction() {
+    controller.abort();
+    clearTimeout(timeoutId)
+    loader.style.visibility = 'hidden';
+    cancelButton.style.visibility = 'hidden';
+  }
+
+
   async function RegisterUser(e) {
     e.preventDefault();
     console.log(`Name: ${userName}`)
