@@ -46,11 +46,14 @@ export default function Login() {
 
 
   async function RegisterUser(e) {
+    setLoading(true);
     e.preventDefault();
-    console.log(`Name: ${userName}`)
-    console.log(`Email: ${email}`)
-    console.log(`pw: ${password}`)
-    let response = await fetch('https://localhost:7270/users/add', {
+    cancelButton.style.visibility = 'visible';
+    loader.style.visibility = 'visible';
+    timeoutId = setTimeout(async () => {
+      try {
+        const response = await fetch('https://localhost:7270/users/add', {
+          signal,
       body: JSON.stringify({
         "Name": userName,
         "Password": password,
@@ -67,8 +70,20 @@ export default function Login() {
       console.log(`Points: ${result.Points}`)
     }
     else {
-      console.warn("Something went wrong! Please try again later");
+          console.warn(`Something went wrong! Please try again later\nERROR:\n ${result}`);
+        }
+      }
+      catch (error) {
+        if (error.name === 'AbortError') {
+          console.log('Fetch request was cancelled by the user');
+        } else {
+          console.error(`ERROR: ${error}`);
     }
+  }
+      cancelButton.style.visibility = 'hidden';
+      loader.style.visibility = 'hidden';
+    }, 2000);
+    setLoading(false)
   }
 
   return (
