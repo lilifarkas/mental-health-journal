@@ -15,8 +15,8 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [pwType, setPwType] = useState('password');
   const [eyeType, setEyeType] = useState(eye);
-  const [pwStatus, setPwStatus] = useState(2);
-  const [btnVisibility, setBtnVisibility] = useState('visible');
+  const [valid, setValid] = useState(false);
+  const [loading, setLoading] = useState(false);
 
 
   function ChangePasswordType() {
