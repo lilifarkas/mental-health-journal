@@ -15,34 +15,25 @@ public class UserRepository : IRepository<User>
     
     public async Task Add(User entity)
     {
-        await using (_context)
-        {
-            await _context.Users.AddAsync(entity);
+        await _context.Users.AddAsync(entity);
             await _context.SaveChangesAsync();
-        }
     }
 
     public async Task<User?> Get(long id)
     {
-        await using (_context)
-        {
-            return await _context.Users.FindAsync(id);
-        }
+        return await _context.Users.FindAsync(id);
+        
     }
 
     public async Task<IEnumerable<User>> GetAll()
     {
-        await using (_context)
-        {
-            return await _context.Users.ToListAsync();
-        }
+        return await _context.Users.ToListAsync();
+        
     }
     
     public async Task Update(User entity)
     {
-        await using (_context)
-        {
-            var user = await _context.Users.FindAsync(entity.ID);
+        var user = await _context.Users.FindAsync(entity.ID);
             if (user != null)
             {
                 user.Name = entity.Name;
@@ -52,7 +43,7 @@ public class UserRepository : IRepository<User>
 
                 await _context.SaveChangesAsync();
             }
-        }
+        
     }
 
     public async Task Delete(long id)
@@ -63,5 +54,17 @@ public class UserRepository : IRepository<User>
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
         }
+    }
+    
+    internal async Task<User> IncludeUserTasks(long id)
+    {
+        return await _context.Users.Include(user => user.UserTasks).FirstOrDefaultAsync(user => user.ID == id);
+    }
+
+    internal async Task AddTask(long id, UserTask task)
+    {
+        var user = await IncludeUserTasks(id);
+        user.UserTasks.Add(task);
+        await _context.SaveChangesAsync();
     }
 }
