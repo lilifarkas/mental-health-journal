@@ -118,7 +118,7 @@ export default function Login() {
               <input onChange={(e) => setPasswordConfirm(e.target.value)} type={pwType} className="form-control" id="button-addon2" placeholder="Confirm Password" />
               <label className='input-label' htmlFor="button-addon2">Confirm Password</label>
               <span className="input-group-text" id="basic-addon1">
-                <button type='submit' className="btn" onClick={(e) => ChangePasswordType(e)}><img src={eyeType} /></button>
+                <button type='button' className="btn" onClick={(e) => ChangePasswordType(e)}><img src={eyeType} /></button>
               </span>
             </div>
           </div>
