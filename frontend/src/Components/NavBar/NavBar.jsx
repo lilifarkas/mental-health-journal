@@ -9,20 +9,22 @@ function NavBar() {
         navRef.current.classList.toggle("responsive_nav");
     }
     return (
-        <header className='navbar'>
-            <h3>Logo</h3>
-            <nav ref={navRef}>
-                <a href="/#">Home</a>
-                <a href="/#">Journal</a>
-                <a href="/profile">Profile</a>
-                <button className="nav-btn nav-close-btn" onClick={showNavbar}>
-                    <FaTimes />
+        <div className='navbar'>
+            <header>
+                <h3>Logo</h3>
+                <nav ref={navRef}>
+                    <a href="/#">Home</a>
+                    <a href="/#">Journal</a>
+                    <a href="/profile">Profile</a>
+                    <button className="nav-btn nav-close-btn" onClick={showNavbar}>
+                        <FaTimes />
+                    </button>
+                </nav>
+                <button className="nav-btn" onClick={showNavbar}>
+                    <FaBars />
                 </button>
-            </nav>
-            <button className="nav-btn" onClick={showNavbar}>
-                <FaBars />
-            </button>
-        </header>
+            </header>
+        </div>
     );
 }
 
