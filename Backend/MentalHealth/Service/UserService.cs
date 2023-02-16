@@ -3,7 +3,7 @@ using MentalHealth.Repository;
 
 namespace MentalHealth.Service;
 
-public class UserService
+public class UserService : IService<User>
 {
     private readonly UserRepository _repository;
 
@@ -12,26 +12,27 @@ public class UserService
         _repository = repository;
     }
 
-    public async Task AddUser(User user)
+    public async Task AddToDb(User user)
     {
         await _repository.Add(user);
     }
-    public async Task<User> GetUser(long id)
+    public async Task<User> GetFromDb(long id)
     {
         return await _repository.Get(id);
     }
 
-    public async Task<IEnumerable<User>> AllUsers()
+    public async Task<List<User>> GetAllFromDb()
     {
-        return await _repository.GetAll();
+        var users = await _repository.GetAll();
+        return users.ToList();
     }
 
-    public async Task UpdateUser(User task)
+    public async Task UpdateInDb(User task)
     {
         await _repository.Update(task);
     }
 
-    public async Task DeleteUser(long id)
+    public async Task DeleteFromDb(long id)
     {
         await _repository.Delete(id);
     }
