@@ -50,14 +50,16 @@ function Profile() {
 
     // This method will map out the record with the biggest id on the table
     function UserList() {
-        return users.map((record) => {
+        const userWithBiggestId = users.sort((a, b) => b.id - a.id)[0];
+        console.log(userWithBiggestId)
+        
             return (
                 <User
-                    record={record}
-                    key={record.id}
+                    record={userWithBiggestId}
+                    key={userWithBiggestId.id}
                 />
             );
-        });
+        
     }
 
     return (
