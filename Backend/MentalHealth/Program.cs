@@ -1,5 +1,7 @@
+using System.Text.Json.Serialization;
 using MentalHealth;
 using MentalHealth.Repository;
+using MentalHealth.Service;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,8 +19,14 @@ builder.Services.AddDbContext<MentalHealthContext>(options =>
 builder.Services.AddScoped<MoodTrackerRepository>();
 builder.Services.AddScoped<TreeRepository>();
 builder.Services.AddScoped<TaskRepository>();
+builder.Services.AddScoped<TaskService>();
 builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<UserService>();
 
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+});
 
 var app = builder.Build();
 
