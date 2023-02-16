@@ -63,10 +63,10 @@ export default function Login() {
           method: "POST",
           headers: { 'Content-Type': 'application/json' }
         });
-        let result = await response.text();
+        let result = await response.json();
 
-        if (result.includes("200") || response.ok) {
-          console.log(`Success!`);
+        if (response.ok) {
+          console.log(`Success!\nUser ID: ${JSON.stringify(result.id)}`);
           setValid(true);
         }
         else {
