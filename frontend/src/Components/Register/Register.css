@@ -26,9 +26,6 @@ h1 {
     backdrop-filter: blur(7px);
 }
 
-.center {
-    position: relative;
-}
 
 .btn:focus,
 .btn:active:focus,

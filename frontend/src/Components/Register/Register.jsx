@@ -120,16 +120,15 @@ export default function Login() {
             </div>
           </div>
 
-          {
-            pwStatus === 0 && <div className="spinner-border text-success" role="status">
-              <span className="sr-only"></span>
-            </div>
-          }
-          <button type="submit" style={{ visibility: { btnVisibility } }} id='submitBtn' className="btn btn-success">
+          <button type="submit" id='submitBtn' className="btn btn-success">
+            {/* Register */}
             <NavLink  className="button-text" to="/main">
               Register
             </NavLink>
           </button>
+          {/* {valid === true && navigate("/main")} */}
+          {/* {valid === true && navigate("/login")} */}
+          <button type='button' onClick={() => AbortFunction()} id='cancelBtn' className='btn btn-secondary'>Cancel</button>
         </form>
       </div>
     </>
