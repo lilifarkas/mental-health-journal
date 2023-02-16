@@ -62,12 +62,12 @@ export default function Login() {
       }),
       method: "POST",
       headers: { 'Content-Type': 'application/json' }
-    })
-    let result = await response.json();
-    if (result.ok) {
-      console.log(`Name: ${result.Name}`)
-      console.log(`Email: ${result.Email}`)
-      console.log(`Points: ${result.Points}`)
+        });
+        let result = await response.text();
+
+        if (result.includes("200") || response.ok) {
+          console.log(`Success!`);
+          setValid(true);
     }
     else {
           console.warn(`Something went wrong! Please try again later\nERROR:\n ${result}`);
