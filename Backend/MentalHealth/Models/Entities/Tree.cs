@@ -11,5 +11,5 @@ public class Tree
     public User Owner { get; }
     public TreeType Type { get; set; }
     public int Progress { get; set; }
-    public ICollection<User> Users { get; set; }
+    public virtual ICollection<User>? Users { get; set; }
 }

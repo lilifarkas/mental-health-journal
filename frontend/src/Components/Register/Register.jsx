@@ -84,6 +84,7 @@ export default function Login() {
       loader.style.visibility = 'hidden';
     }, 2000);
     setLoading(false)
+    navigate('/main');
   }
 
   return (
@@ -121,10 +122,10 @@ export default function Login() {
           </div>
 
           <button type="submit" id='submitBtn' className="btn btn-success">
-            {/* Register */}
-            <NavLink  className="button-text" to="/main">
+            Register
+            {/* <NavLink  className="button-text" to="/main">
               Register
-            </NavLink>
+            </NavLink> */}
           </button>
           {/* {valid === true && navigate("/main")} */}
           {/* {valid === true && navigate("/login")} */}

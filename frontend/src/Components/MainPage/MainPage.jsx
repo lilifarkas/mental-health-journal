@@ -8,8 +8,8 @@ function MainPage() {
     return (
         <div className='main-container'>
             < NavBar />
-            < Footer />
             < MoodTracker />
+            < Footer />
         </div>
     );
 }
