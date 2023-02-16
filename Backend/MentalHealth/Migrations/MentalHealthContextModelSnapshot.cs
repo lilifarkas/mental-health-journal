@@ -135,17 +135,7 @@ namespace MentalHealth.Migrations
                     b.Property<int>("Points")
                         .HasColumnType("int");
 
-                    b.Property<long?>("TreeID")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("UserTaskID")
-                        .HasColumnType("bigint");
-
                     b.HasKey("ID");
-
-                    b.HasIndex("TreeID");
-
-                    b.HasIndex("UserTaskID");
 
                     b.ToTable("Users");
                 });
@@ -167,6 +157,36 @@ namespace MentalHealth.Migrations
                     b.ToTable("UserTasks");
                 });
 
+            modelBuilder.Entity("TreeUser", b =>
+                {
+                    b.Property<long>("TreesID")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UsersID")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("TreesID", "UsersID");
+
+                    b.HasIndex("UsersID");
+
+                    b.ToTable("TreeUser");
+                });
+
+            modelBuilder.Entity("UserUserTask", b =>
+                {
+                    b.Property<long>("UserTasksID")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UsersID")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("UserTasksID", "UsersID");
+
+                    b.HasIndex("UsersID");
+
+                    b.ToTable("UserUserTask");
+                });
+
             modelBuilder.Entity("MentalHealth.Models.Entities.MoodTrackerUserJoin", b =>
                 {
                     b.HasOne("MentalHealth.Models.Entities.MoodTracker", "MoodTracker")
@@ -178,25 +198,34 @@ namespace MentalHealth.Migrations
                     b.Navigation("MoodTracker");
                 });
 
-            modelBuilder.Entity("MentalHealth.Models.Entities.User", b =>
+            modelBuilder.Entity("TreeUser", b =>
                 {
                     b.HasOne("MentalHealth.Models.Entities.Tree", null)
-                        .WithMany("Users")
-                        .HasForeignKey("TreeID");
+                        .WithMany()
+                        .HasForeignKey("TreesID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
+                    b.HasOne("MentalHealth.Models.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("UserUserTask", b =>
+                {
                     b.HasOne("MentalHealth.Models.Entities.UserTask", null)
-                        .WithMany("Users")
-                        .HasForeignKey("UserTaskID");
-                });
+                        .WithMany()
+                        .HasForeignKey("UserTasksID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-            modelBuilder.Entity("MentalHealth.Models.Entities.Tree", b =>
-                {
-                    b.Navigation("Users");
-                });
-
-            modelBuilder.Entity("MentalHealth.Models.Entities.UserTask", b =>
-                {
-                    b.Navigation("Users");
+                    b.HasOne("MentalHealth.Models.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
