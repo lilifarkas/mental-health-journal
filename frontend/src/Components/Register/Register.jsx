@@ -121,12 +121,12 @@ export default function Login() {
           </div>
 
           <button type="submit" id='submitBtn' className="btn btn-success">
-            Register
-            {/* <NavLink  className="button-text" to="/main">
+            {/* Register */}
+            <NavLink  className="button-text" to="/main">
               Register
-            </NavLink> */}
+            </NavLink>
           </button>
-          {valid === true && navigate("/main")}
+          {/* {valid === true && navigate("/main")} */}
           {/* {valid === true && navigate("/login")} */}
           <button type='button' onClick={() => AbortFunction()} id='cancelBtn' className='btn btn-secondary'>Cancel</button>
         </form>
