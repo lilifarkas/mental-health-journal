@@ -8,7 +8,6 @@ import LandingPage from "./Components/LandingPage/LandingPage";
 function App() {
   return (
     <div className='App'>
-      <div className='container'>
        <BrowserRouter>
           <Routes>
               <Route path='/' element={<LandingPage />} />
@@ -17,7 +16,6 @@ function App() {
               <Route exact path="/profile" element={<Profile />} />
           </Routes>
         </BrowserRouter>
-      </div>
     </div>
   );
 }
