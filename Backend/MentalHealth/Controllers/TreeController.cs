@@ -7,43 +7,43 @@ using Microsoft.AspNetCore.Mvc;
 namespace MentalHealth.Controllers;
 
 [ApiController, Route("/tree")]
-public class TreeController : Controller
+public class TreeController : ControllerBase
 {
-    public TreeController(IRepository<Tree> treeRepository)
+    public TreeController(TreeRepository repository)
     {
-        _treeRepository = treeRepository;
+        _repository = repository;
     }
 
-    private readonly IRepository<Tree> _treeRepository;
+    private readonly IRepository<Tree> _repository;
     
     [HttpGet]
     public async Task<IEnumerable<Tree>> GetAllTrees()
     {
-        return await _treeRepository.GetAll();
+        return await _repository.GetAll();
     }
 
     [HttpPost]
     public async Task AddTree([FromBody] Tree tree)
     {
-        await _treeRepository.Add(tree);
+        await _repository.Add(tree);
     }
 
     [HttpGet("/{id}")]
     public async Task<Tree> GetTreeById(long id)
     {
-        return await _treeRepository.Get(id);
+        return await _repository.Get(id);
     }
 
     [HttpPut("/{id}")]
     public void UpdateTreeById([FromBody] Tree updatedTree)
     {
-        _treeRepository.Update(updatedTree);
+        _repository.Update(updatedTree);
     }
 
     [HttpDelete("/{id}")]
     public async Task DeleteTreeById(long id)
     {
-        await _treeRepository.Delete(id);
+        await _repository.Delete(id);
     }
 }
 
