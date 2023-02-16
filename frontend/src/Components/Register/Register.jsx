@@ -8,6 +8,12 @@ import eyeslash from './img/eye-slash.svg';
 
 export default function Login() {
 
+  let loader = document.querySelector('.loadingContainer');
+  let regContainer = document.querySelector('.RegisterContainer');
+  let cancelButton = document.querySelector('.btn-secondary');
+  const controller = new AbortController();
+  const { signal } = controller;
+
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
