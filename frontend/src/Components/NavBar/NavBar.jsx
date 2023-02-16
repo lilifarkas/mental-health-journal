@@ -9,7 +9,7 @@ function NavBar() {
         navRef.current.classList.toggle("responsive_nav");
     }
     return (
-        <header>
+        <header className='navbar'>
             <h3>Logo</h3>
             <nav ref={navRef}>
                 <a href="/#">Home</a>

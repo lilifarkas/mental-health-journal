@@ -1,13 +1,14 @@
-header {
+.navbar header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: 80px;
     padding: 0 2rem;
     background: rgb(50, 58, 73);
+    width: 100%;
 }
 
-nav a {
+.navbar nav a {
     margin: 0 2rem;
     text-decoration: none;
     color: whitesmoke;
@@ -18,11 +19,11 @@ nav a {
     line-height: 38px;
 }
  
-nav a:hover {
+.navbar nav a:hover {
     color: aquamarine;
 }
 
-header .nav-btn {
+.navbar header .nav-btn {
     padding: 5px;
     cursor: pointer;
     background: transparent;
@@ -35,12 +36,12 @@ header .nav-btn {
 }
 
 @media only screen and (max-width: 1024px){
-    header .nav-btn {
+    .navbar header .nav-btn {
         visibility: visible;
         opacity: 1;
     }
     
-    header nav {
+    .navbar header nav {
         position: fixed;
         top: 0;
         left: 0;
@@ -56,17 +57,17 @@ header .nav-btn {
         transform: translateY(-100vh);
     }
     
-    header .responsive_nav {
+    .navbar header .responsive_nav {
         transform: none;
     }
     
-    nav .nav-close-btn {
+    .navbar nav .nav-close-btn {
         position: absolute;
         top: 2rem;
         right: 2rem;
     }
     
-    nav a {
+    .navbar nav a {
         font-size: 1.5rem;
     }
 }
