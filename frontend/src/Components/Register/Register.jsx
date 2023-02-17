@@ -122,9 +122,6 @@ export default function Login() {
 
           <button type="submit" id='submitBtn' className="btn btn-success">
             Register
-            {/* <NavLink  className="button-text" to="/main">
-              Register
-            </NavLink> */}
           </button>
           {valid === true && navigate("/main")}
           {/* {valid === true && navigate("/login")} */}
