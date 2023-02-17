@@ -46,7 +46,7 @@ public class UserController: ControllerBase
     }
 
     [HttpGet("{userID}/allTasks")]
-    public async Task<List<UserTask>> GetUserTasks(long userID)
+    public async Task<IEnumerable<UserTask>> GetUserTasks(long userID)
     {
         return await _service.TasksForUser(userID);
     }
