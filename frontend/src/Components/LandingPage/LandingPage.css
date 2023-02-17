@@ -4,7 +4,7 @@ body {
    background: url('background.png');
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center center;
+    background-position:center -30vh;
 }
 
 .button {
