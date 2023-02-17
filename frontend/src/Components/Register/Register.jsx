@@ -11,8 +11,6 @@ export default function Login() {
   let loader = document.querySelector('.loadingContainer');
   let regContainer = document.querySelector('.RegisterContainer');
   let cancelButton = document.querySelector('.btn-secondary');
-  const controller = new AbortController();
-  const { signal } = controller;
 
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
@@ -23,6 +21,7 @@ export default function Login() {
   const [eyeType, setEyeType] = useState(eye);
   const [valid, setValid] = useState(false);
   const [loading, setLoading] = useState(false);
+  let controller = new AbortController();
 
 
   function ChangePasswordType() {
@@ -39,7 +38,7 @@ export default function Login() {
   let timeoutId;
   function AbortFunction() {
     controller.abort();
-    clearTimeout(timeoutId)
+    console.log(clearTimeout(timeoutId));
     loader.style.visibility = 'hidden';
     cancelButton.style.visibility = 'hidden';
   }
@@ -48,12 +47,14 @@ export default function Login() {
   async function RegisterUser(e) {
     setLoading(true);
     e.preventDefault();
+    controller = new AbortController();
+    const signal = controller.signal;
     cancelButton.style.visibility = 'visible';
     loader.style.visibility = 'visible';
     timeoutId = setTimeout(async () => {
       try {
         const response = await fetch('https://localhost:7270/users/add', {
-          signal,
+          signal: signal,
           body: JSON.stringify({
             "Name": userName,
             "Password": password,
@@ -63,14 +64,17 @@ export default function Login() {
           method: "POST",
           headers: { 'Content-Type': 'application/json' }
         });
-        let result = await response.text();
+        let result = await response.json();
 
-        if (result.includes("200") || response.ok) {
-          console.log(`Success!`);
+        if (response.ok) {
+          console.log(`Success!\nUser ID: ${JSON.stringify(result.id)}`);
           setValid(true);
         }
         else {
           console.warn(`Something went wrong! Please try again later\nERROR:\n ${result}`);
+        }
+        if (signal.aborted) {
+          console.warn("Request cancelled!");
         }
       }
       catch (error) {
@@ -83,8 +87,8 @@ export default function Login() {
       cancelButton.style.visibility = 'hidden';
       loader.style.visibility = 'hidden';
     }, 2000);
+    console.log(timeoutId)
     setLoading(false)
-    navigate('/main');
   }
 
   return (
@@ -103,7 +107,7 @@ export default function Login() {
           <div className="form-floating mb-3">
             <input onChange={(e) => setEmail(e.target.value)} type="email" className="form-control" id="floatingInput" placeholder="name@example.com" />
             <label className='input-label' htmlFor="floatingInput">Email address</label>
-            <div class="invalid-feedback">
+            <div className="invalid-feedback">
               Please choose a username.
             </div>
           </div>
@@ -123,11 +127,8 @@ export default function Login() {
 
           <button type="submit" id='submitBtn' className="btn btn-success">
             Register
-            {/* <NavLink  className="button-text" to="/main">
-              Register
-            </NavLink> */}
           </button>
-          {/* {valid === true && navigate("/main")} */}
+          {valid === true && navigate("/main")}
           {/* {valid === true && navigate("/login")} */}
           <button type='button' onClick={() => AbortFunction()} id='cancelBtn' className='btn btn-secondary'>Cancel</button>
         </form>

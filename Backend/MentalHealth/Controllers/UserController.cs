@@ -16,9 +16,10 @@ public class UserController: ControllerBase
     }
 
     [HttpPost("/users/add")]
-    public async Task AddNewUser([FromBody] User user)
+    public async Task<User> AddNewUser([FromBody] User user)
     {
         await _service.AddToDb(user);
+        return user;
     }
     
     [HttpGet("/users/{id}")]

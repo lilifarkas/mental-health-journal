@@ -1,20 +1,49 @@
 .mood-container {
   display: flex;
+  margin-top: 100px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(5px);
-  height: 200px;
-  width: 100%;
-}
-.mood-container input{
-  width: 50px;
-  height: 50px;
-}
-.mood-container form {
-  display: flex;
-  justify-content: space-between;
-  padding: 0 2rem;
+  height: 250px;
   width: 50%;
+  border: 2px solid green;
+  border-radius: 7px 7px 7px 7px;
+  padding: 0 2rem;
+  background-color: rgba(101, 161, 119, 0.385);
 }
 
+.inputs {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.rateInput {
+  width: 70px;
+  height: 50px;
+}
+
+.ratingForm {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  top: 35%;
+  width: 40%;
+}
+
+.ratingHeader{
+  position: absolute;
+  top: 0;
+}
+
+.inpLabel{
+  text-align: center;
+}
+
+.inputWrapper{
+  text-align: center;
+  color: white;
+}
