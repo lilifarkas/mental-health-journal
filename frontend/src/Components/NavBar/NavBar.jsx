@@ -1,6 +1,6 @@
 import React,{useRef} from 'react';
+import { NavLink } from "react-router-dom";
 import {FaBars, FaTimes} from 'react-icons/fa';
-import './NavBar.css';
 
 function NavBar() {
     const navRef = useRef();
@@ -9,22 +9,41 @@ function NavBar() {
         navRef.current.classList.toggle("responsive_nav");
     }
     return (
-        <div className='navbar'>
-            <header>
-                <h3>Logo</h3>
-                <nav ref={navRef}>
-                    <a href="/#">Home</a>
-                    <a href="/#">Journal</a>
-                    <a href="/profile">Profile</a>
-                    <button className="nav-btn nav-close-btn" onClick={showNavbar}>
-                        <FaTimes />
-                    </button>
-                </nav>
-                <button className="nav-btn" onClick={showNavbar}>
-                    <FaBars />
-                </button>
-            </header>
-        </div>
+
+        <div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+              <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav mx-auto">
+                  <li class="nav-item px-4">
+                      <NavLink className="nav-link" to={'/main'}>Home</NavLink>
+                  </li>
+                  <li class="nav-item px-4">
+                      <NavLink className="nav-link" to={'/tasks'}>Tasks</NavLink>
+                  </li>
+                  <li class="nav-item px-4">
+                  <NavLink className="nav-link" to={'/profile'}>Profile</NavLink>
+                  </li>
+                  </ul>
+              </div>
+          </nav>
+      </div>
+
+        // <div className='navbar'>
+        //     <header>
+        //         <h3>Logo</h3>
+        //         <nav ref={navRef}>
+        //             <a href="/#">Home</a>
+        //             <a href="/#">Journal</a>
+        //             <a href="/profile">Profile</a>
+        //             <button className="nav-btn nav-close-btn" onClick={showNavbar}>
+        //                 <FaTimes />
+        //             </button>
+        //         </nav>
+        //         <button className="nav-btn" onClick={showNavbar}>
+        //             <FaBars />
+        //         </button>
+        //     </header>
+        // </div>
     );
 }
 
