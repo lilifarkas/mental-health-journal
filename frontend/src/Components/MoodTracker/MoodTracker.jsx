@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import "./MoodTracker.css";
+// import "./MoodTracker.css";
 
 const MoodTracker = () => {
   const [rating, setRating] = useState(0);
@@ -30,8 +30,8 @@ const MoodTracker = () => {
   }
 
   return (
-    <>
-      <div className='mood-container'>
+
+      <div className='container p-3 justify-content-center'>
         {/* {isEditing ? (<>
           <form onSubmit={handleSubmit}>
             <input type="radio" name="rating" value="0" onChange={handleRatingChange} />
@@ -54,19 +54,38 @@ const MoodTracker = () => {
 
           <button onClick={handleEdit}>Edit</button>
           </>)} */}
-          <>
-          <form onSubmit={handleSubmit}>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="0"/>
+            <label class="form-check-label" for="inlineRadio1">Very Negative</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="1"/>
+            <label class="form-check-label" for="inlineRadio2">Negative</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="2"/>
+            <label class="form-check-label" for="inlineRadio1">Neutral</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="3"/>
+            <label class="form-check-label" for="inlineRadio2">Happy</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="4"/>
+            <label class="form-check-label" for="inlineRadio2">Very Happy</label>
+          </div>
+          {/* <form onSubmit={handleSubmit}>
             <input type="radio" name="rating" value="0" onChange={handleRatingChange} />
             <input type="radio" name="rating" value="1" onChange={handleRatingChange} />
             <input type="radio" name="rating" value="2" onChange={handleRatingChange} />
             <input type="radio" name="rating" value="3" onChange={handleRatingChange} /> 
             <input type="radio" name="rating" value="4" onChange={handleRatingChange} />
-          </form>
+          </form> */}
 
           <button type="submit">Submit</button>
-        </>
+
       </div>
-    </>
+
   )
 }
 
