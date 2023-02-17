@@ -6,10 +6,10 @@ import "./MainPage.css";
 
 function MainPage() {
     return (
-        <div className='main-container'>
-            < NavBar />
+        <div className='container'>
+            {/* < NavBar /> */}
             < MoodTracker />
-            < Footer />
+            {/* < Footer /> */}
         </div>
     );
 }
