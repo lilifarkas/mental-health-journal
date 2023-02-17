@@ -1,9 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-const Task = ({task})=>(
+const Task = ({task, deleteTask})=>(
     <tr>
         <td>{task.id}</td>
         <td>{task.taskName}</td>
+        <td>
+            <button className="btn btn-success"
+            onClick={() => {
+                deleteTask(task.id);
+            }}
+            >
+            Delete
+            </button>
+        </td>
     </tr>
 )
 
@@ -15,6 +25,7 @@ const Tasks = () => {
         async function getTasks() {
           const response = await fetch(url);      
           const fetchedTasks = await response.json();
+          console.log(fetchedTasks);
           setTasks(fetchedTasks);
         }
       
@@ -23,18 +34,28 @@ const Tasks = () => {
         return;
       }, [tasks.length]);
 
+    async function deleteTask(id) {
+        await fetch(`https://localhost:7270/usertask/${id}`, {
+          method: "DELETE"
+        });
+        
+        const newTasks = tasks["$values"].filter((t) => t.id !== id);
+        setTasks(newTasks);
+      
+    };
       const taskList = ()=>{
         return tasks["$values"]?.map(t=>{
             return(
                 <Task 
                 task={t} 
-                key={t.id} 
+                deleteTask={() => deleteTask(t.id)}
+                key={t.id}
                 />
             )
         })
       }
       return (
-        <div>
+        <div className='d-flex justify-content-center'>
           <h3>Tasks</h3>
           <table className="table table-striped">
             <thead>
