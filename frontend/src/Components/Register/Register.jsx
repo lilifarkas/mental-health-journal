@@ -11,8 +11,6 @@ export default function Login() {
   let loader = document.querySelector('.loadingContainer');
   let regContainer = document.querySelector('.RegisterContainer');
   let cancelButton = document.querySelector('.btn-secondary');
-  const controller = new AbortController();
-  const { signal } = controller;
 
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
@@ -23,6 +21,7 @@ export default function Login() {
   const [eyeType, setEyeType] = useState(eye);
   const [valid, setValid] = useState(false);
   const [loading, setLoading] = useState(false);
+  let controller = new AbortController();
 
 
   function ChangePasswordType() {
@@ -39,7 +38,7 @@ export default function Login() {
   let timeoutId;
   function AbortFunction() {
     controller.abort();
-    clearTimeout(timeoutId)
+    console.log(clearTimeout(timeoutId));
     loader.style.visibility = 'hidden';
     cancelButton.style.visibility = 'hidden';
   }
@@ -48,12 +47,14 @@ export default function Login() {
   async function RegisterUser(e) {
     setLoading(true);
     e.preventDefault();
+    controller = new AbortController();
+    const signal = controller.signal;
     cancelButton.style.visibility = 'visible';
     loader.style.visibility = 'visible';
     timeoutId = setTimeout(async () => {
       try {
         const response = await fetch('https://localhost:7270/users/add', {
-          signal,
+          signal: signal,
           body: JSON.stringify({
             "Name": userName,
             "Password": password,
@@ -72,6 +73,9 @@ export default function Login() {
         else {
           console.warn(`Something went wrong! Please try again later\nERROR:\n ${result}`);
         }
+        if (signal.aborted) {
+          console.warn("Request cancelled!");
+        }
       }
       catch (error) {
         if (error.name === 'AbortError') {
@@ -83,6 +87,7 @@ export default function Login() {
       cancelButton.style.visibility = 'hidden';
       loader.style.visibility = 'hidden';
     }, 2000);
+    console.log(timeoutId)
     setLoading(false)
   }
 
