@@ -20,7 +20,6 @@ export default function Login() {
   const [pwType, setPwType] = useState('password');
   const [eyeType, setEyeType] = useState(eye);
   const [valid, setValid] = useState(false);
-  const [loading, setLoading] = useState(false);
   let controller = new AbortController();
 
 
@@ -45,7 +44,6 @@ export default function Login() {
 
 
   async function RegisterUser(e) {
-    setLoading(true);
     e.preventDefault();
     controller = new AbortController();
     const signal = controller.signal;
@@ -88,7 +86,6 @@ export default function Login() {
       loader.style.visibility = 'hidden';
     }, 2000);
     console.log(timeoutId)
-    setLoading(false)
   }
 
   return (

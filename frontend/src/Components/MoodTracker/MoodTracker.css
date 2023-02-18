@@ -1,6 +1,7 @@
 .mood-container {
+  position: relative;
   display: flex;
-  margin-top: 100px;
+  margin-top: 300px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -9,8 +10,14 @@
   width: 50%;
   border: 2px solid green;
   border-radius: 7px 7px 7px 7px;
-  padding: 0 2rem;
-  background-color: rgba(101, 161, 119, 0.385);
+  padding: 50px;
+  background-color: rgba(80, 80, 80, 0.586);
+}
+
+.mood-container p{
+  color: rgb(220, 220, 220);
+  font-size: x-large;
+  font-weight: 500;
 }
 
 .inputs {
@@ -24,6 +31,61 @@
   height: 50px;
 }
 
+svg {
+  width: 70px;
+  height: 50px;
+  color: rgb(201, 201, 201);
+}
+
+/*==================================EMOJI===================================*/
+/*ANGRY*/
+.emoji-wrapper.angry:hover>svg,
+.emoji-wrapper.angry:focus>svg {
+  color: #de332b !important;
+  transform: scale(1.2) !important;
+  transition: all .1s ease-in-out !important;
+  cursor: pointer !important;
+}
+
+/*FROWN*/
+#frown-emoji-wrapper.emoji-wrapper.frown:hover>svg,
+#frown-emoji-wrapper.emoji-wrapper.frown:focus>svg {
+  color: #ff5f2f !important;
+  transform: scale(1.2) !important;
+  transition: all .1s ease-in-out !important;
+  cursor: pointer !important;
+}
+.emoji-wrapper.frown:active>svg{
+  outline: none !important;
+  border: none !important;
+}
+
+/*NEUTRAL*/
+.neutral:hover>svg {
+  color: #f9a217 !important;
+  transform: scale(1.2) !important;
+  transition: all .1s ease-in-out !important;
+  cursor: pointer !important;
+}
+
+/*SMILE*/
+.smile:hover>svg,
+.smile:focus>svg {
+  color: #efdc02 !important;
+  transform: scale(1.2) !important;
+  transition: all .1s ease-in-out !important;
+  cursor: pointer !important;
+}
+
+/*LAUGH*/
+.laugh:hover>svg {
+  color: #74d701 !important;
+  transform: scale(1.2) !important;
+  transition: all .1s ease-in-out !important;
+  cursor: pointer !important;
+}
+
+/*==================================FORM===================================*/
 .ratingForm {
   position: absolute;
   display: flex;
@@ -34,16 +96,51 @@
   width: 40%;
 }
 
-.ratingHeader{
+.ratingHeader {
   position: absolute;
+  color: rgb(220, 220, 220);
   top: 0;
 }
 
-.inpLabel{
+.inpLabel {
   text-align: center;
 }
 
-.inputWrapper{
+.inputWrapper {
   text-align: center;
-  color: white;
+  color: rgb(255, 255, 255);
+}
+
+/*LOADING*/
+
+.loadingContainer {
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0);
+  visibility: hidden;
+  z-index: 99;
+}
+
+.loader {
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: inline-block;
+  border-top: 3px solid #1cd628;
+  border-right: 3px solid transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+      transform: rotate(0deg);
+  }
+
+  100% {
+      transform: rotate(360deg);
+  }
 }

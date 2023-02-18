@@ -11,16 +11,16 @@ function NavBar() {
     return (
 
         <div>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-              <div class="collapse navbar-collapse" id="navbarNav">
-                  <ul class="navbar-nav mx-auto">
-                  <li class="nav-item px-4">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+              <div className="collapse navbar-collapse" id="navbarNav">
+                  <ul className="navbar-nav mx-auto">
+                  <li className="nav-item px-4">
                       <NavLink className="nav-link" to={'/main'}>Home</NavLink>
                   </li>
-                  <li class="nav-item px-4">
+                  <li className="nav-item px-4">
                       <NavLink className="nav-link" to={'/tasks'}>Tasks</NavLink>
                   </li>
-                  <li class="nav-item px-4">
+                  <li className="nav-item px-4">
                   <NavLink className="nav-link" to={'/profile'}>Profile</NavLink>
                   </li>
                   </ul>
