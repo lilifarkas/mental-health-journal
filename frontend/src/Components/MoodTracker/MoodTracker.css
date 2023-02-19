@@ -14,7 +14,7 @@
   background-color: rgba(80, 80, 80, 0.586);
 }
 
-.mood-container p{
+.mood-container p {
   color: rgb(220, 220, 220);
   font-size: x-large;
   font-weight: 500;
@@ -55,7 +55,8 @@ svg {
   transition: all .1s ease-in-out !important;
   cursor: pointer !important;
 }
-.emoji-wrapper.frown:active>svg{
+
+.emoji-wrapper.frown:active>svg {
   outline: none !important;
   border: none !important;
 }
@@ -137,10 +138,10 @@ svg {
 
 @keyframes rotation {
   0% {
-      transform: rotate(0deg);
+    transform: rotate(0deg);
   }
 
   100% {
-      transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }
