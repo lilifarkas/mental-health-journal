@@ -14,6 +14,7 @@ const MoodTracker = (props) => {
   const [rating, setRating] = useState(0);
   //const [isEditing, setIsEditing] = useState(false);
   const [rated, setRated] = useState(false);
+  const [selectedEmoji, setSelectedEmoji] = useState(null);
 
   // function handleRatingChange(event) {
   //   setRating(parseInt(props.value));
@@ -22,6 +23,7 @@ const MoodTracker = (props) => {
 
   function getChildProps(value) {
     setRating(value);
+    setSelectedEmoji(value);
     console.log(value)
   }
 
@@ -83,32 +85,32 @@ const MoodTracker = (props) => {
           </div>
           <form className='ratingForm' onSubmit={(event) => handleSubmit(event)}>
             <div className='inputs'>
-              <div className='inputWrapper'>
-                <div id="angry-emoji-wrapper" className='emoji-wrapper angry'>
+              <div className={`inputWrapper`}>
+                <div id="angry-emoji-wrapper" className={`emoji-wrapper angry ${selectedEmoji === 0 ? 'selected' : ''}`}>
                   <EmojiAngry passedProp={getChildProps} value={0} />
                 </div>
                 <label className='inpLabel' htmlFor="0">Very Bad</label>
               </div>
-              <div className='inputWrapper'>
-                <div id="frown-emoji-wrapper" className='emoji-wrapper frown'>
+              <div className={`inputWrapper`}>
+                <div id="frown-emoji-wrapper" className={`emoji-wrapper frown ${selectedEmoji === 1 ? 'selected' : ''}`}>
                   <EmojiFrown passedProp={getChildProps} value={1} />
                 </div>
                 <label className='inpLabel' htmlFor="1">Bad</label>
               </div>
-              <div className='inputWrapper'>
-                <div id='neutral-emoji-wrapper' className='emoji-wrapper neutral'>
+              <div className={`inputWrapper`}>
+                <div id='neutral-emoji-wrapper' className={`emoji-wrapper neutral ${selectedEmoji === 2 ? 'selected' : ''}`}>
                   <EmojiNeutral passedProp={getChildProps} value={2} />
                 </div>
                 <label className='inpLabel' htmlFor="2">Average</label>
               </div>
-              <div className='inputWrapper'>
-                <div id='smile-emoji-wrapper' className='emoji-wrapper smile'>
+              <div className={`inputWrapper`}>
+                <div id='smile-emoji-wrapper' className={`emoji-wrapper smile ${selectedEmoji === 3 ? 'selected' : ''}`}>
                   <EmojiSmile passedProp={getChildProps} value={3} />
                 </div>
                 <label className='inpLabel' htmlFor="3">Good</label>
               </div>
-              <div className='inputWrapper'>
-                <div id='laughing-emoji-wrapper' className='emoji-wrapper laugh'>
+              <div className={`inputWrapper`}>
+                <div id='laughing-emoji-wrapper' className={`emoji-wrapper laugh ${selectedEmoji === 4 ? 'selected' : ''}`}>
                   <EmojiLaughing passedProp={getChildProps} value={4} />
                 </div>
                 <label className='inpLabel' htmlFor="4">Very Good</label>
