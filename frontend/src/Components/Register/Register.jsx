@@ -97,7 +97,7 @@ export default function Login() {
         <h1 className='header mb-5 center'>Create Account</h1>
         <form className='needs-validation' onSubmit={(e) => RegisterUser(e)} noValidate>
           <div className="form-floating mb-3">
-            <input onChange={(e) => setUserName(e.target.value)} type="text" className="form-control" id='floatingUsername' placeholder="Username" />
+            <input onChange={(e) => setUserName(e.target.value)} type="text" className="form-control" id='floatingUsername' placeholder="Username" autoFocus />
             <label className='input-label' htmlFor="floatingInput">Username</label>
           </div>
 
@@ -125,7 +125,7 @@ export default function Login() {
           <button type="submit" id='submitBtn' className="btn btn-success">
             Register
           </button>
-          {valid === true && navigate("/main")}
+          {valid === true && navigate("/login")}
           {/* {valid === true && navigate("/login")} */}
           <button type='button' onClick={() => AbortFunction()} id='cancelBtn' className='btn btn-secondary'>Cancel</button>
         </form>
