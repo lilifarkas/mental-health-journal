@@ -10,7 +10,7 @@ import Login from './Components/Login/Login.jsx';
 
 function App() {
   const location = useLocation();
-  const excludedPaths = ['/', '/registration'];
+  const excludedPaths = ['/', '/registration', '/login'];
 
   return (
     <div>
