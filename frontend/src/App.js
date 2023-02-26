@@ -7,6 +7,7 @@ import LandingPage from "./Components/LandingPage/LandingPage";
 import Tasks from "./Components/Tasks/Tasks";
 import NavBar from './Components/NavBar/NavBar';
 import Login from './Components/Login/Login.jsx';
+import EditProfile from './Components/Profile/EditProfile'
 
 function App() {
   const location = useLocation();
@@ -20,6 +21,7 @@ function App() {
         <Route path='/registration' element={<Register />} />
         <Route path="/main" element={<MainPage />}></Route>
         <Route exact path="/profile" element={<Profile />} />
+        <Route exact path="/profile/edit/:id" element={<EditProfile />} />
         <Route path='/tasks' element={<Tasks />}></Route>
         <Route path='/login' element={<Login />} />
       </Routes>
