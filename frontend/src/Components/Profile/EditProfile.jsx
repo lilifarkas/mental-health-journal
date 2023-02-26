@@ -26,7 +26,19 @@ function EditProfile( ) {
         return;
     }, []);
 
+    const onSubmit = async (e) => {
+        e.preventDefault();
 
+        await fetch(`https://localhost:7270/users/update/`, {
+            method: "PUT",
+            body: JSON.stringify(user),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        navigate("/profile");
+    }
 
     return (
         <div className="main">
