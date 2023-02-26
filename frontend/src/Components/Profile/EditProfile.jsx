@@ -5,7 +5,28 @@ function EditProfile( ) {
     const navigate = useNavigate()
     const params = useParams();
     const [user, setUser] = useState([]);
-    
+
+    useEffect(() => {
+        async function getUsers() {
+            const id = params.id.toString();
+            const response = await fetch(`https://localhost:7270/users/${id}`);
+
+            if (!response.ok) {
+                const message = `An error occurred: ${response.statusText}`;
+                window.alert(message);
+                return;
+            }
+
+            const result = await response.json();
+            setUser(result);
+        }
+
+        getUsers();
+
+        return;
+    }, []);
+
+
 
     return (
         <div className="main">
