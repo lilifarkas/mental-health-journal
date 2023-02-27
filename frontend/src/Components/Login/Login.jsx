@@ -47,13 +47,13 @@ export default function Login() {
     return (
         <>
           <div className='LoginContainer'>
-            <div className='loadingContainer'>
-              <span className="loader"></span>
+            <div className='LogLoadingContainer'>
+              <span className="LogLoader"></span>
             </div>
             <h1 className='header mb-5 center'>Sign In</h1>
             <form className='needs-validation' noValidate>
               <div className="form-floating mb-3">
-                <input onChange={(e) => setUserName(e.target.value)} type="text" className="form-control" id='floatingUsername' placeholder="Username" autoFocus />
+                <input onChange={(e) => setUserName(e.target.value)} type="text" className="form-control" autoComplete='off' id='floatingUsername' placeholder="Username" autoFocus />
                 <label className='input-label' htmlFor="floatingInput">Username</label>
               </div>
               <div className='password-fields'>
