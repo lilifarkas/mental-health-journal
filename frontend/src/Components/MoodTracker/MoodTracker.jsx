@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import "./MoodTracker.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import EmojiAngry from '../Emojis/EmojiAngry/EmojiAngry';
@@ -8,7 +9,7 @@ import EmojiSmile from '../Emojis/EmojiSmile/EmojiSmile';
 import EmojiLaughing from '../Emojis/EmojiLaughing/EmojiLaughing';
 import { HiCheck } from 'react-icons/hi';
 const MoodTracker = (props) => {
-
+  let navigate = useNavigate();
   let loader = document.querySelector('.MoodLoadingContainer');
   let check = document.querySelector('.MoodCheck');
 
@@ -43,8 +44,8 @@ const MoodTracker = (props) => {
         loader.style.visibility = 'hidden';
         console.log(result);
         setTimeout(async () => {
-          console.log('asd');
           setRated(true);
+          navigate("/profile");
         }, 1000)
       }
       else {
