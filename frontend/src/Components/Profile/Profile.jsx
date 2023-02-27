@@ -1,28 +1,15 @@
-import {Link} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import {useEffect, useState} from "react";
 import "./Profile.css"
 
-const User = (props) => (
-    <div className="data">
-        <p>{props.record.name}</p>
-        <p>{props.record.email}</p>
-        <p>{props.record.points}</p>
-        <div>
-            <Link className="btn btn-link" to={`/edit/${props.record.id}`}>Edit</Link> |
-            <Link className="btn btn-link" to={`/deleted`}>Delete</Link>
 
-        </div>
-    </div>
-);
+function Profile( {id} ) {
 
-function Profile() {
-
-    const [users, setUsers] = useState([]);
-
-    // This method fetches the records from the database.
+    const [user, setUser] = useState([]);
+    
     useEffect(() => {
         async function getUsers() {
-            const response = await fetch(`https://localhost:7270/users`);
+            const response = await fetch(`https://localhost:7270/users/${id}`);
 
             if (!response.ok) {
                 const message = `An error occurred: ${response.statusText}`;
@@ -31,7 +18,7 @@ function Profile() {
             }
 
             const result = await response.json();
-            setUsers(result);
+            setUser(result);
         }
 
         getUsers();
@@ -39,39 +26,27 @@ function Profile() {
         return;
     }, []);
 
-    // // This method will delete a record
-    // async function deleteRecord(id) {
-    //     await fetch(`http://localhost:5000/${id}`, {
-    //         method: "DELETE"
-    //     });
-    //
-    //     const newRecords = records.filter((el) => el._id !== id);
-    //     setRecords(newRecords);
-    // }
-
-    // This method will map out the record with the biggest id on the table
-    function UserList() {
-        const userWithBiggestId = users.sort((a, b) => b.id - a.id)[0];
-        console.log(userWithBiggestId)
-
-        return users.map((user) => {
-            return (
-                <User
-                    record={user}
-                    key={user.id}
-                />
-            );
-        });
-    }
-
     return (
         <div className="main">
             <div className="titles">
-                <p>Name</p>
-                <p>Email</p>
-                <p>Points</p>
+                <p>Name:</p>
+                <p>{user.name}</p>
+                <p>Email:</p>
+                <p>{user.email}</p>
+                <p>Points:</p>
+                <p>{user.points}</p>
+                <p>Tree:</p>
+                <p>{user.trees}</p>
+                <p>Tasks:</p>
+                <ul>
+                    {user.userTasks.map(task => <li>task.taskName</li>)}
+                </ul>
             </div>
-            {UserList()}
+            <div>
+                <NavLink to={`profile/edit/${id}`}>
+                <button>EDIT</button>
+                </NavLink>
+            </div>
         </div>
     );
 }
