@@ -128,6 +128,7 @@ svg {
   height: 25px;
   visibility: hidden;
 }
+
 .MoodCheck>svg {
   color: #1cd628;
   width: 25px;
@@ -137,7 +138,7 @@ svg {
   transform: translate(-50%, 0);
 }
 
-.MoodSubmitError{
+.MoodSubmitError {
   position: absolute;
   width: 25px;
   height: 25px;
@@ -146,13 +147,27 @@ svg {
   left: 50%;
   transform: translate(-50%, 0);
 }
-.MoodSubmitError>svg{
+
+.MoodSubmitError>svg {
   color: rgb(255, 217, 217);
   width: 25px;
   height: 25px;
   position: relative;
   /* left: 50%; */
   /* transform: translate(-50%, 0); */
+}
+
+.MoodErrorMessage {
+  background-color: #ff0d002e;
+  padding: 3px;
+  color: rgb(170, 9, 9);
+  width: 500px;
+  position: relative;
+  text-align: center;
+  visibility: hidden;
+  margin: 2px;
+  font-weight: 500;
+  border-radius: 4px;
 }
 
 .MoodSubmitText {

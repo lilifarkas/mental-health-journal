@@ -16,6 +16,7 @@ const MoodTracker = (props) => {
   let text = document.querySelector('.MoodSubmitText');
   let submitBtn = document.querySelector('#moodSubmitBtn');
   let error = document.querySelector('.MoodSubmitError');
+  let errorMessage = document.querySelector('.MoodErrorMessage');
 
   const [rating, setRating] = useState(0);
   //const [isEditing, setIsEditing] = useState(false);
@@ -68,15 +69,17 @@ const MoodTracker = (props) => {
         }
       } catch (err) {
         console.error(`ERROR: ${err}`);
+        errorMessage.style.visibility = 'visible';
         check.style.visibility = 'hidden';
         loader.style.visibility = 'hidden';
         submitBtn.classList.value = 'btn btn-danger';
         error.style.visibility = 'visible';
         setTimeout(async () => {
+          errorMessage.style.visibility = 'hidden';
           submitBtn.classList.value = 'btn btn-success'
           error.style.visibility = 'hidden';
           text.style.visibility = 'visible';
-        }, 2000);
+        }, 3000);
       }
     }, 1000)
   }
@@ -160,6 +163,7 @@ const MoodTracker = (props) => {
                 <MdOutlineReportGmailerrorred />
               </div>
             </button>
+            <span className='MoodErrorMessage'>Unable to reach the server! Please try again later! </span>
           </form>
         </div>
       )
