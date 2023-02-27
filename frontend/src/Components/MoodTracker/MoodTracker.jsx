@@ -6,10 +6,11 @@ import EmojiFrown from '../Emojis/EmojiFrown/EmojiFrown';
 import EmojiNeutral from '../Emojis/EmojiNeutral/EmojiNeutral';
 import EmojiSmile from '../Emojis/EmojiSmile/EmojiSmile';
 import EmojiLaughing from '../Emojis/EmojiLaughing/EmojiLaughing';
-
+import { HiCheck } from 'react-icons/hi';
 const MoodTracker = (props) => {
 
-  let loader = document.querySelector('.loadingContainer');
+  let loader = document.querySelector('.MoodLoadingContainer');
+  let check = document.querySelector('.MoodCheck');
 
   const [rating, setRating] = useState(0);
   //const [isEditing, setIsEditing] = useState(false);
@@ -30,21 +31,26 @@ const MoodTracker = (props) => {
   async function handleSubmit(event) {
     event.preventDefault();
     loader.style.visibility = 'visible';
-    let response = await fetch("https://localhost:7270/mood", {
-      body: JSON.stringify({ "description": rating }),
-      method: "POST",
-      headers: { "Content-Type": "application/json" }
-    });
-
-    let result = await response.json();
-    if (response.ok) {
-      console.log(result);
-      setRated(true);
-    }
-    else {
-      console.error('Error')
-    }
-    loader.style.visibility = 'hidden';
+    setTimeout(async () => {
+      let response = await fetch("https://localhost:7270/mood", {
+        body: JSON.stringify({ "description": rating }),
+        method: "POST",
+        headers: { "Content-Type": "application/json" }
+      });
+      let result = await response.json();
+      if (response.ok) {
+        check.style.visibility = 'visible';
+        loader.style.visibility = 'hidden';
+        console.log(result);
+        setTimeout(async () => {
+          console.log('asd');
+          setRated(true);
+        }, 1000)
+      }
+      else {
+        console.error('Error')
+      }
+    }, 1000)
   }
 
   // function handleEdit(event) {
@@ -80,9 +86,7 @@ const MoodTracker = (props) => {
       {rated === false && (
         <div className='mood-container'>
           <h3 className="ratingHeader">How are you feeling today?</h3>
-          <div className='loadingContainer'>
-            <span className="loader"></span>
-          </div>
+
           <form className='ratingForm' onSubmit={(event) => handleSubmit(event)}>
             <div className='inputs'>
               <div className={`inputWrapper`}>
@@ -116,15 +120,19 @@ const MoodTracker = (props) => {
                 <label className='inpLabel' htmlFor="4">Very Good</label>
               </div>
             </div>
-            <button className='btn btn-success' type="submit">Submit</button>
+            <button id='moodSubmitBtn' className='btn btn-success' type="submit">
+              <span>Submit</span>
+              <div className='MoodLoadingContainer'>
+                <span className="MoodLoader"></span>
+              </div>
+              <div className='MoodCheck'>
+                <HiCheck />
+              </div>
+            </button>
           </form>
         </div>
-      )}
-      {rated && (
-        <div className='mood-container'>
-          <p>Thank you for submitting your rating!</p>
-        </div>
-      )}
+      )
+      }
     </>
   );
 }
