@@ -12,6 +12,7 @@ const MoodTracker = (props) => {
   let navigate = useNavigate();
   let loader = document.querySelector('.MoodLoadingContainer');
   let check = document.querySelector('.MoodCheck');
+  let text = document.querySelector('.MoodSubmitText');
 
   const [rating, setRating] = useState(0);
   //const [isEditing, setIsEditing] = useState(false);
@@ -32,6 +33,7 @@ const MoodTracker = (props) => {
   async function handleSubmit(event) {
     event.preventDefault();
     loader.style.visibility = 'visible';
+    text.style.visibility = 'hidden';
     setTimeout(async () => {
       let response = await fetch("https://localhost:7270/mood", {
         body: JSON.stringify({ "description": rating }),
@@ -122,7 +124,7 @@ const MoodTracker = (props) => {
               </div>
             </div>
             <button id='moodSubmitBtn' className='btn btn-success' type="submit">
-              <span>Submit</span>
+              <span className='MoodSubmitText'>Submit</span>
               <div className='MoodLoadingContainer'>
                 <span className="MoodLoader"></span>
               </div>

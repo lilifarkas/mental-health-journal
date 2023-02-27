@@ -21,11 +21,6 @@
   font-weight: 500;
 }
 
-#moodSubmitBtn {
-  display: flex;
-  width: fit-content;
-  align-items: center;
-}
 
 .inputs {
   display: flex;
@@ -121,25 +116,41 @@ svg {
   color: rgb(255, 255, 255);
 }
 
-.MoodCheck{
+#moodSubmitBtn {
+  width: 100px;
+  align-items: center;
+  justify-content: center;
+}
+
+.MoodCheck {
   width: 25px;
   height: 25px;
   visibility: hidden;
 }
 
-.MoodCheck > svg{
+.MoodSubmitText {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  display: inline-block;
+}
+
+.MoodCheck>svg {
   color: #1cd628;
   width: 25px;
   height: 25px;
   position: absolute;
-  left: 55%;
+  left: 50%;
+  transform: translate(-50%, 0);
 }
 
 /*LOADING*/
 
 .MoodLoadingContainer {
-  position: relative;
-  left: 10%;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  /* left: 10%; */
   /* transform: translate(-50%, 0); */
   visibility: hidden;
   z-index: 99;
@@ -152,10 +163,12 @@ svg {
   width: 25px;
   height: 25px;
   border-radius: 50%;
+  /* left: 50%; */
+  /* transform: translate(-50%, 0); */
   display: inline-block;
   border-top: 3px solid #1cd628;
   border-right: 3px solid transparent;
-  margin-top: 3px;
+  /* margin-top: 3px; */
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
 }
