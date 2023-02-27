@@ -8,7 +8,7 @@ import eyeslash from './img/eye-slash.svg';
 
 export default function Login() {
 
-  let loader = document.querySelector('.loadingContainer');
+  let loader = document.querySelector('.RegLoadingContainer');
   let regContainer = document.querySelector('.RegisterContainer');
   let cancelButton = document.querySelector('.btn-secondary');
 
@@ -91,18 +91,18 @@ export default function Login() {
   return (
     <>
       <div className='RegisterContainer'>
-        <div className='loadingContainer'>
-          <span className="loader"></span>
+        <div className='RegLoadingContainer'>
+          <span className="RegLoader"></span>
         </div>
         <h1 className='header mb-5 center'>Create Account</h1>
         <form className='needs-validation' onSubmit={(e) => RegisterUser(e)} noValidate>
           <div className="form-floating mb-3">
-            <input onChange={(e) => setUserName(e.target.value)} type="text" className="form-control" id='floatingUsername' placeholder="Username" autoFocus />
+            <input onChange={(e) => setUserName(e.target.value)} type="text" autoComplete='off' className="form-control" id='floatingUsername' placeholder="Username" autoFocus />
             <label className='input-label' htmlFor="floatingInput">Username</label>
           </div>
 
           <div className="form-floating mb-3">
-            <input onChange={(e) => setEmail(e.target.value)} type="email" className="form-control" id="floatingInput" placeholder="name@example.com" />
+            <input onChange={(e) => setEmail(e.target.value)} type="email" autoComplete='off' className="form-control" id="floatingInput" placeholder="name@example.com" />
             <label className='input-label' htmlFor="floatingInput">Email address</label>
             <div className="invalid-feedback">
               Please choose a username.
