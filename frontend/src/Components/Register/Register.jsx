@@ -5,12 +5,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './Register.css';
 import eye from './img/eye.svg';
 import eyeslash from './img/eye-slash.svg';
+import { HiCheck } from 'react-icons/hi';
 
 export default function Login() {
 
   let loader = document.querySelector('.RegLoadingContainer');
   let regContainer = document.querySelector('.RegisterContainer');
   let cancelButton = document.querySelector('.btn-secondary');
+  let check = document.querySelector('.RegCheck');
+  let text = document.querySelector('.RegSubmitText');
 
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
@@ -35,10 +38,13 @@ export default function Login() {
   }
 
   let timeoutId;
+  let loaderTimeoutId;
   function AbortFunction() {
     controller.abort();
-    console.log(clearTimeout(timeoutId));
+    console.log(clearTimeout(timeoutId)); //undefined
+    console.log(clearTimeout(loaderTimeoutId)); //undefined
     loader.style.visibility = 'hidden';
+    text.style.visibility = 'visible';
     cancelButton.style.visibility = 'hidden';
   }
 
@@ -47,6 +53,7 @@ export default function Login() {
     e.preventDefault();
     controller = new AbortController();
     const signal = controller.signal;
+    text.style.visibility = 'hidden';
     cancelButton.style.visibility = 'visible';
     loader.style.visibility = 'visible';
     timeoutId = setTimeout(async () => {
@@ -65,8 +72,13 @@ export default function Login() {
         let result = await response.json();
 
         if (response.ok) {
-          console.log(`Success!\nUser ID: ${JSON.stringify(result.id)}`);
-          setValid(true);
+          check.style.visibility = 'visible';
+          loaderTimeoutId = setTimeout(async () => {
+            text.style.visibility = 'visible';
+            check.style.visibility = 'hidden';
+            console.log(`Success!\nUser ID: ${JSON.stringify(result.id)}`);
+            setValid(true);
+          }, 2000)
         }
         else {
           console.warn(`Something went wrong! Please try again later\nERROR:\n ${result}`);
@@ -91,9 +103,6 @@ export default function Login() {
   return (
     <>
       <div className='RegisterContainer'>
-        <div className='RegLoadingContainer'>
-          <span className="RegLoader"></span>
-        </div>
         <h1 className='header mb-5 center'>Create Account</h1>
         <form className='needs-validation' onSubmit={(e) => RegisterUser(e)} noValidate>
           <div className="form-floating mb-3">
@@ -122,8 +131,14 @@ export default function Login() {
             </div>
           </div>
 
-          <button type="submit" id='submitBtn' className="btn btn-success">
-            Register
+          <button type="submit" id='RegSubmitBtn' className="btn btn-success">
+            <span className='RegSubmitText'>Register</span>
+            <div className='RegLoadingContainer'>
+              <span className="RegLoader"></span>
+            </div>
+            <div className='RegCheck'>
+              <HiCheck />
+            </div>
           </button>
           {valid === true && navigate("/login")}
           {/* {valid === true && navigate("/login")} */}

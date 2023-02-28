@@ -73,15 +73,34 @@ body {
     flex-direction: row;
 }
 
-/* .loader {
-    display: block;
+#RegSubmitBtn {
     position: relative;
-    height: 12px;
-    width: 80%;
-    border: 1px solid #fff;
-    border-radius: 10px;
-    overflow: hidden;
-} */
+    width: 100px;
+    align-items: center;
+    justify-content: center;
+}
+
+.RegSubmitText {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    display: inline-block;
+}
+
+.RegCheck {
+    width: 25px;
+    height: 25px;
+    visibility: hidden;
+}
+
+.RegCheck>svg {
+    color: #1cd628;
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
 
 #cancelBtn {
     margin-left: 20px;
@@ -91,7 +110,7 @@ body {
 /*LOADING*/
 
 .RegLoadingContainer {
-    position: relative;
+    position: absolute;
     left: 50%;
     transform: translate(-50%, 0);
     visibility: hidden;
@@ -100,10 +119,10 @@ body {
 
 .RegLoader {
     position: relative;
-    left: 50%;
-    transform: translate(-50%, 0);
-    width: 48px;
-    height: 48px;
+    /* left: 50%; */
+    /* transform: translate(-50%, 0); */
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
     display: inline-block;
     border-top: 3px solid #1cd628;
