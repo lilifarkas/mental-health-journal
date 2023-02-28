@@ -8,11 +8,15 @@ import EmojiNeutral from '../Emojis/EmojiNeutral/EmojiNeutral';
 import EmojiSmile from '../Emojis/EmojiSmile/EmojiSmile';
 import EmojiLaughing from '../Emojis/EmojiLaughing/EmojiLaughing';
 import { HiCheck } from 'react-icons/hi';
+import { MdOutlineReportGmailerrorred } from 'react-icons/md';
 const MoodTracker = (props) => {
   let navigate = useNavigate();
   let loader = document.querySelector('.MoodLoadingContainer');
   let check = document.querySelector('.MoodCheck');
   let text = document.querySelector('.MoodSubmitText');
+  let submitBtn = document.querySelector('#moodSubmitBtn');
+  let error = document.querySelector('.MoodSubmitError');
+  let errorMessage = document.querySelector('.MoodErrorMessage');
 
   const [rating, setRating] = useState(0);
   //const [isEditing, setIsEditing] = useState(false);
@@ -35,23 +39,47 @@ const MoodTracker = (props) => {
     loader.style.visibility = 'visible';
     text.style.visibility = 'hidden';
     setTimeout(async () => {
-      let response = await fetch("https://localhost:7270/mood", {
-        body: JSON.stringify({ "description": rating }),
-        method: "POST",
-        headers: { "Content-Type": "application/json" }
-      });
-      let result = await response.json();
-      if (response.ok) {
-        check.style.visibility = 'visible';
+      try {
+        let response = await fetch("https://localhost:7270/mood", {
+          body: JSON.stringify({ "description": rating }),
+          method: "POST",
+          headers: { "Content-Type": "application/json" }
+        });
+        let result = await response.json();
+        if (response.ok) {
+          check.style.visibility = 'visible';
+          loader.style.visibility = 'hidden';
+          console.log(result);
+          setTimeout(async () => {
+            setRated(true);
+            navigate("/profile");
+          }, 1000)
+        }
+        else {
+          submitBtn.classList.remove('btn-success');
+          submitBtn.classList.add('btn-danger');
+          error.style.visibility = 'visible';
+          setTimeout(async () => {
+            submitBtn.classList.remove('btn-danger');
+            submitBtn.classList.add('btn-success');
+            error.style.visibility = 'hidden';
+            text.style.visibility = 'visible';
+          }, 1000);
+          console.error('Error')
+        }
+      } catch (err) {
+        console.error(`ERROR: ${err}`);
+        errorMessage.style.visibility = 'visible';
+        check.style.visibility = 'hidden';
         loader.style.visibility = 'hidden';
-        console.log(result);
+        submitBtn.classList.value = 'btn btn-danger';
+        error.style.visibility = 'visible';
         setTimeout(async () => {
-          setRated(true);
-          navigate("/profile");
-        }, 1000)
-      }
-      else {
-        console.error('Error')
+          errorMessage.style.visibility = 'hidden';
+          submitBtn.classList.value = 'btn btn-success'
+          error.style.visibility = 'hidden';
+          text.style.visibility = 'visible';
+        }, 3000);
       }
     }, 1000)
   }
@@ -131,7 +159,11 @@ const MoodTracker = (props) => {
               <div className='MoodCheck'>
                 <HiCheck />
               </div>
+              <div className='MoodSubmitError'>
+                <MdOutlineReportGmailerrorred />
+              </div>
             </button>
+            <span className='MoodErrorMessage'>Unable to reach the server! Please try again later! </span>
           </form>
         </div>
       )
