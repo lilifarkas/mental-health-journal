@@ -8,6 +8,7 @@ import Tasks from "./Components/Tasks/Tasks";
 import NavBar from './Components/NavBar/NavBar';
 import Login from './Components/Login/Login.jsx';
 import EditProfile from './Components/Profile/EditProfile'
+import Admin from './Components/Admin/Admin'
 
 function App() {
   const location = useLocation();
@@ -24,6 +25,7 @@ function App() {
         <Route exact path="/profile/edit/:id" element={<EditProfile />} />
         <Route path='/tasks' element={<Tasks />}></Route>
         <Route path='/login' element={<Login />} />
+        <Route path='/admin' element={<Admin />} />
       </Routes>
     </div>
   );
