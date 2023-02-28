@@ -197,12 +197,9 @@ svg {
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  /* left: 50%; */
-  /* transform: translate(-50%, 0); */
   display: inline-block;
   border-top: 3px solid #1cd628;
   border-right: 3px solid transparent;
-  /* margin-top: 3px; */
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
 }
