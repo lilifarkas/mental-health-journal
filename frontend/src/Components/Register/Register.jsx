@@ -6,7 +6,6 @@ import './Register.css';
 import eye from './img/eye.svg';
 import eyeslash from './img/eye-slash.svg';
 import { HiCheck } from 'react-icons/hi';
-
 export default function Login() {
 
 
