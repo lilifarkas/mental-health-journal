@@ -1,10 +1,11 @@
-import {Link, NavLink} from "react-router-dom";
+import {Link, NavLink, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import "./Profile.css"
 
 
 function Profile( {id} ) {
 
+    const navigate = useNavigate()
     const [user, setUser] = useState([]);
     
     useEffect(() => {
@@ -16,7 +17,6 @@ function Profile( {id} ) {
                 window.alert(message);
                 return;
             }
-
             const result = await response.json();
             setUser(result);
         }
@@ -25,6 +25,16 @@ function Profile( {id} ) {
 
         return;
     }, []);
+    
+    const deleteUser = async (e) => {
+        e.preventDefault();
+
+        await fetch(`https://localhost:7270/users/delete/${id}`, {
+            method: "DELETE"
+        });
+        
+        navigate("/");
+    }
 
     return (
         <div className="main">
@@ -46,6 +56,7 @@ function Profile( {id} ) {
                 <NavLink to={`profile/edit/${id}`}>
                 <button>EDIT</button>
                 </NavLink>
+                <button onClick={deleteUser}>DELETE PROFILE</button>
             </div>
         </div>
     );
