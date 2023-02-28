@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, NavLink, Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Register.css';
@@ -9,8 +9,9 @@ import { HiCheck } from 'react-icons/hi';
 
 export default function Login() {
 
+
   let loader = document.querySelector('.RegLoadingContainer');
-  let regContainer = document.querySelector('.RegisterContainer');
+  //let regContainer = document.querySelector('.RegisterContainer');
   let cancelButton = document.querySelector('.btn-secondary');
   let check = document.querySelector('.RegCheck');
   let text = document.querySelector('.RegSubmitText');
@@ -50,6 +51,7 @@ export default function Login() {
 
 
   async function RegisterUser(e) {
+
     e.preventDefault();
     controller = new AbortController();
     const signal = controller.signal;
