@@ -220,7 +220,7 @@ export default function Login() {
           <div className="form-floating mb-3">
             <input onChange={(e) => setEmail(e.target.value)} type="email" autoComplete='off' className="form-control " id='email-input' placeholder="name@example.com" />
             <label className='input-label' htmlFor="floatingInput">Email address</label>
-            </div>
+          </div>
           <span className='pwError'>.</span>
           <div className='password-fields'>
             <div className="form-floating mb-3 pw">
