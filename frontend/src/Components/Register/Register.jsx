@@ -49,6 +49,99 @@ export default function Login() {
     cancelButton.style.visibility = 'hidden';
   }
 
+  async function ValidateInputs(e) {
+    e.preventDefault();
+    const response = await fetch('https://localhost:7270/users');
+    let result = await response.json();
+    isNameOK = validateName(result);
+    isEmailOK = validateEmail(result);
+    if (password !== passwordConfirm) {
+      pwError.style.visibility = 'visible';
+      passwordInput.classList.value = 'form-control error';
+      passwordInput2.classList.value = 'form-control error';
+      pwError.innerHTML = 'Please make sure your passwords are matching';
+    }
+    if (password === passwordConfirm) {
+      if (password.length < 8) {
+        pwError.style.visibility = 'visible';
+        passwordInput.classList.value = 'form-control error';
+        passwordInput2.classList.value = 'form-control error';
+        pwError.innerHTML = 'Please make sure you password contains at least 8 characters';
+      }
+      else {
+        let format = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+        if (format.test(password) === true) {
+          pwError.style.visibility = 'hidden';
+          passwordInput.classList.value = 'form-control correct';
+          passwordInput2.classList.value = 'form-control correct';
+          isPwOK = true;
+        }
+        else {
+          pwError.style.visibility = 'visible';
+          passwordInput.classList.value = 'form-control error';
+          passwordInput2.classList.value = 'form-control error';
+          pwError.innerHTML = `Please make sure you password contains ()`;
+        }
+      }
+    }
+    if (isEmailOK && isNameOK && isPwOK) {
+      submitBtn.disabled = false;
+    }
+    return false;
+  }
+  useEffect(() => {
+    setTimeout(async () => {
+      submitBtn.disabled = true;
+    }, 10);
+  }, [userName, email, password])
+
+  function validateName(result) {
+    for (const user of result.$values) {
+      if (userName === '') {
+        nameInput.classList.value = 'form-control error';
+        nameError.style.visibility = 'visible';
+        nameError.innerHTML = 'Please enter a valid username';
+        return false;
+      }
+      else if (user.name === userName) {
+        nameInput.classList.value = 'form-control error';
+        nameError.style.visibility = 'visible';
+        nameError.innerHTML = 'An account is already registered with this username';
+        return false;
+      }
+    }
+    nameInput.classList.value = 'form-control correct';
+    nameError.style.visibility = 'hidden';
+    return true;
+  }
+
+  function validateEmail(result) {
+    let emailFormat = /^[a-zA-Z0-9._+-]+@([a-zA-Z0-9]+\.)+[a-zA-Z]{2,}$/;
+    for (const user of result.$values) {
+      if (email === '') {
+        emailError.style.visibility = 'visible';
+        emailInput.classList.value = 'form-control error';
+        emailError.innerHTML = 'Please enter a valid email address';
+        return false;
+      }
+      else if (emailFormat.test(email) === false) {
+        emailError.style.visibility = 'visible';
+        emailInput.classList.value = 'form-control error';
+        emailError.innerHTML = 'Please make sure you use the correct format (example@email.com)';
+        return false;
+      }
+      else if (user.email === email) {
+        emailError.style.visibility = 'visible';
+        emailInput.classList.value = 'form-control error';
+        emailError.innerHTML = 'An account is already registered with this email';
+        return false;
+      }
+    }
+    emailError.style.visibility = 'hidden';
+    emailInput.classList.value = 'form-control correct';
+    return true;
+  }
+
 
   async function RegisterUser(e) {
 
