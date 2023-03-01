@@ -6,14 +6,13 @@ import './Register.css';
 import eye from './img/eye.svg';
 import eyeslash from './img/eye-slash.svg';
 import { HiCheck } from 'react-icons/hi';
-export default function Login() {
 
 
 export default function Register() {
 
   let loader = document.querySelector('.RegLoadingContainer');
   //let regContainer = document.querySelector('.RegisterContainer');
-  let cancelButton = document.querySelector('.btn-secondary');
+  let cancelButton = document.querySelector('#cancelBtn');
   let check = document.querySelector('.RegCheck');
   let text = document.querySelector('.RegSubmitText');
   let submitBtn = document.querySelector('#RegSubmitBtn');
@@ -24,6 +23,9 @@ export default function Register() {
   let nameError = document.querySelector('.nameError');
   let emailError = document.querySelector('.emailError');
   let pwError = document.querySelector('.pwError');
+  let ValidateText = document.querySelector('.ValidateText');
+  let ValidateLoader = document.querySelector('.ValidateLoader');
+  let ValidateBtn = document.querySelector('#ValidateBtn');
 
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
@@ -67,13 +69,13 @@ export default function Register() {
     try {
       ValidateText.style.visibility = 'hidden';
       ValidateLoader.style.visibility = 'visible';
-    const response = await fetch('https://localhost:7270/users');
-    let result = await response.json();
+      const response = await fetch('https://localhost:7270/users');
+      let result = await response.json();
       if (response.ok) {
         ValidateLoader.style.visibility = 'hidden';
         ValidateText.style.visibility = 'visible';
-    isNameOK = validateName(result);
-    isEmailOK = validateEmail(result);
+        isNameOK = validateName(result);
+        isEmailOK = validateEmail(result);
       }
     }
     catch (err) {
@@ -93,7 +95,7 @@ export default function Register() {
         pwError.innerHTML = 'Please make sure you password contains at least 8 characters';
       }
       else {
-        let format = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+        let format = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$_!%*#?&])[A-Za-z\d@$_!%*#?&]{8,}$/;
         if (format.test(password) === true) {
           pwError.style.visibility = 'hidden';
           passwordInput.classList.value = 'form-control correct';
@@ -104,18 +106,20 @@ export default function Register() {
           pwError.style.visibility = 'visible';
           passwordInput.classList.value = 'form-control error';
           passwordInput2.classList.value = 'form-control error';
-          pwError.innerHTML = `Please make sure you password contains ()`;
+          pwError.innerHTML = `Password not containing numbers, capital letters or special characters`;
         }
       }
     }
     if (isEmailOK && isNameOK && isPwOK) {
       submitBtn.disabled = false;
+      ValidateBtn.style.display = 'none';
     }
     return false;
   }
   useEffect(() => {
+    const submitBtnRendered = document.querySelector('#RegSubmitBtn');
     setTimeout(async () => {
-      submitBtn.disabled = true;
+      submitBtnRendered.disabled = true;
     }, 10);
   }, [userName, email, password])
 
@@ -172,8 +176,8 @@ export default function Register() {
     e.preventDefault();
     controller = new AbortController();
     const signal = controller.signal;
-    text.style.visibility = 'hidden';
     cancelButton.style.visibility = 'visible';
+    text.style.visibility = 'hidden';
     loader.style.visibility = 'visible';
     timeoutId = setTimeout(async () => {
       try {
@@ -182,7 +186,7 @@ export default function Register() {
           body: JSON.stringify({
             "Name": userName,
             "Password": password,
-            "Email": email,
+            "Email": email.toLowerCase(),
             "Points": 0
           }),
           method: "POST",
@@ -242,9 +246,9 @@ export default function Register() {
             </div>
             <div className="input-group form-floating mb-3 pw">
               <input onChange={(e) => setPasswordConfirm(e.target.value)} type={pwType} className="form-control pw-input" id="ConfPwInput" placeholder="Confirm Password" />
-              <label className='input-label' htmlFor="button-addon2">Confirm Password</label>
+              <label className='input-label' htmlFor="button-addon1">Confirm Password</label>
               <span className="input-group-text" id="basic-addon1">
-                <button type='button' className="btn" onClick={(e) => ChangePasswordType(e)}><img src={eyeType} /></button>
+                <button type='button' className="btn" onClick={(e) => ChangePasswordType(e)}><img src={eyeType} alt={"eye"} /></button>
               </span>
             </div>
           </div>
@@ -258,7 +262,10 @@ export default function Register() {
               <HiCheck />
             </div>
           </button>
-          <button type='button' id='RegValidateBtn' className='btn btn-secondary' onClick={(e) => ValidateInputs(e)}>Validate</button>
+          <button type='button' id='ValidateBtn' className='btn btn-secondary' onClick={(e) => ValidateInputs(e)}>
+            <span className='ValidateText'>Validate</span>
+            <span className="ValidateLoader"></span>
+          </button>
           {valid === true && navigate("/login")}
           {/* {valid === true && navigate("/login")} */}
           <button type='button' onClick={() => AbortFunction()} id='cancelBtn' className='btn btn-secondary'>Cancel</button>
