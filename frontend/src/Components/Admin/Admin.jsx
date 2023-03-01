@@ -100,27 +100,29 @@ export default function UsersList() {
     }
         
     return (
-        <div>
+        <div className= "bg-light">
             <h3>Users List</h3>
-            <select id = "arrange" onChange={(e) => {
-                if (e.target.value === "By Name") {
-                    sortByName();
-                } else if (e.target.value === "By Points") {
-                    sortByPoints();
-                } else if(e.target.value === "Arrange"){
-                    notSorted();
-                }
-            }}>
-                <option> Arrange </option>
-                <option> By Name </option>
-                <option> By Points </option>
-            </select>
-            <input id="filterName" type="text"
-                   placeholder="Filter name" onChange={(e) => filterName(e.target.value)}></input>
-            <input id="filterPoints" type="text"
-                   placeholder="Filter points" onChange={(e) => filterPoints(e.target.value)}></input>
-            <input id="filterId" type="text"
-                   placeholder="Filter ID" onChange={(e) => filterId(e.target.value)}></input>
+            <div className="d-flex flex-row justify-content-center align-items-center gap-2">
+                <select className="d-inline-flex mt-3" id = "arrange" onChange={(e) => {
+                    if (e.target.value === "By Name") {
+                        sortByName();
+                    } else if (e.target.value === "By Points") {
+                        sortByPoints();
+                    } else if(e.target.value === "Arrange"){
+                        notSorted();
+                    }
+                }}>
+                    <option> Arrange </option>
+                    <option> By Name </option>
+                    <option> By Points </option>
+                </select>
+                <input className="d-inline-flex mt-3" id="filterName" type="text"
+                       placeholder="Filter name" onChange={(e) => filterName(e.target.value)}></input>
+                <input className="d-inline-flex mt-3" id="filterPoints" type="text"
+                       placeholder="Filter points" onChange={(e) => filterPoints(e.target.value)}></input>
+                <input className="d-inline-flex mt-3" id="filterId" type="text"
+                       placeholder="Filter ID" onChange={(e) => filterId(e.target.value)}></input>
+            </div>
             <table className="table table-striped" style={{ marginTop: 20 }}>
                 <thead>
                 <tr>
