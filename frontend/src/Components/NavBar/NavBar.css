@@ -22,6 +22,28 @@
 .navbar nav a:hover {
     color: aquamarine;
 }
+.logout{
+    justify-self: left;
+    left: 5%;
+    position: absolute;
+    background: transparent;
+    outline: none;
+    border: none;
+    width: 35px;
+    height: 35px;
+}
+.logout > svg{
+    top: 7%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    position: absolute;
+    height: 35px;
+    width: 35px;
+    color: white;
+}
+.logout > svg:hover{
+    color: red;
+}
 
 .navbar header .nav-btn {
     padding: 5px;
