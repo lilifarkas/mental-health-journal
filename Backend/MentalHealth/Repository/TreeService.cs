@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace MentalHealth.Repository;
 
-public class TreeRepository : IRepository<Tree>
+public class TreeService : IService<Tree>
 {
-    public TreeRepository(MentalHealthContext context)
+    public TreeService(MentalHealthContext context)
     {
         _context = context;
     }

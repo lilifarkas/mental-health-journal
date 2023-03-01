@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MentalHealth.Repository
 {
-	public class MoodTrackerRepository : IRepository<MoodTracker>
+	public class MoodTrackerService : IService<MoodTracker>
 	{
 		private readonly MentalHealthContext _context;
 
-		public MoodTrackerRepository(MentalHealthContext context)
+		public MoodTrackerService(MentalHealthContext context)
 		{
 			_context = context;
 		}

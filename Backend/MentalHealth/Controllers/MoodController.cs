@@ -10,9 +10,9 @@ namespace MentalHealth.Controllers
 	[ApiController, Route("/mood")]
 	public class MoodController : ControllerBase
 	{
-		private readonly MoodTrackerRepository _repository;
+		private readonly MoodTrackerService _repository;
 
-		public MoodController(MoodTrackerRepository repository)
+		public MoodController(MoodTrackerService repository)
 		{
 			_repository = repository;
 		}

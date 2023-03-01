@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MentalHealth.Repository;
 
-public class TaskRepository : IRepository<UserTask>
+public class TaskService : IService<UserTask>
 {
     private readonly MentalHealthContext _context;
 
-    public TaskRepository(MentalHealthContext context)
+    public TaskService(MentalHealthContext context)
     {
         _context = context;
     }

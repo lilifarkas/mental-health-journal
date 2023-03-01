@@ -1,6 +1,6 @@
 ﻿namespace MentalHealth.Repository;
 
-public interface IRepository<T>
+public interface IService<T>
 {
     public Task Add(T entity);
     public Task<T> Get(long id);

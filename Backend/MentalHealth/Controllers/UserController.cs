@@ -1,6 +1,5 @@
 using MentalHealth.Models.Entities;
 using MentalHealth.Repository;
-using MentalHealth.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MentalHealth.Controllers;
@@ -18,43 +17,37 @@ public class UserController: ControllerBase
     [HttpPost("/users/add")]
     public async Task<User> AddNewUser([FromBody] User user)
     {
-        await _service.AddToDb(user);
+        await _service.Add(user);
         return user;
     }
     
     [HttpGet("/users/{id}")]
     public async Task<User?> GetUserById(long id)
     {
-        return await _service.GetFromDb(id);
+        return await _service.Get(id);
     }
     
     [HttpGet]
     public async Task<IEnumerable<User>> GetAllUser()
     {
-        return await _service.GetAllFromDb();
+        return await _service.GetAll();
     }
     
     [HttpPut("/users/update/")]
     public async Task UpdateUser(long id, [FromBody] User user)
     {
-        await _service.UpdateInDb(user);
+        await _service.Update(user);
     }
     
     [HttpDelete("/users/delete/{id}")]
     public async Task DeleteUser(long id)
     {
-        await _service.DeleteFromDb(id);
+        await _service.Delete(id);
     }
 
     [HttpGet("{userID}/allTasks")]
     public async Task<IEnumerable<UserTask>> GetUserTasks(long userID)
     {
-        return await _service.TasksForUser(userID);
-    }
-
-    [HttpPost("{userID}/addTask")]
-    public async Task AddTask(long userID, [FromBody] UserTask task)
-    {
-        await _service.AddTaskToUser(userID, task);
+        return await _service.IncludeUserTasks(userID);
     }
 }

@@ -9,8 +9,8 @@ namespace MentalHealth.Controllers;
 [ApiController, Route("/tree")]
 public class TreeController : Controller
 {
-    private readonly IRepository<Tree> _treeRepository;
-    public TreeController(TreeRepository treeRepository)
+    private readonly TreeService _treeRepository;
+    public TreeController(TreeService treeRepository)
     {
         _treeRepository = treeRepository;
     }
