@@ -1,8 +1,24 @@
+@import url('https://fonts.cdnfonts.com/css/garuda');
+@import url('https://fonts.cdnfonts.com/css/gloria-hallelujah');
 
+.button {
+    background: -webkit-linear-gradient(to right, #7A89A9, #A39772); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #7A89A9, #A39772); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    width: 100px;
+    height: 70px;
+    font-family: 'GARUDA';
+    transition: all 0.3s ease-in-out;
+}
 
-.main{
-    display: flex;
-    flex-direction: row;
-    justify-content: left;
-    gap: 30px;
+.button:hover {
+    transform: translateY(-5px); /* Move the button up 5 pixels on hover */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3); /* Add box shadow */
+}
+
+.title{
+    font-family: 'GARUDA';  
+}
+
+.titles{
+    font-family: "Gloria Hallelujah";
 }
