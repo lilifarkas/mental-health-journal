@@ -18,7 +18,7 @@ public class UserService : IService<User>
             await _context.SaveChangesAsync();
     }
 
-    public async Task<User?> Get(long id)
+    public async Task<User> Get(long id)
     {
         return await _context.Users.FindAsync(id);
         
@@ -58,5 +58,10 @@ public class UserService : IService<User>
     public async Task<List<UserTask>> IncludeUserTasks(long id)
     {
         return await _context.UserTasks.Where(task => task.Users.Any(user => user.ID == id)).ToListAsync();
+    }
+
+    public async Task<User?> GetByLogin(string email, string password)
+    {
+        return await _context.Users.FirstOrDefaultAsync(user => user.Email == email && user.Password == password);
     }
 }
