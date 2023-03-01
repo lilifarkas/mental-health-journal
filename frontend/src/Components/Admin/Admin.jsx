@@ -82,6 +82,14 @@ export default function UsersList() {
         );
         setFilteredUsers(filtered);
     }
+
+    function filterId(e) {
+        const value = e.toLowerCase();
+        const filtered = users.filter((user) =>
+            user.id.toString().includes(value)
+        );
+        setFilteredUsers(filtered);
+    }
         
     return (
         <div>
@@ -101,6 +109,8 @@ export default function UsersList() {
                    placeholder="Filter name" onChange={(e) => filterName(e.target.value)}></input>
             <input id="filterPoints" type="text"
                    placeholder="Filter points" onChange={(e) => filterPoints(e.target.value)}></input>
+            <input id="filterId" type="text"
+                   placeholder="Filter ID" onChange={(e) => filterId(e.target.value)}></input>
             <table className="table table-striped" style={{ marginTop: 20 }}>
                 <thead>
                 <tr>
