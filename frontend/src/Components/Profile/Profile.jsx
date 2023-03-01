@@ -47,10 +47,6 @@ function Profile( {id} ) {
                 <p>{user.points}</p>
                 <p>Tree:</p>
                 <p>{user.trees}</p>
-                <p>Tasks:</p>
-                <ul>
-                    {user.userTasks.map(task => <li>task.taskName</li>)}
-                </ul>
             </div>
             <div>
                 <NavLink to={`profile/edit/${id}`}>
