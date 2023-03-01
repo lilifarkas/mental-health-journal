@@ -56,6 +56,11 @@ export default function UsersList() {
             );
         });
     }
+
+    function sortByName() {
+        const sorted = [...filteredUsers].sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+        setSortedUsers(sorted);
+    }
         
     return (
         <div>
