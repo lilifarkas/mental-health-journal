@@ -34,6 +34,7 @@
 .btn:active.focus,
 .btn.active.focus {
     outline: none;
+    box-shadow: none;
 }
 
 .form-contol:focus,
@@ -59,6 +60,7 @@
 }
 
 .form-control:focus {
+    box-shadow: none !important;
     outline: none !important;
     border: 2px solid green;
     background-color: rgba(255, 255, 255, 0.711);
