@@ -3,12 +3,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MentalHealth.Repository;
 
-public class UserRepository : IRepository<User>
+public class UserService : IService<User>
 {
     private readonly MentalHealthContext _context;
-    private IRepository<User> _repositoryImplementation;
 
-    public UserRepository(MentalHealthContext context)
+    public UserService(MentalHealthContext context)
     {
         _context = context;
     }
@@ -56,15 +55,8 @@ public class UserRepository : IRepository<User>
         }
     }
     
-    internal async Task<User> IncludeUserTasks(long id)
+    public async Task<List<UserTask>> IncludeUserTasks(long id)
     {
-        return await _context.Users.Include(user => user.UserTasks).FirstOrDefaultAsync(user => user.ID == id);
-    }
-
-    internal async Task AddTask(long id, UserTask task)
-    {
-        var user = await IncludeUserTasks(id);
-        user.UserTasks.Add(task);
-        await _context.SaveChangesAsync();
+        return await _context.UserTasks.Where(task => task.Users.Any(user => user.ID == id)).ToListAsync();
     }
 }
