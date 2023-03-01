@@ -1,4 +1,6 @@
 .mood-container {
+  left: 50%;
+  transform: translate(-50%, 0);
   position: relative;
   display: flex;
   margin-top: 300px;
@@ -11,7 +13,7 @@
   border: 2px solid green;
   border-radius: 7px 7px 7px 7px;
   padding: 50px;
-  background-color: rgba(80, 80, 80, 0.586);
+  background-color: rgba(255, 255, 250, 0.9);
   user-select: none;
 }
 
@@ -37,7 +39,7 @@
 svg {
   width: 70px;
   height: 50px;
-  color: rgb(201, 201, 201);
+  color: rgb(149, 149, 149);
 }
 
 /*ANGRY*/
@@ -103,12 +105,13 @@ svg {
 
 .ratingHeader {
   position: absolute;
-  color: rgb(220, 220, 220);
+  color: rgb(29, 29, 29);
   top: 0;
 }
 
 .inpLabel {
   text-align: center;
+  color: black;
 }
 
 .inputWrapper {
