@@ -10,7 +10,7 @@ function Profile( {id} ) {
     
     useEffect(() => {
         async function getUsers() {
-            const response = await fetch(`https://localhost:7270/users/${id}`);
+            const response = await fetch(`https://localhost:7270/users/2`);
 
             if (!response.ok) {
                 const message = `An error occurred: ${response.statusText}`;
@@ -29,7 +29,7 @@ function Profile( {id} ) {
     const deleteUser = async (e) => {
         e.preventDefault();
 
-        await fetch(`https://localhost:7270/users/delete/${id}`, {
+        await fetch(`https://localhost:7270/users/delete/2`, {
             method: "DELETE"
         });
         
@@ -37,26 +37,31 @@ function Profile( {id} ) {
     }
 
     return (
-        <div className="main">
-            <div className="titles">
-                <p>Name:</p>
-                <p>{user.name}</p>
-                <p>Email:</p>
-                <p>{user.email}</p>
-                <p>Points:</p>
-                <p>{user.points}</p>
-                <p>Tree:</p>
-                <p>{user.trees}</p>
-                <p>Tasks:</p>
-                <ul>
-                    {user.userTasks.map(task => <li>task.taskName</li>)}
-                </ul>
+        <div className="main d-flex flex-column mt-lg-5 justify-content-center">
+            <h3 className="title">PROFILE</h3>
+            <div className="titles d-inline-flex flex-column mt-lg-5">
+                <div className="d-inline-flex d-flex flex-row gap-5">
+                    <p className="d-inline-flex">Name:</p>
+                    <p className="d-inline-flex">{user.name}</p>
+                </div>
+                <div className="d-inline-flex d-flex flex-row gap-5">
+                    <p className="d-inline-flex">Email:</p>
+                    <p className="d-inline-flex">{user.email}</p> 
+                </div>
+                <div className="d-inline-flex d-flex flex-row gap-5">
+                    <p className="d-inline-flex">Points:</p>
+                    <p className="d-inline-flex">{user.points}</p>
+                </div>
+                <div className="d-inline-flex d-flex flex-row gap-5">
+                    <p className="d-inline-flex">Tree:</p>
+                    <p className="d-inline-flex">{user.trees}</p>
+                </div>
             </div>
-            <div>
-                <NavLink to={`profile/edit/${id}`}>
-                <button>EDIT</button>
+            <div className="d-inline-flex gap-5">
+                <NavLink to={`/profile/edit`}>
+                <button className="button">EDIT</button>
                 </NavLink>
-                <button onClick={deleteUser}>DELETE PROFILE</button>
+                <button onClick={deleteUser} className="button">DELETE PROFILE</button>
             </div>
         </div>
     );
