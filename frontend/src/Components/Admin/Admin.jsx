@@ -66,6 +66,22 @@ export default function UsersList() {
         const sorted = [...filteredUsers].sort((a, b) => (a.points > b.points) ? 1 : ((b.points > a.points) ? -1 : 0));
         setSortedUsers(sorted);
     }
+
+    function filterName(e) {
+        const value = e.toLowerCase();
+        const filtered = users.filter((user) =>
+            user.name.toLowerCase().includes(value)
+        );
+        setFilteredUsers(filtered);
+    }
+
+    function filterPoints(e) {
+        const value = e.toLowerCase();
+        const filtered = users.filter((user) =>
+            user.points.toString().includes(value)
+        );
+        setFilteredUsers(filtered);
+    }
         
     return (
         <div>
