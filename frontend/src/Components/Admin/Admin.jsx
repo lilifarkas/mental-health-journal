@@ -1,5 +1,23 @@
 import React, { useEffect, useState } from "react";
 
+const User = (props) => (
+    <tr>
+        <td>{props.record.id}</td>
+        <td>{props.record.name}</td>
+        <td>{props.record.email}</td>
+        <td>{props.record.points}</td>
+        {/*<td>*/}
+        {/*    <button className="btn btn-link"*/}
+        {/*            onClick={() => {*/}
+        {/*                props.deleteUser(props.record.id);*/}
+        {/*            }}*/}
+        {/*    >*/}
+        {/*        Delete*/}
+        {/*    </button>*/}
+        {/*</td>*/}
+    </tr>
+);
+
 export default function UsersList() {
     
     const [users, setUsers] = useState([]);
@@ -26,8 +44,18 @@ export default function UsersList() {
         getUsers();
         
     }, []);
-    
 
+    function recordList() {
+        const userList = sortedUsers.length !== filteredUsers.length ?  filteredUsers : sortedUsers ;
+        return userList.map((record) => {
+            return (
+                <User
+                    record={record}
+                    key={record.id}
+                />
+            );
+        });
+    }
         
     return (
         <div>
