@@ -22,3 +22,18 @@
 .titles{
     font-family: "Gloria Hallelujah";
 }
+
+.modalDelete{
+    width: 50%;
+    height: auto;
+    margin: auto;
+    borderRadius: 10px;
+    padding: 20px;
+    margin-top: 10%;
+    backdrop-filter: blur(50px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
