@@ -23,6 +23,7 @@ export default function UsersList() {
     const [users, setUsers] = useState([]);
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [sortedUsers, setSortedUsers] = useState([]);
+    const [sortedIsChanged, setSortedIsChanged] = useState(false);
     
     useEffect(() => {
         async function getUsers() {
@@ -46,7 +47,7 @@ export default function UsersList() {
     }, []);
 
     function recordList() {
-        const userList = sortedUsers.length !== filteredUsers.length ?  filteredUsers : sortedUsers ;
+        const userList = sortedIsChanged === true ?  sortedUsers : filteredUsers;
         return userList.map((record) => {
             return (
                 <User
@@ -58,13 +59,20 @@ export default function UsersList() {
     }
 
     function sortByName() {
-        const sorted = [...filteredUsers].sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+        const sorted = [...sortedUsers].sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
         setSortedUsers(sorted);
+        setSortedIsChanged(true);
     }
 
     function sortByPoints() {
-        const sorted = [...filteredUsers].sort((a, b) => (a.points > b.points) ? 1 : ((b.points > a.points) ? -1 : 0));
+        const sorted = [...sortedUsers].sort((a, b) => (a.points > b.points) ? 1 : ((b.points > a.points) ? -1 : 0));
         setSortedUsers(sorted);
+        setSortedIsChanged(true);
+    }
+    
+    function notSorted(){
+        setSortedUsers(users);
+        setSortedIsChanged(false);
     }
 
     function filterName(e) {
@@ -95,10 +103,12 @@ export default function UsersList() {
         <div>
             <h3>Users List</h3>
             <select id = "arrange" onChange={(e) => {
-                if (e.target.value === " By Name ") {
+                if (e.target.value === "By Name") {
                     sortByName();
-                } else if (e.target.value === " By Points ") {
+                } else if (e.target.value === "By Points") {
                     sortByPoints();
+                } else if(e.target.value === "Arrange"){
+                    notSorted();
                 }
             }}>
                 <option> Arrange </option>
