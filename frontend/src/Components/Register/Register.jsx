@@ -33,7 +33,7 @@ export default function Register() {
   const [pwType, setPwType] = useState('password');
   const [eyeType, setEyeType] = useState(eye);
   const [valid, setValid] = useState(false);
-  const specialChars = [`!"#$%&'()*+,-./:;<=>?@[\\]^_{|}~`];
+
   let isNameOK = false;
   let isEmailOK = false;
   let isPwOK = false;
