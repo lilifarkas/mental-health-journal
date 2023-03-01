@@ -9,6 +9,8 @@ import { HiCheck } from 'react-icons/hi';
 export default function Login() {
 
 
+export default function Register() {
+
   let loader = document.querySelector('.RegLoadingContainer');
   //let regContainer = document.querySelector('.RegisterContainer');
   let cancelButton = document.querySelector('.btn-secondary');
