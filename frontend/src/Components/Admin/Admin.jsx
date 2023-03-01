@@ -61,6 +61,11 @@ export default function UsersList() {
         const sorted = [...filteredUsers].sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
         setSortedUsers(sorted);
     }
+
+    function sortByPoints() {
+        const sorted = [...filteredUsers].sort((a, b) => (a.points > b.points) ? 1 : ((b.points > a.points) ? -1 : 0));
+        setSortedUsers(sorted);
+    }
         
     return (
         <div>
