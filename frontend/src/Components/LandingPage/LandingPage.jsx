@@ -16,18 +16,18 @@ function LandingPage() {
                         With daily affirmations and a journal for your thoughts
                         we aim to help you prioritize your mental health and self-care.
                         Get started by logging in and begin your journey towards self-discovery and growth.</h1>
-                    
+
                     <p className="buttons">
-                        <button className="btn button">
-                        <NavLink  className="button-text" to="/registration">
-                        SIGN UP
+                        <NavLink className="button-text" to="/registration">
+                            <button className="btn button">
+                                SIGN UP
+                            </button>
                         </NavLink>
-                        </button>
-                        <button className="btn button">
-                        <NavLink className="button-text" to="/users">
-                        SIGN IN
+                        <NavLink className="button-text" to="/login">
+                            <button className="btn button">
+                                SIGN IN
+                            </button>
                         </NavLink>
-                        </button>
                     </p>
                 </div>
             </header>

@@ -1,17 +1,26 @@
 .mood-container {
+  position: relative;
   display: flex;
-  margin-top: 100px;
+  margin-top: 300px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(5px);
-  height: 250px;
+  height: 280px;
   width: 50%;
   border: 2px solid green;
   border-radius: 7px 7px 7px 7px;
-  padding: 0 2rem;
-  background-color: rgba(101, 161, 119, 0.385);
+  padding: 50px;
+  background-color: rgba(80, 80, 80, 0.586);
+  user-select: none;
 }
+
+.mood-container p {
+  color: rgb(220, 220, 220);
+  font-size: x-large;
+  font-weight: 500;
+}
+
 
 .inputs {
   display: flex;
@@ -24,6 +33,64 @@
   height: 50px;
 }
 
+/*==================================EMOJI===================================*/
+svg {
+  width: 70px;
+  height: 50px;
+  color: rgb(201, 201, 201);
+}
+
+/*ANGRY*/
+#angry-emoji-wrapper.emoji-wrapper.angry:hover>svg,
+#angry-emoji-wrapper.emoji-wrapper.angry:focus>svg,
+#angry-emoji-wrapper.emoji-wrapper.angry.selected>svg {
+  color: #de332b !important;
+  transform: scale(1.2) !important;
+  transition: all .1s ease-in-out !important;
+  cursor: pointer !important;
+}
+
+/*FROWN*/
+#frown-emoji-wrapper.emoji-wrapper.frown:hover>svg,
+#frown-emoji-wrapper.emoji-wrapper.frown:focus>svg,
+#frown-emoji-wrapper.emoji-wrapper.frown.selected>svg {
+  color: #ff5f2f !important;
+  transform: scale(1.2) !important;
+  transition: all .1s ease-in-out !important;
+  cursor: pointer !important;
+}
+
+/*NEUTRAL*/
+#neutral-emoji-wrapper.emoji-wrapper.neutral:hover>svg,
+#neutral-emoji-wrapper.emoji-wrapper.neutral:focus>svg,
+#neutral-emoji-wrapper.emoji-wrapper.neutral.selected>svg {
+  color: #f9a217 !important;
+  transform: scale(1.2) !important;
+  transition: all .1s ease-in-out !important;
+  cursor: pointer !important;
+}
+
+/*SMILE*/
+#smile-emoji-wrapper.emoji-wrapper.smile:hover>svg,
+#smile-emoji-wrapper.emoji-wrapper.smile:focus>svg,
+#smile-emoji-wrapper.emoji-wrapper.smile.selected>svg {
+  color: #efdc02 !important;
+  transform: scale(1.2) !important;
+  transition: all .1s ease-in-out !important;
+  cursor: pointer !important;
+}
+
+/*LAUGH*/
+#laughing-emoji-wrapper.emoji-wrapper.laugh:hover>svg,
+#laughing-emoji-wrapper.emoji-wrapper.laugh:focus>svg,
+#laughing-emoji-wrapper.emoji-wrapper.laugh.selected>svg {
+  color: #74d701 !important;
+  transform: scale(1.2) !important;
+  transition: all .1s ease-in-out !important;
+  cursor: pointer !important;
+}
+
+/*==================================FORM===================================*/
 .ratingForm {
   position: absolute;
   display: flex;
@@ -34,16 +101,115 @@
   width: 40%;
 }
 
-.ratingHeader{
+.ratingHeader {
   position: absolute;
+  color: rgb(220, 220, 220);
   top: 0;
 }
 
-.inpLabel{
+.inpLabel {
   text-align: center;
 }
 
-.inputWrapper{
+.inputWrapper {
   text-align: center;
-  color: white;
+  color: rgb(255, 255, 255);
+}
+
+#moodSubmitBtn {
+  position: relative;
+  width: 100px;
+  align-items: center;
+  justify-content: center;
+}
+
+.MoodCheck {
+  width: 25px;
+  height: 25px;
+  visibility: hidden;
+}
+
+.MoodCheck>svg {
+  color: #1cd628;
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.MoodSubmitError {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  visibility: hidden;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.MoodSubmitError>svg {
+  color: rgb(255, 217, 217);
+  width: 25px;
+  height: 25px;
+  position: relative;
+  /* left: 50%; */
+  /* transform: translate(-50%, 0); */
+}
+
+.MoodErrorMessage {
+  background-color: #ff0d002e;
+  padding: 3px;
+  color: rgb(170, 9, 9);
+  width: 500px;
+  position: relative;
+  text-align: center;
+  visibility: hidden;
+  margin: 2px;
+  font-weight: 500;
+  border-radius: 4px;
+}
+
+.MoodSubmitText {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  display: inline-block;
+}
+
+
+/*LOADING*/
+
+.MoodLoadingContainer {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  /* left: 10%; */
+  /* transform: translate(-50%, 0); */
+  visibility: hidden;
+  z-index: 99;
+}
+
+.MoodLoader {
+  position: relative;
+  /* left: 50%; */
+  /* transform: translate(-50%, 0); */
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: inline-block;
+  border-top: 3px solid #1cd628;
+  border-right: 3px solid transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }

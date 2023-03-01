@@ -1,0 +1,125 @@
+/* body {
+    background: url('./img/background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+} */
+
+.header {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+    color: white;
+    text-align: center;
+}
+
+.LoginContainer {
+    top: 15%;
+    position: absolute;
+    left: 50%;
+    margin: 20px;
+    transform: translate(-50%, 0);
+    width: 40%;
+    border: 2px solid green;
+    border-radius: 7px 7px 7px 7px;
+    padding: 60px;
+    backdrop-filter: blur(7px);
+}
+
+
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.form-contol:focus,
+.form-contol:active:focus,
+.form-contol.active:focus,
+.form-contol.focus,
+.form-contol:active.focus,
+.form-contol.active.focus {
+    outline: none;
+}
+
+.form-control {
+    border: 1px dashed green;
+
+}
+
+.form-control:hover {
+    border: 2px solid green;
+}
+
+.form-control:focus+.input-label {
+    color: green;
+}
+
+.form-control:focus {
+    box-shadow: none !important;
+    outline: none !important;
+    border: 2px solid green;
+    background-color: rgba(255, 255, 255, 0.711);
+}
+
+#LoginPwInput {
+    width: 100%;
+}
+
+.password-fields {
+    display: flex;
+    flex-direction: row;
+}
+
+/* .loader {
+    display: block;
+    position: relative;
+    height: 12px;
+    width: 80%;
+    border: 1px solid #fff;
+    border-radius: 10px;
+    overflow: hidden;
+} */
+
+#cancelBtn {
+    margin-left: 20px;
+    visibility: hidden;
+}
+
+/*LOADING*/
+
+.LogLoadingContainer {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+    visibility: hidden;
+    z-index: 99;
+}
+
+.LogLoader {
+    position: relative;
+    /* left: 50%; */
+    /* transform: translate(-50%, 0); */
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: inline-block;
+    border-top: 3px solid #1cd628;
+    border-right: 3px solid transparent;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
