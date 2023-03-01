@@ -73,8 +73,10 @@ const MoodTracker = (props) => {
         check.style.visibility = 'hidden';
         loader.style.visibility = 'hidden';
         submitBtn.classList.value = 'btn btn-danger';
+        submitBtn.disabled = true;
         error.style.visibility = 'visible';
         setTimeout(async () => {
+          submitBtn.disabled = false;
           errorMessage.style.visibility = 'hidden';
           submitBtn.classList.value = 'btn btn-success'
           error.style.visibility = 'hidden';
