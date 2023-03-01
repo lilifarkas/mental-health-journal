@@ -64,10 +64,21 @@ export default function Register() {
 
   async function ValidateInputs(e) {
     e.preventDefault();
+    try {
+      ValidateText.style.visibility = 'hidden';
+      ValidateLoader.style.visibility = 'visible';
     const response = await fetch('https://localhost:7270/users');
     let result = await response.json();
+      if (response.ok) {
+        ValidateLoader.style.visibility = 'hidden';
+        ValidateText.style.visibility = 'visible';
     isNameOK = validateName(result);
     isEmailOK = validateEmail(result);
+      }
+    }
+    catch (err) {
+      console.error(err);
+    }
     if (password !== passwordConfirm) {
       pwError.style.visibility = 'visible';
       passwordInput.classList.value = 'form-control error';
