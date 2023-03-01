@@ -12,7 +12,7 @@ import Admin from './Components/Admin/Admin'
 
 function App() {
   const location = useLocation();
-  const excludedPaths = ['/', '/registration', '/login'];
+  const excludedPaths = ['/', '/registration', '/login', '/profile/edit'];
 
   return (
     <div>
@@ -22,7 +22,7 @@ function App() {
         <Route path='/registration' element={<Register />} />
         <Route path="/main" element={<MainPage />}></Route>
         <Route exact path="/profile" element={<Profile />} />
-        <Route exact path="/profile/edit/:id" element={<EditProfile />} />
+        <Route exact path="/profile/edit" element={<EditProfile />} />
         <Route path='/tasks' element={<Tasks />}></Route>
         <Route path='/login' element={<Login />} />
         <Route path='/admin' element={<Admin />} />
