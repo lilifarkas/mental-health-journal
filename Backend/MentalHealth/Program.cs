@@ -24,10 +24,10 @@ builder.Services.AddCors(options =>
 builder.Services.AddDbContext<MentalHealthContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped<IService<MoodTracker>, MoodTrackerService>();
-builder.Services.AddScoped<IService<Tree>,TreeService>();
-builder.Services.AddScoped<IService<UserTask>,TaskService>();
-builder.Services.AddScoped<IService<User>,UserService>();
+builder.Services.AddScoped<MoodTrackerService>();
+builder.Services.AddScoped<TreeService>();
+builder.Services.AddScoped<TaskService>();
+builder.Services.AddScoped<UserService>();
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
