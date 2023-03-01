@@ -1,3 +1,4 @@
+using MentalHealth.Models.DTOs;
 using MentalHealth.Models.Entities;
 using MentalHealth.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -8,21 +9,14 @@ namespace MentalHealth.Controllers;
 public class UserController: ControllerBase
 {
     private readonly UserService _service;
-
+   
     public UserController(UserService service)
     {
         _service = service;
     }
-
-    [HttpPost("/users/add")]
-    public async Task<User> AddNewUser([FromBody] User user)
-    {
-        await _service.Add(user);
-        return user;
-    }
     
     [HttpGet("/users/{id}")]
-    public async Task<User?> GetUserById(long id)
+    public async Task<User> GetUserById(long id)
     {
         return await _service.Get(id);
     }
