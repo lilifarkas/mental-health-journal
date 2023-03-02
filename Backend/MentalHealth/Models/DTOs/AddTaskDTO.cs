@@ -2,5 +2,5 @@
 
 public class AddTaskDTO
 {
-    public long TaskID { get; set; }
+    public string TaskDescription { get; set; }
 }
