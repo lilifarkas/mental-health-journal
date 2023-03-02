@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import "./MoodTracker.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -23,18 +23,18 @@ const MoodTracker = () => {
   const [rating, setRating] = useState(0);
   const [rated, setRated] = useState(false);
   const [selectedEmoji, setSelectedEmoji] = useState(null);
-  const [shouldShow, setShouldShow] = useState(false);
+  const [shouldShow, setShouldShow] = useState(true);
 
-  const lastShownDateString = localStorage.getItem('lastShownDate');
-  const lastShownDate = lastShownDateString ? new Date(lastShownDateString) : null;
+  // const lastShownDateString = localStorage.getItem('lastShownDate');
+  // const lastShownDate = lastShownDateString ? new Date(lastShownDateString) : null;
 
-  const now = new Date();
-  const shouldShowToday = !lastShownDate || now.getDate() !== lastShownDate.getDate();
+  // const now = new Date();
+  // const shouldShowToday = !lastShownDate || now.getDate() !== lastShownDate.getDate();
 
-  if (shouldShowToday) {
-    localStorage.setItem('lastShownDate', now.toDateString());
-  }
-  console.log(now.getDate(), lastShownDate.getDate(), shouldShow, now.toDateString(), lastShownDateString);
+  // if (shouldShowToday) {
+  //   localStorage.setItem('lastShownDate', now.toDateString());
+  // }
+  // console.log(now.getDate(), lastShownDate.getDate(), shouldShow, now.toDateString(), lastShownDateString);
 
   const jwtToken = localStorage.getItem("jwtToken");
   const userID = jwt_decode(jwtToken).userID;
@@ -58,7 +58,7 @@ const MoodTracker = () => {
 
       if (!response.ok) {
         const message = `An error occurred: ${response.statusText}`;
-        window.alert(message);
+        console.warn(message);
         return;
       }
       const result = await response.json();
@@ -75,16 +75,16 @@ const MoodTracker = () => {
     event.preventDefault();
 
     const newMood = {
-      "description": rating 
+      "description": rating
     };
     console.log(user.moods)
     const updatedUser = {
       ...user,
-      moods: [...user.moods.$values, newMood] 
+      moods: [...user.moods.$values, newMood]
     };
     console.log(updatedUser)
     setUser(updatedUser);
-    
+
     loader.style.visibility = 'visible';
     text.style.visibility = 'hidden';
     setTimeout(async () => {
@@ -92,9 +92,9 @@ const MoodTracker = () => {
         let response = await fetch(url, {
           body: JSON.stringify(newMood),
           method: "POST",
-          headers: { 
+          headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${localStorage.getItem("JwtToken")}`
+            "Authorization": `Bearer ${jwtToken}`
           }
         });
         let result = await response.json();
@@ -103,10 +103,10 @@ const MoodTracker = () => {
           loader.style.visibility = 'hidden';
           console.log(result);
           setTimeout(async () => {
-            if (shouldShowToday) {
-              setShouldShow(false);
-              console.log(now.getDate(), lastShownDate.getDate(), shouldShow, now.toDateString(), lastShownDateString);
-            }
+            //if (shouldShowToday) {
+            setShouldShow(false);
+            //console.log(now.getDate(), lastShownDate.getDate(), shouldShow, now.toDateString(), lastShownDateString);
+            //}
             navigate("/profile");
           }, 1000)
         }
@@ -224,11 +224,11 @@ const MoodTracker = () => {
           </form>
         </div>
       )
-    }
-    {!shouldShow && (<div className='NoMoreUse'>
-      <p className='nousetext'>You can set your mood only once a day!</p> 
-      <button className='btn btn-success backBtn' onClick={() => navigate('/profile')}>Back</button>
-    </div>)}
+      }
+      {/* {!shouldShow && (<div className='NoMoreUse'>
+        <p className='nousetext'>You can set your mood only once a day!</p>
+        <button className='btn btn-success backBtn' onClick={() => navigate('/profile')}>Back</button>
+      </div>)} */}
     </>
   );
 }
