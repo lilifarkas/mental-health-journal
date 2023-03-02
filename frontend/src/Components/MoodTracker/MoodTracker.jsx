@@ -9,8 +9,9 @@ import EmojiSmile from '../Emojis/EmojiSmile/EmojiSmile';
 import EmojiLaughing from '../Emojis/EmojiLaughing/EmojiLaughing';
 import { HiCheck } from 'react-icons/hi';
 import { MdOutlineReportGmailerrorred } from 'react-icons/md';
+import jwt_decode from 'jwt-decode'
 
-const MoodTracker = ({user}) => {
+const MoodTracker = () => {
   let navigate = useNavigate();
   let loader = document.querySelector('.MoodLoadingContainer');
   let check = document.querySelector('.MoodCheck');
@@ -20,7 +21,6 @@ const MoodTracker = ({user}) => {
   let errorMessage = document.querySelector('.MoodErrorMessage');
 
   const [rating, setRating] = useState(0);
-  //const [isEditing, setIsEditing] = useState(false);
   const [rated, setRated] = useState(false);
   const [selectedEmoji, setSelectedEmoji] = useState(null);
   const [shouldShow, setShouldShow] = useState(false);
@@ -36,9 +36,11 @@ const MoodTracker = ({user}) => {
   }
   console.log(now.getDate(), lastShownDate.getDate(), shouldShow, now.toDateString(), lastShownDateString);
 
-  // const jwtToken = localStorage.getItem("JwtToken");
-  // const userID = jwt_decode(jwtToken).userID;
-  const url = `https://localhost:7270/mood/1`;
+  const jwtToken = localStorage.getItem("jwtToken");
+  const userID = jwt_decode(jwtToken).userID;
+  const decodedToken = jwt_decode(jwtToken);
+  console.log(decodedToken);
+  const url = `https://localhost:7270/mood/${userID}`;
   const [user, setUser] = useState(null);
 
   function getChildProps(value) {
@@ -49,7 +51,7 @@ const MoodTracker = ({user}) => {
 
   useEffect(() => {
     async function getUsers() {
-      const response = await fetch(`https://localhost:7270/users/1`);
+      const response = await fetch(`https://localhost:7270/users/${userID}`);
 
       if (!response.ok) {
         const message = `An error occurred: ${response.statusText}`;
