@@ -2,7 +2,7 @@ import React,{useRef} from 'react';
 import { NavLink } from "react-router-dom";
 import {FaBars, FaTimes} from 'react-icons/fa';
 
-function NavBar() {
+function NavBar({handleLogout, user}) {
     const navRef = useRef();
     
     const showNavbar = () => {
@@ -23,6 +23,10 @@ function NavBar() {
                   <li className="nav-item px-4">
                   <NavLink className="nav-link" to={'/profile'}>Profile</NavLink>
                   </li>
+                  {user != null &&                  <li className="nav-item px-4">
+                  <button className="btn btn-success" onClick={handleLogout}>Logout</button>
+                  </li> }
+
                   </ul>
               </div>
           </nav>
