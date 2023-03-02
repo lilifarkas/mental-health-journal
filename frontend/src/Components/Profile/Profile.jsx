@@ -79,7 +79,7 @@ function Profile( {id} ) {
          let moodMessage;
 
         if (!moods || !moods.$values || moods.$values.length < 7) {
-            moodMessage =  null;
+            moodMessage =  "Track your mood for at least 7 days to get average!";
         }else {
             const lastSevenMoods = moods.$values.slice(-7);
             const lastSevenDescriptions = lastSevenMoods.map((mood) => mood.description);
@@ -109,8 +109,6 @@ function Profile( {id} ) {
                     moodMessage = "";
             }
         }
-
-        
         return moodMessage
         
     }
