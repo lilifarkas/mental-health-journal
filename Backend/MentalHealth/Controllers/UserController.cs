@@ -50,7 +50,9 @@ public class UserController: ControllerBase
     [HttpPost("{userID}/addTask")]
     public async Task<ActionResult> AddTask( long userID, [FromBody] AddTaskDTO taskDto)
     {
-        await _service.AddTask(taskDto, userID);
+        UserTask task = new UserTask();
+        task.TaskName = taskDto.TaskDescription;
+        await _service.AddTask(task, userID);
         return Ok();
     }
 }
