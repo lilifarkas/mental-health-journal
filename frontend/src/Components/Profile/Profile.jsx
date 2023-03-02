@@ -76,7 +76,7 @@ function Profile( {id} ) {
                 <NavLink to={`/profile/edit`}>
                 <button className="button">EDIT</button>
                 </NavLink>
-                <button onClick={deleteUser} className="button">DELETE PROFILE</button>
+                <button onClick={() => setShowModal(true)} className="button">DELETE PROFILE</button>
             </div>
             <Modal
                 isOpen={showModal}
