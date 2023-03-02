@@ -21,7 +21,6 @@ const MoodTracker = () => {
   let errorMessage = document.querySelector('.MoodErrorMessage');
 
   const [rating, setRating] = useState(0);
-  //const [isEditing, setIsEditing] = useState(false);
   const [rated, setRated] = useState(false);
   const [selectedEmoji, setSelectedEmoji] = useState(null);
   const [shouldShow, setShouldShow] = useState(false);
@@ -50,7 +49,12 @@ const MoodTracker = () => {
 
   useEffect(() => {
     async function getUsers() {
-      const response = await fetch(`https://localhost:7270/users/1`);
+      const response = await fetch(`https://localhost:7270/users/${userID}`, {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem("JwtToken")}`
+        }
+      });
 
       if (!response.ok) {
         const message = `An error occurred: ${response.statusText}`;
