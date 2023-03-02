@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 import { NavLink } from "react-router-dom";
-import { FaBars, FaTimes } from 'react-icons/fa';
 import { BiLogOut } from 'react-icons/bi';
-import './NavBar.css';
-function NavBar() {
+import {FaBars, FaTimes} from 'react-icons/fa';
+
+function NavBar({handleLogout, user}) {
     const navRef = useRef();
 
     const showNavbar = () => {
@@ -12,27 +12,28 @@ function NavBar() {
     return (
 
         <div>
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                <div className="collapse navbar-collapse" id="navbarNav">
-                    <ul className="navbar-nav mx-auto">
-                        <li className='nav-item px-4'>
-                            <button className='logout'>
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+              <div className="collapse navbar-collapse" id="navbarNav">
+                  <ul className="navbar-nav mx-auto">
+                  <li className="nav-item px-4">
+                      <NavLink className="nav-link" to={'/main'}>Home</NavLink>
+                  </li>
+                  <li className="nav-item px-4">
+                      <NavLink className="nav-link" to={'/tasks'}>Tasks</NavLink>
+                  </li>
+                  <li className="nav-item px-4">
+                  <NavLink className="nav-link" to={'/profile'}>Profile</NavLink>
+                  </li>
+                  {user != null &&                  <li className="nav-item px-4">
+                  <button className='logout' onClick={handleLogout}>
                                 <BiLogOut />
                             </button>
-                        </li>
-                        <li className="px-4">
-                            <NavLink className="nav-link" to={'/main'}>Home</NavLink>
-                        </li>
-                        <li className="nav-item px-4">
-                            <NavLink className="nav-link" to={'/tasks'}>Tasks</NavLink>
-                        </li>
-                        <li className="nav-item px-4">
-                            <NavLink className="nav-link" to={'/profile'}>Profile</NavLink>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </div>
+                  </li> }
+
+                  </ul>
+              </div>
+          </nav>
+      </div>
 
         // <div className='navbar'>
         //     <header>

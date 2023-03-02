@@ -1,74 +1,59 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import './Tasks.css';
-const Task = ({ task, deleteTask }) => (
-  <tr>
-    <td>{task.id}</td>
-    <td>{task.taskName}</td>
-    <td>
-      <button className="btn btn-success"
-        onClick={() => {
-          deleteTask(task.id);
-        }}
-      >
-        Delete
-      </button>
-    </td>
-  </tr>
+import jwt_decode from "jwt-decode"; 
+
+const Task = ({task, deleteTask})=>(
+    <tr>
+        <td>{task.id}</td>
+        <td>{task.taskName}</td>
+        <td>
+            <button className="btn btn-success"
+            onClick={() => {
+                deleteTask(task.id);
+            }}
+            >
+            Delete
+            </button>
+        </td>
+    </tr>
 )
 
 
 
 const Tasks = () => {
-  const [tasks, setTasks] = useState([]);
-  const [newTask, setNewTask] = useState('');
-  const url = "https://localhost:7270/users/3/allTasks";
-
-  useEffect(() => {
-    async function getTasks() {
-      const response = await fetch(url);
-      const fetchedTasks = await response.json();
-      console.log(fetchedTasks);
-      setTasks(fetchedTasks);
-    }
-    getTasks();
-
-    return;
-  }, [tasks.length]);
-
-  async function AddNewTask() {
-    let response = await fetch(`https://localhost:7270/users/3`)
-    let user = await response.json();
-    delete user.id; //remove user id to avoid request error
-    console.log(user, newTask);
-    try {
-      let resp2 = await fetch(`https://localhost:7270/usertask`, {
-        body: JSON.stringify({
-          "taskname": newTask,
-          "complete": false,
-          "users": [user]
-        }),
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-          "Access-Control-Allow-Headers": "Content-Type"
+    const [tasks, setTasks] = useState([]);
+    const jwtToken = localStorage.getItem("jwtToken");
+    const userID = jwt_decode(jwtToken).userID;
+    const url = `https://localhost:7270/users/${userID}/allTasks`;
+    
+    useEffect(() => {
+        async function getTasks() {
+          const response = await fetch(url, {
+            method : 'GET',
+            headers: {
+              "Authorization": `Bearer ${jwtToken}`
+            }
+          });      
+          const fetchedTasks = await response.json();
+          setTasks(fetchedTasks);
         }
-      });
-      setNewTask('');
-      if (resp2.ok) {
-        setTasks([newTask]);
-        console.log(resp2, tasks)
-      }
-      else {
-        console.warn(resp2)
-      }
-    }
-    catch (error) {
-      console.error('ERROR', error);
-    }
-  }
+      
+        getTasks();
+      
+        return;
+      }, [tasks.length]);
+
+    async function deleteTask(id) {
+        await fetch(`https://localhost:7270/usertask/${userID}`, {
+          method: "DELETE",
+          headers : {
+            'Authorization' : `Bearer ${jwtToken}`
+          }
+        });
+        
+        const newTasks = tasks["$values"].filter((t) => t.id !== id);
+        setTasks(newTasks);
+      
+    };
 
   async function deleteTask(id) {
     await fetch(`https://localhost:7270/usertask/${id}`, {

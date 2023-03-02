@@ -18,9 +18,9 @@ public class TaskService : IService<UserTask>
             await _context.SaveChangesAsync();
     }
 
-    public async Task<UserTask> Get(long id)
+    public async Task<UserTask?> Get(long id)
     {
-        return await _context.UserTasks.FindAsync(id);
+        return await _context.UserTasks.FirstOrDefaultAsync(task => task.ID == id);
     }
 
     public async Task<IEnumerable<UserTask>> GetAll()

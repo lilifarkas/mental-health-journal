@@ -23,7 +23,7 @@ public class AuthController : ControllerBase
         _configuration = configuration;
     }
     
-    [HttpPost("/register")]
+    [HttpPost("register")]
     public async Task<ActionResult<User>> Register([FromBody] RegisterDTO registerDto)
     {
         User.Name = registerDto.Name;
@@ -34,24 +34,24 @@ public class AuthController : ControllerBase
         return Ok(User);
     }
 
-    [HttpPost("/login")]
-    public async Task<ActionResult<User>> Login([FromBody] LoginDTO loginDto)
+    [HttpPost("login")]
+    public async Task<ActionResult<LoginResultDTO>> Login([FromBody] LoginDTO loginDto)
     {
         var user = await _service.GetByLogin(loginDto.Email, loginDto.Password);
         if (user != null)
         {
             string token = CreateToken(user);
-            return Ok(token);
+            return Ok(new LoginResultDTO{Token = token});
         }
 
-        return BadRequest("Email or password is incorrect");
+        return BadRequest( new LoginResultDTO{Error = "Email or password is incorrect"});
     }
 
     private string CreateToken(User user)
     {
         var claims = new List<Claim>()
         {
-            new Claim(ClaimTypes.NameIdentifier, user.ID.ToString()),
+            new Claim("userID", user.ID.ToString()),
             new Claim(ClaimTypes.Name, user.Name),
             new Claim(ClaimTypes.Email, user.Email),
             new Claim(ClaimTypes.Role, user.Role)

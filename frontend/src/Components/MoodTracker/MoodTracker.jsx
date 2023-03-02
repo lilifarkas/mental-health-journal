@@ -10,7 +10,7 @@ import EmojiLaughing from '../Emojis/EmojiLaughing/EmojiLaughing';
 import { HiCheck } from 'react-icons/hi';
 import { MdOutlineReportGmailerrorred } from 'react-icons/md';
 
-const MoodTracker = (props) => {
+const MoodTracker = ({user}) => {
   let navigate = useNavigate();
   let loader = document.querySelector('.MoodLoadingContainer');
   let check = document.querySelector('.MoodCheck');
@@ -56,7 +56,11 @@ const MoodTracker = (props) => {
         let response = await fetch("https://localhost:7270/mood", {
           body: JSON.stringify({ "description": rating }),
           method: "POST",
-          headers: { "Content-Type": "application/json" }
+          headers: { 
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("JwtToken")}`
+          }
+
         });
         let result = await response.json();
         if (response.ok) {
