@@ -15,7 +15,7 @@ public class UserTaskController : ControllerBase
     }
 
     [HttpPost]
-    public async Task AddUserTask(UserTask userTask)
+    public async Task AddUserTask([FromBody] UserTask userTask)
     {
         await _service.Add(userTask);
     }
