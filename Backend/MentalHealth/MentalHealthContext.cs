@@ -10,7 +10,6 @@ public class MentalHealthContext : DbContext
     public DbSet<UserTask> UserTasks { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Tree> Trees { get; set; }
-    public DbSet<MoodTrackerUserJoin> TrackerUserJoins { get; set; }
     public MentalHealthContext(DbContextOptions<MentalHealthContext> options): base(options)
     {
         
