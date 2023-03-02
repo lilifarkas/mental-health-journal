@@ -9,8 +9,9 @@ import EmojiSmile from '../Emojis/EmojiSmile/EmojiSmile';
 import EmojiLaughing from '../Emojis/EmojiLaughing/EmojiLaughing';
 import { HiCheck } from 'react-icons/hi';
 import { MdOutlineReportGmailerrorred } from 'react-icons/md';
+import jwt_decode from "jwt-decode";
 
-const MoodTracker = ({user}) => {
+const MoodTracker = () => {
   let navigate = useNavigate();
   let loader = document.querySelector('.MoodLoadingContainer');
   let check = document.querySelector('.MoodCheck');
@@ -36,9 +37,9 @@ const MoodTracker = ({user}) => {
   }
   console.log(now.getDate(), lastShownDate.getDate(), shouldShow, now.toDateString(), lastShownDateString);
 
-  // const jwtToken = localStorage.getItem("JwtToken");
-  // const userID = jwt_decode(jwtToken).userID;
-  const url = `https://localhost:7270/mood/1`;
+  const jwtToken = localStorage.getItem("jwtToken");
+  const userID = jwt_decode(jwtToken).userID;
+  const url = `https://localhost:7270/mood/${userID}`;
   const [user, setUser] = useState(null);
 
   function getChildProps(value) {
