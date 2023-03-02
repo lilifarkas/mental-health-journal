@@ -3,9 +3,8 @@ import jwt_decode from "jwt-decode";
 
 const Task = ({task, deleteTask})=>(
     <tr>
-        <td>{task.id}</td>
         <td>{task.taskName}</td>
-        <td>
+        <td className='d-flex justify-content-end'>
             <button className="btn btn-success"
             onClick={() => {
                 deleteTask(task.id);
@@ -17,33 +16,35 @@ const Task = ({task, deleteTask})=>(
     </tr>
 )
 
-
-
 const Tasks = () => {
     const [tasks, setTasks] = useState([]);
+    const [task, setTask] = useState("");
     const jwtToken = localStorage.getItem("jwtToken");
     const userID = jwt_decode(jwtToken).userID;
     const url = `https://localhost:7270/users/${userID}/allTasks`;
     
-    useEffect(() => {
-        async function getTasks() {
-          const response = await fetch(url, {
-            method : 'GET',
-            headers: {
-              "Authorization": `Bearer ${jwtToken}`
-            }
-          });      
-          const fetchedTasks = await response.json();
-          setTasks(fetchedTasks);
+    async function getTasks() {
+      const response = await fetch(url, {
+        method : 'GET',
+        headers: {
+          "Authorization": `Bearer ${jwtToken}`
         }
-      
+      });      
+      const fetchedTasks = await response.json();
+      setTasks(fetchedTasks);
+    }
+
+    useEffect(() => {
         getTasks();
-      
         return;
       }, [tasks.length]);
 
-    async function deleteTask(id) {
-        await fetch(`https://localhost:7270/usertask/${userID}`, {
+      const handleTaskChange = (event) => {
+        setTask(event.target.value);
+      };
+
+  async function deleteTask(id) {
+        await fetch(`https://localhost:7270/usertask/${id}`, {
           method: "DELETE",
           headers : {
             'Authorization' : `Bearer ${jwtToken}`
@@ -54,16 +55,22 @@ const Tasks = () => {
         setTasks(newTasks);
       
     };
-
-  async function deleteTask(id) {
-    await fetch(`https://localhost:7270/usertask/${id}`, {
-      method: "DELETE"
+    
+  async function addTask() {
+    let taskDTO = {TaskDescription : task}
+    console.log(taskDTO)
+    await fetch(`https://localhost:7270/users/${userID}/addtask`, {
+      method: "POST",
+      body: JSON.stringify(taskDTO),
+      headers : {
+        'Authorization' : `Bearer ${jwtToken}`,
+        'Content-Type' : 'application/json'
+      }
     });
-
-    const newTasks = tasks['$values'].filter((t) => t.id !== id);
-    setTasks(newTasks);
-
-  };
+    setTask("");
+    getTasks();
+  }
+  
   const taskList = () => {
     return tasks['$values']?.map(t => {
       return (
@@ -75,17 +82,13 @@ const Tasks = () => {
       )
     })
   }
+
   return (
-    <div className='d-flex justify-content-center taskContainer'>
+    <div className='justify-content-center align-items-center container mt-5 pt-5'>
       <h3 className='taskHeader'>Tasks</h3>
-      <div className='newTaskInputContainer'>
-        <input type="text" className='form-container taskInput' placeholder='Task description' />
-        <button className='btn btn-success'>Add Task</button>
-      </div>
       <table className="table table-striped">
         <thead>
           <tr>
-            <th>ID</th>
             <th>Task Description</th>
           </tr>
         </thead>
@@ -93,6 +96,12 @@ const Tasks = () => {
           {taskList()}
         </tbody>
       </table>
+      <div class="input-group pt-5">
+      <input type="text" class="form-control border border-success bg-opacity" 
+      placeholder='Description' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+      value={task} onChange={handleTaskChange}/>
+      <button className='btn btn-success' onClick={addTask}>Add task</button>
+    </div>
     </div>
   )
 }
