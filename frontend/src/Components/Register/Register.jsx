@@ -20,11 +20,11 @@ export default function Register() {
   let emailInput = document.querySelector('#email-input');
   let passwordInput = document.querySelector('#pwInput');
   let passwordInput2 = document.querySelector('#ConfPwInput');
-  let nameError = document.querySelector('.nameError');
+  //let nameError = document.querySelector('.nameError');
   let emailError = document.querySelector('.emailError');
   let pwError = document.querySelector('.pwError');
-  let ValidateText = document.querySelector('.ValidateText');
-  let ValidateLoader = document.querySelector('.ValidateLoader');
+  //let ValidateText = document.querySelector('.ValidateText');
+  //let ValidateLoader = document.querySelector('.ValidateLoader');
   let ValidateBtn = document.querySelector('#ValidateBtn');
 
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ export default function Register() {
   const [eyeType, setEyeType] = useState(eye);
   const [valid, setValid] = useState(false);
 
-  let isNameOK = false;
+  //let isNameOK = false;
   let isEmailOK = false;
   let isPwOK = false;
   let controller = new AbortController();
@@ -52,7 +52,7 @@ export default function Register() {
       setEyeType(eye)
     }
   }
-  //Validate button not shows after editing inputs
+
   let timeoutId;
   let loaderTimeoutId;
   function AbortFunction() {
@@ -64,23 +64,9 @@ export default function Register() {
     cancelButton.style.visibility = 'hidden';
   }
 
-  async function ValidateInputs(e) {
-    e.preventDefault();
-    try {
-      ValidateText.style.visibility = 'hidden';
-      ValidateLoader.style.visibility = 'visible';
-      const response = await fetch('https://localhost:7270/users');
-      let result = await response.json();
-      if (response.ok) {
-        ValidateLoader.style.visibility = 'hidden';
-        ValidateText.style.visibility = 'visible';
-        isNameOK = validateName(result);
-        isEmailOK = validateEmail(result);
-      }
-    }
-    catch (err) {
-      console.error(err);
-    }
+  async function ValidateInputs() {
+    nameInput.classList.value = 'form-control correct';
+    isEmailOK = validateEmail();
     if (password !== passwordConfirm) {
       pwError.style.visibility = 'visible';
       passwordInput.classList.value = 'form-control error';
@@ -111,7 +97,7 @@ export default function Register() {
         }
       }
     }
-    if (isEmailOK && isNameOK && isPwOK) {
+    if (isEmailOK && isPwOK) {
       submitBtn.disabled = false;
       ValidateBtn.style.display = 'none';
     }
@@ -121,52 +107,44 @@ export default function Register() {
   useEffect(() => {
     const submitBtnRendered = document.querySelector('#RegSubmitBtn');
     setTimeout(async () => {
-      submitBtnRendered.disabled = true;
       ValidateBtn.style.display = 'inline-block';
+      submitBtnRendered.disabled = true;
     }, 10);
-  }, [userName, email, password])
+  }, [email, password])
 
-  function validateName(result) {
-    for (const user of result.$values) {
-      if (userName === '') {
-        nameInput.classList.value = 'form-control error';
-        nameError.style.visibility = 'visible';
-        nameError.innerHTML = 'Please enter a valid username';
-        return false;
-      }
-      else if (user.name === userName) {
-        nameInput.classList.value = 'form-control error';
-        nameError.style.visibility = 'visible';
-        nameError.innerHTML = 'An account is already registered with this username';
-        return false;
-      }
-    }
-    nameInput.classList.value = 'form-control correct';
-    nameError.style.visibility = 'hidden';
-    return true;
-  }
+  // function validateName(result) {
+  //   for (const user of result.$values) {
+  //     if (userName === '') {
+  //       nameInput.classList.value = 'form-control error';
+  //       nameError.style.visibility = 'visible';
+  //       nameError.innerHTML = 'Please enter a valid username';
+  //       return false;
+  //     }
+  //     else if (user.name === userName) {
+  //       nameInput.classList.value = 'form-control error';
+  //       nameError.style.visibility = 'visible';
+  //       nameError.innerHTML = 'An account is already registered with this username';
+  //       return false;
+  //     }
+  //   }
+  //   nameInput.classList.value = 'form-control correct';
+  //   nameError.style.visibility = 'hidden';
+  //   return true;
+  // }
 
-  function validateEmail(result) {
+  function validateEmail() {
     let emailFormat = /^[a-zA-Z0-9._+-]+@([a-zA-Z0-9]+\.)+[a-zA-Z]{2,}$/;
-    for (const user of result.$values) {
-      if (email === '') {
-        emailError.style.visibility = 'visible';
-        emailInput.classList.value = 'form-control error';
-        emailError.innerHTML = 'Please enter a valid email address';
-        return false;
-      }
-      else if (emailFormat.test(email) === false) {
-        emailError.style.visibility = 'visible';
-        emailInput.classList.value = 'form-control error';
-        emailError.innerHTML = 'Please make sure you use the correct format (example@email.com)';
-        return false;
-      }
-      else if (user.email === email) {
-        emailError.style.visibility = 'visible';
-        emailInput.classList.value = 'form-control error';
-        emailError.innerHTML = 'An account is already registered with this email';
-        return false;
-      }
+    if (email === '') {
+      emailError.style.visibility = 'visible';
+      emailInput.classList.value = 'form-control error';
+      emailError.innerHTML = 'Please enter a valid email address';
+      return false;
+    }
+    else if (emailFormat.test(email) === false) {
+      emailError.style.visibility = 'visible';
+      emailInput.classList.value = 'form-control error';
+      emailError.innerHTML = 'Please make sure you use the correct format (example@email.com)';
+      return false;
     }
     emailError.style.visibility = 'hidden';
     emailInput.classList.value = 'form-control correct';
@@ -184,13 +162,12 @@ export default function Register() {
     loader.style.visibility = 'visible';
     timeoutId = setTimeout(async () => {
       try {
-        const response = await fetch('https://localhost:7270/users/add', {
+        const response = await fetch('https://localhost:7270/welcome/register', {
           signal: signal,
           body: JSON.stringify({
             "Name": userName,
             "Password": password,
-            "Email": email.toLowerCase(),
-            "Points": 0
+            "Email": email.toLowerCase()
           }),
           method: "POST",
           headers: { 'Content-Type': 'application/json' }
@@ -199,6 +176,7 @@ export default function Register() {
 
         if (response.ok) {
           check.style.visibility = 'visible';
+          console.log(response);
           loaderTimeoutId = setTimeout(async () => {
             text.style.visibility = 'visible';
             check.style.visibility = 'hidden';
@@ -216,7 +194,9 @@ export default function Register() {
       catch (error) {
         if (error.name === 'AbortError') {
           console.log('Fetch request was cancelled by the user');
-        } else {
+        }
+
+        else {
           console.error(`ERROR: ${error}`);
         }
       }
@@ -259,7 +239,7 @@ export default function Register() {
             </span>
           </div>
 
-          <button type="submit" id='RegSubmitBtn' className="btn btn-success" disabled>
+          <button type="submit" id='RegSubmitBtn' className="btn btn-success">
             <span className='RegSubmitText'>Register</span>
             <div className='RegLoadingContainer'>
               <span className="RegLoader"></span>
@@ -268,9 +248,9 @@ export default function Register() {
               <HiCheck />
             </div>
           </button>
-          <button type='button' id='ValidateBtn' className='btn btn-secondary' onClick={(e) => ValidateInputs(e)}>
+          <button type='button' id='ValidateBtn' className='btn btn-secondary' onClick={() => ValidateInputs()}>
             <span className='ValidateText'>Validate</span>
-            <span className="ValidateLoader"></span>
+            <span className='ValidateLoader'></span>
           </button>
           {valid === true && navigate("/login")}
           {/* {valid === true && navigate("/login")} */}
