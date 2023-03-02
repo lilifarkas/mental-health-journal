@@ -1,37 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import "./Garden.css";
-import jwt_decode from "jwt-decode"; 
+import jwt_decode from "jwt-decode";
 
 const Garden = () => {
-  const [menuModal,setMenuModal] = useState(true);
-  const [plantModal,setPlantModal] = useState(false);
-  const [treeName,setTreeName] = useState("");
-  const [treeType,setTreeType] = useState(1);
-  const [trees,setTrees] = useState([]);
-  
+  const [menuModal, setMenuModal] = useState(true);
+  const [plantModal, setPlantModal] = useState(false);
+  const [treeName, setTreeName] = useState("");
+  const [treeType, setTreeType] = useState(1);
+  const [trees, setTrees] = useState([]);
+
   const jwtToken = localStorage.getItem("jwtToken");
   const currentUserId = jwt_decode(jwtToken).userID;
-  
+
   const toggleMenuModal = () => {
     setMenuModal(!menuModal);
   };
-  
+
   const togglePlantModal = () => {
     setPlantModal(!plantModal);
     toggleMenuModal();
   };
-  
+
   useEffect(() => {
     const getTrees = async () => {
       let response = await fetch(`https://localhost:7270/tree/user${currentUserId}`, {
         method: 'GET',
-        headers: { 
+        headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${jwtToken}`
         }
       })
       let result = await response.json(response)
-    
+
       let treesArray = [];
       result.$values.forEach(tree => {
         treesArray.push(tree);
@@ -44,7 +44,7 @@ const Garden = () => {
     }).catch(error => {
       console.error(error);
     });
-    
+
   }, []);
 
   const fetchTree = async (e) => {
@@ -52,15 +52,15 @@ const Garden = () => {
 
     let tree = {
       name: treeName,
-      ownerid:1,
-      type:treeType,
-      progress:0
+      ownerid: currentUserId,
+      type: treeType,
+      progress: 0
     };
 
     let response = await fetch('https://localhost:7270/tree', {
       method: 'POST',
       body: JSON.stringify(tree),
-      headers: { 
+      headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${jwtToken}`
       }
@@ -68,9 +68,9 @@ const Garden = () => {
     let result = await response.text();
     console.log(result);
   };
-  
+
   console.log(trees)
-  
+
   function TreeCard(props) {
     let type = props.type === 1 ? "Oak" : props.type === 2 ? "Spruce" : "Birch";
     let progress = props.progress === 0 ? "Seed" : props.progress === 1 ? "Sprout" : props.progress === 2 ? "Sapling" : "Mature Tree";
@@ -82,17 +82,17 @@ const Garden = () => {
       </div>
     )
   };
-  
-  const treeCards = trees.map((tree,index) => (
-    <TreeCard key={index} name={tree.name} type={tree.type} progress={tree.progress}/>
-    ));
 
-    if (!Array.isArray(trees)) {
-      return <div>Loading data...</div>;
-    }
-    
-  
-    
+  const treeCards = trees.map((tree, index) => (
+    <TreeCard key={index} name={tree.name} type={tree.type} progress={tree.progress} />
+  ));
+
+  if (!Array.isArray(trees)) {
+    return <div>Loading data...</div>;
+  }
+
+
+
   return (
     <div className='garden-container'>
       {menuModal && (
@@ -108,7 +108,7 @@ const Garden = () => {
         </>
       )}
       {plantModal && (
-        <form onSubmit={(e) => {fetchTree(e)}} className='plant-tree-modal'>
+        <form onSubmit={(e) => { fetchTree(e) }} className='plant-tree-modal'>
           <label htmlFor="">Tree name:</label>
           <input onChange={(e) => setTreeName(e.target.value)} type="text" value={treeName} />
           <label htmlFor="">Tree type:</label>
