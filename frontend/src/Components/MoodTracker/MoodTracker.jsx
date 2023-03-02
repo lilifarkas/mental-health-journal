@@ -9,7 +9,7 @@ import EmojiSmile from '../Emojis/EmojiSmile/EmojiSmile';
 import EmojiLaughing from '../Emojis/EmojiLaughing/EmojiLaughing';
 import { HiCheck } from 'react-icons/hi';
 import { MdOutlineReportGmailerrorred } from 'react-icons/md';
-import jwt_decode from 'jwt-decode'
+import jwt_decode from "jwt-decode";
 
 const MoodTracker = () => {
   let navigate = useNavigate();
@@ -38,8 +38,6 @@ const MoodTracker = () => {
 
   const jwtToken = localStorage.getItem("jwtToken");
   const userID = jwt_decode(jwtToken).userID;
-  const decodedToken = jwt_decode(jwtToken);
-  console.log(decodedToken);
   const url = `https://localhost:7270/mood/${userID}`;
   const [user, setUser] = useState(null);
 
