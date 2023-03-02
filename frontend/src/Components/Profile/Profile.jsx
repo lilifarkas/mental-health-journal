@@ -24,15 +24,22 @@ function Profile( {id} ) {
               "Authorization": `Bearer ${jwtToken}`
             }
 
-          });      
-          const fetchedTasks = await response.json();
-          setUser(fetchedTasks);
+          });
+            const result = await response.json();
+            console.log(result);
+
+            return result;
         }
-      
-        getUser();
+
+        getUser().then(result => {
+            setUser(result);
+            setMoods(result.moods);
+        }).catch(error => {
+            console.error(error);
+        });
       
         return;
-      }, [user.length]);
+      }, []);
 
     
     if(user == null){
@@ -42,9 +49,8 @@ function Profile( {id} ) {
     const deleteUser = async (e) => {
         e.preventDefault();
         setShowModal(true);
-
     }
-    
+
     const handleDelete = async () => {
        
         await fetch(`https://localhost:7270/users/delete/${userID}`, {
@@ -74,35 +80,37 @@ function Profile( {id} ) {
 
         if (!moods || !moods.$values || moods.$values.length < 7) {
             moodMessage =  null;
+        }else {
+            const lastSevenMoods = moods.$values.slice(-7);
+            const lastSevenDescriptions = lastSevenMoods.map((mood) => mood.description);
+            const sumOfDescriptions = lastSevenDescriptions.reduce(
+                (acc, description) => acc + description,
+                0
+            );
+            const averageDescription = Math.round(sumOfDescriptions / 7);
+
+            switch (averageDescription) {
+                case 0:
+                    moodMessage = "0 - Very negative mood";
+                    break;
+                case 1:
+                    moodMessage = "1 - Mildly negative mood";
+                    break;
+                case 2:
+                    moodMessage = "2 - Neutral mood";
+                    break;
+                case 3:
+                    moodMessage = "3 - Mildly positive mood";
+                    break;
+                case 4:
+                    moodMessage = "4 - Very positive mood";
+                    break;
+                default:
+                    moodMessage = "";
+            }
         }
 
-        const lastSevenMoods = moods.$values.slice(-7);
-        const lastSevenDescriptions = lastSevenMoods.map((mood) => mood.description);
-        const sumOfDescriptions = lastSevenDescriptions.reduce(
-            (acc, description) => acc + description,
-            0
-        );
-        const averageDescription = Math.round(sumOfDescriptions / 7);
-
-        switch (averageDescription) {
-            case 0:
-                moodMessage = "0 - Very negative mood";
-                break;
-            case 1:
-                moodMessage = "1 - Mildly negative mood";
-                break;
-            case 2:
-                moodMessage = "2 - Neutral mood";
-                break;
-            case 3:
-                moodMessage = "3 - Mildly positive mood";
-                break;
-            case 4:
-                moodMessage = "4 - Very positive mood";
-                break;
-            default:
-                moodMessage = "";
-        }
+        
         return moodMessage
         
     }
