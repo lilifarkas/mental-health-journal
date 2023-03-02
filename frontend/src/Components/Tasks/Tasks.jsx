@@ -22,14 +22,14 @@ const Task = ({ task, deleteTask }) => (
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState('');
-  const url = "https://localhost:7270/users/1/allTasks";
+  const url = "https://localhost:7270/users/3/allTasks";
 
   useEffect(() => {
     async function getTasks() {
       const response = await fetch(url);
       const fetchedTasks = await response.json();
-      console.log(fetchedTasks.$values);
-      setTasks(fetchedTasks.$values);
+      console.log(fetchedTasks);
+      setTasks(fetchedTasks);
     }
     getTasks();
 
@@ -37,7 +37,7 @@ const Tasks = () => {
   }, [tasks.length]);
 
   async function AddNewTask() {
-    let response = await fetch(`https://localhost:7270/users/1`)
+    let response = await fetch(`https://localhost:7270/users/3`)
     let user = await response.json();
     delete user.id; //remove user id to avoid request error
     console.log(user, newTask);
@@ -58,8 +58,8 @@ const Tasks = () => {
       });
       setNewTask('');
       if (resp2.ok) {
-        console.log(resp2)
-        setTasks(newTask);
+        setTasks([newTask]);
+        console.log(resp2, tasks)
       }
       else {
         console.warn(resp2)
@@ -75,12 +75,12 @@ const Tasks = () => {
       method: "DELETE"
     });
 
-    const newTasks = tasks.filter((t) => t.id !== id);
+    const newTasks = tasks['$values'].filter((t) => t.id !== id);
     setTasks(newTasks);
 
   };
   const taskList = () => {
-    return tasks.map(t => {
+    return tasks['$values']?.map(t => {
       return (
         <Task
           task={t}
