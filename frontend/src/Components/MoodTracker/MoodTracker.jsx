@@ -52,7 +52,7 @@ const MoodTracker = () => {
       const response = await fetch(`https://localhost:7270/users/${userID}`, {
         method: "GET",
         headers: {
-          "Authorization": `Bearer ${localStorage.getItem("JwtToken")}`
+          "Authorization": `Bearer ${localStorage.getItem("jwtToken")}`
         }
       });
 
