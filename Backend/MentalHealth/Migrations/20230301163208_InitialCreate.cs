@@ -8,11 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MentalHealth.Migrations
 {
     /// <inheritdoc />
-<<<<<<<< HEAD:Backend/MentalHealth/Migrations/20230301152249_updatedUser.cs
-    public partial class updatedUser : Migration
-========
-    public partial class treeRefactor : Migration
->>>>>>>> TreeGarden:Backend/MentalHealth/Migrations/20230301164030_treeRefactor.cs
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -55,8 +51,7 @@ namespace MentalHealth.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Points = table.Column<int>(type: "int", nullable: false),
-                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Points = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

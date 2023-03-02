@@ -12,13 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MentalHealth.Migrations
 {
     [DbContext(typeof(MentalHealthContext))]
-<<<<<<<< HEAD:Backend/MentalHealth/Migrations/20230301152249_updatedUser.Designer.cs
-    [Migration("20230301152249_updatedUser")]
-    partial class updatedUser
-========
-    [Migration("20230301164030_treeRefactor")]
-    partial class treeRefactor
->>>>>>>> TreeGarden:Backend/MentalHealth/Migrations/20230301164030_treeRefactor.Designer.cs
+    [Migration("20230301163208_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -145,10 +140,6 @@ namespace MentalHealth.Migrations
 
                     b.Property<int>("Points")
                         .HasColumnType("int");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 

@@ -22,8 +22,10 @@ public class UserService : IService<User>
 
     public async Task<User?> Get(long id)
     {
-        return await _context.Users.FirstOrDefaultAsync(user => user.ID == id);
-        
+
+        return await _context.Users.Include(u => u.Moods).FirstAsync(x => x.ID == id);
+
+
     }
 
     public async Task<IEnumerable<User>> GetAll()
@@ -55,6 +57,12 @@ public class UserService : IService<User>
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
         }
+    }
+
+    public async Task UpdateWithNewMood(User user, MoodTracker mood)
+    {
+        user.Moods.Add(mood);
+        await _context.SaveChangesAsync();
     }
     
     public async Task<List<UserTask>> IncludeUserTasks(long id)

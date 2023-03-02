@@ -1,0 +1,81 @@
+.garden-container {
+  position: relative;
+  display: flex;
+  margin-top: 100px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  backdrop-filter: blur(5px);
+  height: 350px;
+  width: 100%;
+  border: 2px solid green;
+  border-radius: 7px 7px 7px 7px;
+  padding: 50px;
+  background-color: rgba(80, 80, 80, 0.586);
+  user-select: none;
+  top: 50%;
+}
+
+.garden-container p {
+  color: rgb(220, 220, 220);
+  font-size: x-large;
+  font-weight: 500;
+}
+
+.garden-container h1 {
+  color: rgb(0, 0, 0);
+  font-weight: 300;
+  font-size: 24px;
+}
+
+.plant-card-container {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.plant-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  width: 150px;
+  margin-right: 20px;
+  backdrop-filter: blur(10px);
+  background-color: rgb(219, 219, 219);
+  border-radius: 7px 7px 7px 7px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.tree-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  width: 150px;
+  margin-right: 20px;
+  backdrop-filter: blur(10px);
+  background-color: rgb(219, 219, 219);
+  border-radius: 7px 7px 7px 7px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.plant-card:hover {
+  background-color: rgb(184, 184, 184);
+  box-shadow: rgb(38, 77, 58) 0px 20px 30px -10px;
+}
+
+.plant-tree-modal {
+  display: flex;
+  flex-direction: column;
+}
+
+.back-btn {
+  position: fixed;
+  right: 0;
+  top: 0;
+}

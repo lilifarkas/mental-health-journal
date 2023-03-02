@@ -37,3 +37,7 @@
     align-items: center;
     gap: 10px;
 }
+
+.loading{
+    font-size: 30px;
+}
