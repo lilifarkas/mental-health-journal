@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import MainPage from "./Components/MainPage/MainPage";
 import Register from './Components/Register/Register.jsx';
@@ -14,6 +14,16 @@ import ProtectedRoute from './Components/Auth/ProtectedRoute';
 function App() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
+  useEffect(() => {
+    const token = localStorage.getItem("jwtToken");
+    if (token) {
+      const decodedToken = jwt_decode(token);
+    console.log(decodedToken.userID);
+      setUser(decodedToken);
+      setToken(token)
+    }
+  }, []);
 
   const handleLogin = (token) => {
     localStorage.setItem("jwtToken", token);
@@ -23,6 +33,7 @@ function App() {
   const handleLogout = () => {
     localStorage.removeItem("jwtToken");
     setUser(null);
+    setToken(null);
     navigate('/', { replace: true });
   };
 
@@ -35,11 +46,11 @@ function App() {
           <Route path='/main' element = {<MainPage/>}/>
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/edit/:id" element={<EditProfile />} />
-          <Route path='/tasks' element={<Tasks />}/>
+          <Route path='/tasks' element={<Tasks user={user} jwtToken={token} />}/>
         </Route>     
         
       {!user && (<><Route path='/login' element={<Login onLogin={handleLogin}/>} />
-        <Route index element ={<LandingPage />} />
+        <Route path = '/' element ={<LandingPage />} />
         <Route path='/registration' element={<Register />} /></>)}
       </Routes>
     </>
