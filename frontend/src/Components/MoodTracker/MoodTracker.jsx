@@ -49,7 +49,12 @@ const MoodTracker = () => {
 
   useEffect(() => {
     async function getUsers() {
-      const response = await fetch(`https://localhost:7270/users/${userID}`);
+      const response = await fetch(`https://localhost:7270/users/${userID}`, {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem("JwtToken")}`
+        }
+      });
 
       if (!response.ok) {
         const message = `An error occurred: ${response.statusText}`;
