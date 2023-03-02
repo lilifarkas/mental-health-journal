@@ -1,10 +1,12 @@
 using MentalHealth.Models.DTOs;
 using MentalHealth.Models.Entities;
 using MentalHealth.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MentalHealth.Controllers;
 
+[Authorize]
 [ApiController, Route("/users")]
 public class UserController: ControllerBase
 {
@@ -43,5 +45,12 @@ public class UserController: ControllerBase
     public async Task<IEnumerable<UserTask>> GetUserTasks(long userID)
     {
         return await _service.IncludeUserTasks(userID);
+    }
+
+    [HttpPost("{userID}/addTask")]
+    public async Task<ActionResult> AddTask( long userID, [FromBody] AddTaskDTO taskDto)
+    {
+        await _service.AddTask(taskDto, userID);
+        return Ok();
     }
 }
