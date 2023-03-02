@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import MainPage from "./Components/MainPage/MainPage";
 import Register from './Components/Register/Register.jsx';
 import Profile from "./Components/Profile/Profile"
@@ -9,25 +9,52 @@ import NavBar from './Components/NavBar/NavBar';
 import Login from './Components/Login/Login.jsx';
 import EditProfile from './Components/Profile/EditProfile'
 import Admin from './Components/Admin/Admin'
+import jwt_decode from "jwt-decode";
+import ProtectedRoute from './Components/Auth/ProtectedRoute';
 
 function App() {
-  const location = useLocation();
-  const excludedPaths = ['/', '/registration', '/login', '/profile/edit'];
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
+  useEffect(() => {
+    const token = localStorage.getItem("jwtToken");
+    if (token) {
+      const decodedToken = jwt_decode(token);
+      setUser(decodedToken);
+      setToken(token)
+      navigate('/main', { replace: true });
+    }
+  }, []);
+
+  const handleLogin = (token) => {
+    localStorage.setItem("jwtToken", token);
+    setUser(jwt_decode(token));
+    navigate('/main', { replace: true });
+  };
+  const handleLogout = () => {
+    localStorage.removeItem("jwtToken");
+    setUser(null);
+    setToken(null);
+    navigate('/', { replace: true });
+  };
 
   return (
-    <div>
-      {!excludedPaths.includes(location.pathname) && <NavBar />}
-      <Routes>
-        <Route path='/' element={<LandingPage />} />
-        <Route path='/registration' element={<Register />} />
-        <Route path="/main" element={<MainPage />}></Route>
-        <Route exact path="/profile" element={<Profile />} />
-        <Route exact path="/profile/edit" element={<EditProfile />} />
-        <Route path='/tasks' element={<Tasks />}></Route>
-        <Route path='/login' element={<Login />} />
-        <Route path='/admin' element={<Admin />} />
+    <>
+      {user && <NavBar handleLogout={handleLogout} user={user}/>}
+      <Routes>        
+        <Route element={<ProtectedRoute user={user}/>}>
+          <Route path='/main' element = {<MainPage/>}/>
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/edit" element={<EditProfile />} />
+          <Route path='/tasks' element={<Tasks user={user} jwtToken={token} />}/>
+          <Route path='/admin' element={<Admin />} />
+        </Route>     
+        
+      {!user && (<><Route path='/login' element={<Login onLogin={handleLogin}/>} />
+        <Route path = '/' element ={<LandingPage />} />
+        <Route path='/registration' element={<Register />} /></>)}
       </Routes>
-    </div>
+    </>
   );
 }
 

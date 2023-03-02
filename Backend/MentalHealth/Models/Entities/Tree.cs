@@ -8,7 +8,7 @@ public class Tree
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public long ID { get; set; }
     public string Name { get; set; }
-    public User Owner { get; }
+    public int OwnerId { get; set; }
     public TreeType Type { get; set; }
     public int Progress { get; set; }
     public virtual ICollection<User>? Users { get; set; }

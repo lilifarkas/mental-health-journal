@@ -1,5 +1,6 @@
 import {Link, NavLink, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
+import jwt_decode from "jwt-decode"; 
 import "./Profile.css"
 import Modal from 'react-modal';
 
@@ -11,30 +12,28 @@ function Profile( {id} ) {
     const [showModal, setShowModal] = useState(false);
     const [moods, setMoods] = useState([]);
     
+    const jwtToken = localStorage.getItem("jwtToken");
+    const userID = jwt_decode(jwtToken).userID;
+    const url = `https://localhost:7270/users/${userID}`;
+
     useEffect(() => {
-        async function getUsers() {
-            const response = await fetch(`https://localhost:7270/users/1`);
-
-            if (!response.ok) {
-                const message = `An error occurred: ${response.statusText}`;
-                window.alert(message);
-                return;
+        async function getUser() {
+          const response = await fetch(url, {
+            method : 'GET',
+            headers: {
+              "Authorization": `Bearer ${jwtToken}`
             }
-            const result = await response.json();
-            console.log(result);
 
-            return result;
+          });      
+          const fetchedTasks = await response.json();
+          setUser(fetchedTasks);
         }
-        getUsers().then(result => {
-            setUser(result);
-            setMoods(result.moods);
-            console.log(`user: ${user}`)
-            console.log(`moods: ${moods.$values}`)
-        }).catch(error => {
-            console.error(error);
-        });
-        
-    }, []);
+      
+        getUser();
+      
+        return;
+      }, [user.length]);
+
     
     if(user == null){
         return <div className="mt-5 loading">Loading...</div>;
@@ -43,11 +42,16 @@ function Profile( {id} ) {
     const deleteUser = async (e) => {
         e.preventDefault();
         setShowModal(true);
-    }
+
 
     const handleDelete = async () => {
-        await fetch(`https://localhost:7270/users/delete/1`, {
-            method: "DELETE"
+       
+        await fetch(`https://localhost:7270/users/delete/${userID}`, {
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${jwtToken}`
+              }
+
         });
         // close the modal and navigate to home page
         setShowModal(false);
@@ -129,7 +133,7 @@ function Profile( {id} ) {
                 <NavLink to={`/profile/edit`}>
                 <button className="button">EDIT</button>
                 </NavLink>
-                <button onClick={deleteUser} className="button">DELETE PROFILE</button>
+                <button onClick={() => setShowModal(true)} className="button">DELETE PROFILE</button>
             </div>
             <Modal
                 isOpen={showModal}
@@ -139,7 +143,7 @@ function Profile( {id} ) {
             >
                 <h2 className="titles">Are you sure you want to delete your profile?</h2>
                 <div className="d-flex flex-row gap-5 mt-3">
-                    <button className="button" onClick={handleDelete}>YES</button>
+                    <button className="button" onClick={deleteUser}>YES</button>
                     <button className="button" onClick={handleCancel}>NO</button>
                 </div>
             </Modal>

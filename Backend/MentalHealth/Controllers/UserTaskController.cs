@@ -1,9 +1,11 @@
 ﻿using MentalHealth.Models.Entities;
 using MentalHealth.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MentalHealth.Controllers;
 
+[Authorize]
 [ApiController, Route("/usertask")]
 public class UserTaskController : ControllerBase
 {
@@ -15,7 +17,7 @@ public class UserTaskController : ControllerBase
     }
 
     [HttpPost]
-    public async Task AddUserTask(UserTask userTask)
+    public async Task AddUserTask([FromBody] UserTask userTask)
     {
         await _service.Add(userTask);
     }

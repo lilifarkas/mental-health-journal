@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using MentalHealth.Models.Enums;
 
 namespace MentalHealth.Models.Entities;
 
@@ -10,7 +11,8 @@ public class User
     public string Password { get; set; }
     public string Email { get; set; }
     public int Points { get; set; }
+    public string Role { get; set; } = "User";
     public virtual ICollection<Tree>? Trees { get; set; }
-    public virtual ICollection<UserTask>? UserTasks { get; set; }
     public virtual ICollection<MoodTracker>? Moods { get; set; } = new List<MoodTracker>();
+    public virtual ICollection<UserTask>? UserTasks { get; set; } = new List<UserTask>();
 }

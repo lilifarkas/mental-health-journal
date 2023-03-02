@@ -1,28 +1,24 @@
+using MentalHealth.Models.DTOs;
 using MentalHealth.Models.Entities;
 using MentalHealth.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MentalHealth.Controllers;
 
+[Authorize]
 [ApiController, Route("/users")]
 public class UserController: ControllerBase
 {
     private readonly UserService _service;
-
+   
     public UserController(UserService service)
     {
         _service = service;
     }
-
-    [HttpPost("/users/add")]
-    public async Task<User> AddNewUser([FromBody] User user)
-    {
-        await _service.Add(user);
-        return user;
-    }
     
     [HttpGet("/users/{id}")]
-    public async Task<User?> GetUserById(long id)
+    public async Task<User> GetUserById(long id)
     {
         return await _service.Get(id);
     }
@@ -49,5 +45,12 @@ public class UserController: ControllerBase
     public async Task<IEnumerable<UserTask>> GetUserTasks(long userID)
     {
         return await _service.IncludeUserTasks(userID);
+    }
+
+    [HttpPost("{userID}/addTask")]
+    public async Task<ActionResult> AddTask( long userID, [FromBody] AddTaskDTO taskDto)
+    {
+        await _service.AddTask(taskDto, userID);
+        return Ok();
     }
 }

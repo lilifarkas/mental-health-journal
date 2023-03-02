@@ -1,39 +1,42 @@
 import {useEffect, useState} from "react";
-import {NavLink, useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import './EditProfile.css'
+import jwt_decode from "jwt-decode"; 
 
 function EditProfile( ) {
     
     const navigate = useNavigate()
     const [user, setUser] = useState([]);
+    const jwtToken = localStorage.getItem("jwtToken");
+    const userID = jwt_decode(jwtToken).userID;
+    const url = `https://localhost:7270/users/${userID}`;
 
     useEffect(() => {
-        async function getUsers() {
-            const response = await fetch(`https://localhost:7270/users/2`);
-
-            if (!response.ok) {
-                const message = `An error occurred: ${response.statusText}`;
-                window.alert(message);
-                return;
+        async function getUser() {
+          const response = await fetch(url, {
+            method : 'GET',
+            headers: {
+              "Authorization": `Bearer ${jwtToken}`
             }
-
-            const result = await response.json();
-            setUser(result);
+          });      
+          const fetchedTasks = await response.json();
+          setUser(fetchedTasks);
         }
-
-        getUsers();
-
+      
+        getUser();
+      
         return;
-    }, []);
+      }, [user.length]);
 
     const onSubmit = async (e) => {
         e.preventDefault();
 
-        await fetch(`https://localhost:7270/users/update/2`, {
+        await fetch(`https://localhost:7270/users/update/${userID}`, {
             method: "PUT",
             body: JSON.stringify(user),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization' : `Bearer ${jwtToken}`
             },
         });
 

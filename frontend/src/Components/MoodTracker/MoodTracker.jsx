@@ -9,7 +9,8 @@ import EmojiSmile from '../Emojis/EmojiSmile/EmojiSmile';
 import EmojiLaughing from '../Emojis/EmojiLaughing/EmojiLaughing';
 import { HiCheck } from 'react-icons/hi';
 import { MdOutlineReportGmailerrorred } from 'react-icons/md';
-const MoodTracker = (props) => {
+
+const MoodTracker = ({user}) => {
   let navigate = useNavigate();
   let loader = document.querySelector('.MoodLoadingContainer');
   let check = document.querySelector('.MoodCheck');
@@ -22,6 +23,18 @@ const MoodTracker = (props) => {
   //const [isEditing, setIsEditing] = useState(false);
   const [rated, setRated] = useState(false);
   const [selectedEmoji, setSelectedEmoji] = useState(null);
+  const [shouldShow, setShouldShow] = useState(false);
+
+  const lastShownDateString = localStorage.getItem('lastShownDate');
+  const lastShownDate = lastShownDateString ? new Date(lastShownDateString) : null;
+
+  const now = new Date();
+  const shouldShowToday = !lastShownDate || now.getDate() !== lastShownDate.getDate();
+
+  if (shouldShowToday) {
+    localStorage.setItem('lastShownDate', now.toDateString());
+  }
+  console.log(now.getDate(), lastShownDate.getDate(), shouldShow, now.toDateString(), lastShownDateString);
 
   // const jwtToken = localStorage.getItem("JwtToken");
   // const userID = jwt_decode(jwtToken).userID;
@@ -75,8 +88,8 @@ const MoodTracker = (props) => {
           body: JSON.stringify(newMood),
           method: "POST",
           headers: { 
-            "Content-Type": "application/json"
-            //"Authorization": `Bearer ${jwtToken}`
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("JwtToken")}`
           }
         });
         let result = await response.json();
@@ -85,7 +98,10 @@ const MoodTracker = (props) => {
           loader.style.visibility = 'hidden';
           console.log(result);
           setTimeout(async () => {
-            setRated(true);
+            if (shouldShowToday) {
+              setShouldShow(false);
+              console.log(now.getDate(), lastShownDate.getDate(), shouldShow, now.toDateString(), lastShownDateString);
+            }
             navigate("/profile");
           }, 1000)
         }
@@ -150,7 +166,7 @@ const MoodTracker = (props) => {
             
             <button onClick={handleEdit}>Edit</button>
           </>)} */}
-      {rated === false && (
+      {shouldShow && (
         <div className='mood-container'>
           <h3 className="ratingHeader">How are you feeling today?</h3>
 
@@ -203,7 +219,11 @@ const MoodTracker = (props) => {
           </form>
         </div>
       )
-      }
+    }
+    {!shouldShow && (<div className='NoMoreUse'>
+      <p className='nousetext'>You can set your mood only once a day!</p> 
+      <button className='btn btn-success backBtn' onClick={() => navigate('/profile')}>Back</button>
+    </div>)}
     </>
   );
 }
