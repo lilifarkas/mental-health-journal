@@ -25,7 +25,10 @@ const Garden = () => {
     const getTrees = async () => {
       let response = await fetch(`https://localhost:7270/tree/user${currentUserId}`, {
         method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${jwtToken}`
+        }
       })
       let result = await response.json(response)
     
@@ -57,7 +60,10 @@ const Garden = () => {
     let response = await fetch('https://localhost:7270/tree', {
       method: 'POST',
       body: JSON.stringify(tree),
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${jwtToken}`
+      }
     })
     let result = await response.text();
     console.log(result);
