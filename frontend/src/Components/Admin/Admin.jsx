@@ -19,19 +19,19 @@ const User = (props) => (
 );
 
 export default function UsersList() {
-    
+
     const [users, setUsers] = useState([]);
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [sortedUsers, setSortedUsers] = useState([]);
     const [sortedIsChanged, setSortedIsChanged] = useState(false);
-    
+
     useEffect(() => {
         async function getUsers() {
             const response = await fetch(`https://localhost:7270/users`);
 
             if (!response.ok) {
                 const message = `An error occurred: ${response.statusText}`;
-                window.alert(message);
+                console.warn(message);
                 return;
             }
 
@@ -39,15 +39,15 @@ export default function UsersList() {
             setUsers(result.$values);
             setFilteredUsers(result.$values);
             setSortedUsers(result.$values);
-           console.log(result.$values)
+            console.log(result.$values)
         }
 
         getUsers();
-        
+
     }, []);
 
     function recordList() {
-        const userList = sortedIsChanged === true ?  sortedUsers : filteredUsers;
+        const userList = sortedIsChanged === true ? sortedUsers : filteredUsers;
         return userList.map((record) => {
             return (
                 <User
@@ -59,7 +59,7 @@ export default function UsersList() {
     }
 
     function sortByName() {
-        const sorted = [...sortedUsers].sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+        const sorted = [...sortedUsers].sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
         setSortedUsers(sorted);
         setSortedIsChanged(true);
     }
@@ -69,8 +69,8 @@ export default function UsersList() {
         setSortedUsers(sorted);
         setSortedIsChanged(true);
     }
-    
-    function notSorted(){
+
+    function notSorted() {
         setSortedUsers(users);
         setSortedIsChanged(false);
     }
@@ -98,17 +98,17 @@ export default function UsersList() {
         );
         setFilteredUsers(filtered);
     }
-        
+
     return (
-        <div className= "bg-light">
+        <div className="bg-light">
             <h3>Users List</h3>
             <div className="d-flex flex-row justify-content-center align-items-center gap-2">
-                <select className="d-inline-flex mt-3" id = "arrange" onChange={(e) => {
+                <select className="d-inline-flex mt-3" id="arrange" onChange={(e) => {
                     if (e.target.value === "By Name") {
                         sortByName();
                     } else if (e.target.value === "By Points") {
                         sortByPoints();
-                    } else if(e.target.value === "Arrange"){
+                    } else if (e.target.value === "Arrange") {
                         notSorted();
                     }
                 }}>
@@ -117,20 +117,20 @@ export default function UsersList() {
                     <option> By Points </option>
                 </select>
                 <input className="d-inline-flex mt-3" id="filterName" type="text"
-                       placeholder="Filter name" onChange={(e) => filterName(e.target.value)}></input>
+                    placeholder="Filter name" onChange={(e) => filterName(e.target.value)}></input>
                 <input className="d-inline-flex mt-3" id="filterPoints" type="text"
-                       placeholder="Filter points" onChange={(e) => filterPoints(e.target.value)}></input>
+                    placeholder="Filter points" onChange={(e) => filterPoints(e.target.value)}></input>
                 <input className="d-inline-flex mt-3" id="filterId" type="text"
-                       placeholder="Filter ID" onChange={(e) => filterId(e.target.value)}></input>
+                    placeholder="Filter ID" onChange={(e) => filterId(e.target.value)}></input>
             </div>
             <table className="table table-striped" style={{ marginTop: 20 }}>
                 <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>UserName</th>
-                    <th>Email</th>
-                    <th>Points</th>
-                </tr>
+                    <tr>
+                        <th>ID</th>
+                        <th>UserName</th>
+                        <th>Email</th>
+                        <th>Points</th>
+                    </tr>
                 </thead>
                 <tbody>{recordList()}</tbody>
             </table>
