@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { NavLink } from "react-router-dom";
 import { BiLogOut } from 'react-icons/bi';
 import {FaBars, FaTimes} from 'react-icons/fa';
+import './NavBar.css';
 
 function NavBar({handleLogout, user}) {
     const navRef = useRef();
