@@ -45,7 +45,7 @@ function App() {
         <Route element={<ProtectedRoute user={user}/>}>
           <Route path='/main' element = {<MainPage/>}/>
           <Route path="/profile" element={<Profile />} />
-          <Route path="/profile/edit/:id" element={<EditProfile />} />
+          <Route path="/profile/edit" element={<EditProfile />} />
           <Route path='/tasks' element={<Tasks user={user} jwtToken={token} />}/>
           <Route path='/admin' element={<Admin />} />
         </Route>     
