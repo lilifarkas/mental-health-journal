@@ -1,5 +1,5 @@
-import React, { Outlet } from 'react';
-import { Navigate } from "react-router-dom";
+import React from 'react';
+import { Navigate, Outlet } from "react-router-dom";
 
 const ProtectedRoute = ({user, children, redirectPath = "/"}) => {
     if(!user){
