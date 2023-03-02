@@ -75,16 +75,11 @@ public class UserService : IService<User>
         return await _context.Users.FirstOrDefaultAsync(user => user.Email == email && user.Password == password);
     }
 
-    public async Task AddTask( AddTaskDTO taskDto, long userID)
+    public async Task AddTask( UserTask task, long userID)
     {
-        Console.WriteLine(taskDto.TaskID);
-        var task = await _service.Get(taskDto.TaskID);
-        if (task != null)
-        {
-            var user = await Get(userID);
-            user.UserTasks.Add(task);
-            await _context.SaveChangesAsync();
-        }
+        var user = await Get(userID);
+        user.UserTasks.Add(task);
+        await _context.SaveChangesAsync();
     }
     
     public async Task<bool> UserExistsByEmail(string email)

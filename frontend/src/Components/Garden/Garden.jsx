@@ -52,9 +52,9 @@ const Garden = () => {
 
     let tree = {
       name: treeName,
-      ownerid: currentUserId,
-      type: treeType,
-      progress: 0
+      ownerid:currentUserId,
+      type:treeType,
+      progress:0
     };
 
     let response = await fetch('https://localhost:7270/tree', {
@@ -68,9 +68,9 @@ const Garden = () => {
     let result = await response.text();
     console.log(result);
   };
-
-  console.log(trees)
-
+  
+  
+  
   function TreeCard(props) {
     let type = props.type === 1 ? "Oak" : props.type === 2 ? "Spruce" : "Birch";
     let progress = props.progress === 0 ? "Seed" : props.progress === 1 ? "Sprout" : props.progress === 2 ? "Sapling" : "Mature Tree";
@@ -117,8 +117,8 @@ const Garden = () => {
             <option value="2">Spruce</option>
             <option value="3">Birch</option>
           </select>
-          <button type='submit'>Plant!</button>
-          <button className='back-btn' onClick={togglePlantModal}>Back</button>
+          <button className='btn btn-success' type='submit'>Plant!</button>
+          <button className='back-btn btn btn-success' onClick={togglePlantModal}>Back</button>
         </form>
       )}
     </div>
