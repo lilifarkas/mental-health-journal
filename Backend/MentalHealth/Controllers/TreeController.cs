@@ -9,41 +9,48 @@ namespace MentalHealth.Controllers;
 [ApiController, Route("/tree")]
 public class TreeController : Controller
 {
-    private readonly TreeService _treeRepository;
-    public TreeController(TreeService treeRepository)
+    private readonly TreeService _treeService;
+    public TreeController(TreeService treeService)
     {
-        _treeRepository = treeRepository;
+        _treeService = treeService;
     }
 
     
     [HttpGet]
     public async Task<IEnumerable<Tree>> GetAllTrees()
     {
-        return await _treeRepository.GetAll();
+        return await _treeService.GetAll();
     }
 
     [HttpPost]
     public async Task AddTree([FromBody] Tree tree)
     {
-        await _treeRepository.Add(tree);
+        await _treeService.Add(tree);
     }
 
-    [HttpGet("/{id}")]
+    [HttpGet("/tree/{id}")]
     public async Task<Tree> GetTreeById(long id)
     {
-        return await _treeRepository.Get(id);
+        return await _treeService.Get(id);
+    }
+    
+    [HttpGet("/tree/user{id}")]
+    public async Task<IEnumerable<Tree>> GetTreesByUserId(long id)
+    {
+        _treeService.ProgressTree(id);
+        return await _treeService.GetByUser(id);
     }
 
-    [HttpPut("/{id}")]
+    [HttpPut("/tree/{id}")]
     public void UpdateTreeById([FromBody] Tree updatedTree)
     {
-        _treeRepository.Update(updatedTree);
+        _treeService.Update(updatedTree);
     }
 
-    [HttpDelete("/{id}")]
+    [HttpDelete("/tree/{id}")]
     public async Task DeleteTreeById(long id)
     {
-        await _treeRepository.Delete(id);
+        await _treeService.Delete(id);
     }
 }
 
