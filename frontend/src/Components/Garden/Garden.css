@@ -1,0 +1,50 @@
+.garden-container {
+  position: relative;
+  display: flex;
+  margin-top: 100px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  backdrop-filter: blur(5px);
+  height: 280px;
+  width: 50%;
+  border: 2px solid green;
+  border-radius: 7px 7px 7px 7px;
+  padding: 50px;
+  background-color: rgba(80, 80, 80, 0.586);
+  user-select: none;
+  top: 50%;
+}
+
+.garden-container p {
+  color: rgb(220, 220, 220);
+  font-size: x-large;
+  font-weight: 500;
+}
+
+.plant-card-container {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.plant-card {
+  height: 200px;
+  width: 100px;
+  background-color: rgb(220, 220, 220);
+  border-radius: 7px 7px 7px 7px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.plant-tree-modal {
+  display: flex;
+  flex-direction: column;
+}
+
+.back-btn {
+  position: fixed;
+  right: 0;
+  top: 0;
+}
