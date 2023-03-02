@@ -52,7 +52,7 @@ const Garden = () => {
 
     let tree = {
       name: treeName,
-      ownerid:1,
+      ownerid:currentUserId,
       type:treeType,
       progress:0
     };
@@ -69,7 +69,7 @@ const Garden = () => {
     console.log(result);
   };
   
-  console.log(trees)
+  
   
   function TreeCard(props) {
     let type = props.type === 1 ? "Oak" : props.type === 2 ? "Spruce" : "Birch";
