@@ -29,9 +29,13 @@ public class AuthController : ControllerBase
         User.Name = registerDto.Name;
         User.Email = registerDto.Email;
         User.Password = registerDto.Password;
-        
-        await _service.Add(User);
-        return Ok(User);
+
+        if (!await _service.UserExistsByEmail(User.Email))
+        {
+            await _service.Add(User);
+            return Ok(User);
+        }
+        return BadRequest( new RegisterErrorDTO{Error = "User exists"});
     }
 
     [HttpPost("login")]
@@ -46,7 +50,7 @@ public class AuthController : ControllerBase
 
         return BadRequest( new LoginResultDTO{Error = "Email or password is incorrect"});
     }
-
+    
     private string CreateToken(User user)
     {
         var claims = new List<Claim>()
