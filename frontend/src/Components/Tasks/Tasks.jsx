@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import jwt_decode from "jwt-decode"; 
 
 const Task = ({task, deleteTask})=>(
@@ -20,7 +19,7 @@ const Task = ({task, deleteTask})=>(
 
 const Tasks = () => {
     const [tasks, setTasks] = useState([]);
-    const jwtToken = localStorage.getItem("JwtToken");
+    const jwtToken = localStorage.getItem("jwtToken");
     const userID = jwt_decode(jwtToken).userID;
     const url = `https://localhost:7270/users/${userID}/allTasks`;
     

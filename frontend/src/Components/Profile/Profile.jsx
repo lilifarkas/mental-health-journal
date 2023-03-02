@@ -1,5 +1,6 @@
 import {Link, NavLink, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
+import jwt_decode from "jwt-decode"; 
 import "./Profile.css"
 
 
@@ -7,30 +8,35 @@ function Profile( {id} ) {
 
     const navigate = useNavigate()
     const [user, setUser] = useState([]);
-    
+    const jwtToken = localStorage.getItem("jwtToken");
+    const userID = jwt_decode(jwtToken).userID;
+    const url = `https://localhost:7270/users/${userID}`;
+
     useEffect(() => {
-        async function getUsers() {
-            const response = await fetch(`https://localhost:7270/users/${id}`);
-
-            if (!response.ok) {
-                const message = `An error occurred: ${response.statusText}`;
-                window.alert(message);
-                return;
+        async function getUser() {
+          const response = await fetch(url, {
+            method : 'GET',
+            headers: {
+              "Authorization": `Bearer ${jwtToken}`
             }
-            const result = await response.json();
-            setUser(result);
+          });      
+          const fetchedTasks = await response.json();
+          setUser(fetchedTasks);
         }
-
-        getUsers();
-
+      
+        getUser();
+      
         return;
-    }, []);
+      }, [user.length]);
     
     const deleteUser = async (e) => {
         e.preventDefault();
 
-        await fetch(`https://localhost:7270/users/delete/${id}`, {
-            method: "DELETE"
+        await fetch(`https://localhost:7270/users/delete/${userID}`, {
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${jwtToken}`
+              }
         });
         
         navigate("/");
