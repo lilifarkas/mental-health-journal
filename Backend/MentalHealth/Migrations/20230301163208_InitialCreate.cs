@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MentalHealth.Migrations
 {
     /// <inheritdoc />
-    public partial class initMigration : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -33,6 +33,7 @@ namespace MentalHealth.Migrations
                     ID = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OwnerId = table.Column<int>(type: "int", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
                     Progress = table.Column<int>(type: "int", nullable: false)
                 },
@@ -63,7 +64,8 @@ namespace MentalHealth.Migrations
                 {
                     ID = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TaskName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    TaskName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Complete = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

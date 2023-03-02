@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MentalHealth.Migrations
 {
     [DbContext(typeof(MentalHealthContext))]
-    [Migration("20230216212753_initMigration")]
-    partial class initMigration
+    [Migration("20230301164030_treeRefactor")]
+    partial class treeRefactor
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -104,6 +104,9 @@ namespace MentalHealth.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("OwnerId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Progress")
                         .HasColumnType("int");
 
@@ -150,6 +153,9 @@ namespace MentalHealth.Migrations
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
+
+                    b.Property<bool>("Complete")
+                        .HasColumnType("bit");
 
                     b.Property<string>("TaskName")
                         .IsRequired()
