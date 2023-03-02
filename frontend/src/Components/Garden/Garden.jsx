@@ -29,7 +29,7 @@ const Garden = () => {
     let tree = {
       name: treeName,
       ownerid:1,
-      type:Number(treeType),
+      type:treeType,
       progress:0
     };
 
@@ -59,10 +59,10 @@ const Garden = () => {
   
   function TreeCard(props) {
     return (
-      <div className='plant-card'>
-        <div>{props.name}</div>
-        <div>{props.type}</div>
-        <div>{props.progress}</div>
+      <div className='tree-card'>
+        <h1>{props.name}</h1>
+        <h2>{props.type}</h2>
+        <h2>{props.progress}</h2>
       </div>
     )
   };
@@ -93,10 +93,10 @@ const Garden = () => {
           <label htmlFor="">Tree name:</label>
           <input onChange={(e) => setTreeName(e.target.value)} type="text" value={treeName} />
           <label htmlFor="">Tree type:</label>
-          <select id="tree-type">
-            <option onChange={(e) => setTreeType(e.target.value)} value="1">Oak</option>
-            <option onChange={(e) => setTreeType(e.target.value)} value="2">Spruce</option>
-            <option onChange={(e) => setTreeType(e.target.value)} value="3">Birch</option>
+          <select onChange={(e) => setTreeType(Number(e.target.value))} id="tree-type">
+            <option value="1">Oak</option>
+            <option value="2">Spruce</option>
+            <option value="3">Birch</option>
           </select>
           <button type='submit'>Plant!</button>
           <button className='back-btn' onClick={togglePlantModal}>Back</button>
