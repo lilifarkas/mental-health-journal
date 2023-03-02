@@ -79,8 +79,8 @@ const Tasks = () => {
     <div className='d-flex justify-content-center taskContainer'>
       <h3 className='taskHeader'>Tasks</h3>
       <div className='newTaskInputContainer'>
-        <input type="text" onChange={(e) => setNewTask(e.target.value)} className='form-container taskInput' placeholder='Task description' />
-        <button onClick={() => AddNewTask()} className='btn btn-success'>Add Task</button>
+        <input type="text" className='form-container taskInput' placeholder='Task description' />
+        <button className='btn btn-success'>Add Task</button>
       </div>
       <table className="table table-striped">
         <thead>
