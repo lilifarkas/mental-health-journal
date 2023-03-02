@@ -66,7 +66,7 @@ public class TreeService : IService<Tree>
             .Select(u => u.Points)
             .FirstOrDefault();
         
-        int[] progressThresholds = new int[] { 0, 50, 200, 500, 1000 };
+        int[] progressThresholds = new int[] { 50, 200, 500, 1000 };
         
         int currentProgress = _context.Trees
             .Where(t => t.OwnerId == userId)

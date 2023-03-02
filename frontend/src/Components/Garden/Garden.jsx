@@ -21,8 +21,28 @@ const Garden = () => {
   };
   
   useEffect(() => {
-    getTrees();
+    const getTrees = async () => {
+      let response = await fetch(`https://localhost:7270/tree/user${currentUserId}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      let result = await response.text();
+      let treesObject = JSON.parse(result);
+      let treesArray = [];
+      treesObject.$values.forEach(tree => {
+        treesArray.push(tree);
+      });
+      return treesArray;
+    };
+
+    getTrees().then(result => {
+      setTrees(result);
+    }).catch(error => {
+      console.error(error);
+    });
+    
   }, []);
+
   const fetchTree = async (e) => {
     e.preventDefault();
 
@@ -42,24 +62,11 @@ const Garden = () => {
     console.log(result);
   };
   
-  const getTrees = async () => {
-    let response = await fetch(`https://localhost:7270/tree/user${currentUserId}`, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    })
-    let result = await response.text();
-    let treesObject = JSON.parse(result);
-    
-    treesObject.$values.forEach(tree => {
-      trees.push(tree);
-      console.log(trees)
-    });
-    
-  };
+  console.log(trees)
   
   function TreeCard(props) {
-    let type = props.type == 1 ? "Oak" : props.type == 2 ? "Spruce" : "Birch";
-    let progress = props.progress < 2 ? "Seed" : props.progress == 2 ? "Sprout" : props.progress == 3 ? "Sapling" : "Mature Tree"
+    let type = props.type === 1 ? "Oak" : props.type === 2 ? "Spruce" : "Birch";
+    let progress = props.progress === 0 ? "Seed" : props.progress === 1 ? "Sprout" : props.progress === 2 ? "Sapling" : "Mature Tree";
     return (
       <div className='tree-card'>
         <h1>{props.name}</h1>
@@ -89,7 +96,7 @@ const Garden = () => {
             <div onClick={togglePlantModal} className='plant-card'>+</div>
 
             {treeCards}
-            
+
           </div>
         </>
       )}
