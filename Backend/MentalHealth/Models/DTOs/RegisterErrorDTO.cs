@@ -1,4 +1,4 @@
-﻿namespace MentalHealth.Models.DTOs;
+﻿    namespace MentalHealth.Models.DTOs;
 
 public class RegisterErrorDTO
 {
