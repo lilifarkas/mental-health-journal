@@ -27,6 +27,14 @@ public class TreeService : IService<Tree>
             return await _context.Trees.FindAsync(id);
         }
     }
+    
+    public async Task<IEnumerable<Tree>> GetByUser(long id)
+    {
+        await using (_context)
+        {
+            return await _context.Trees.Where(tree => tree.OwnerId == id).ToListAsync();
+        }
+    }
 
     public async Task<IEnumerable<Tree>> GetAll()
     {
@@ -52,5 +60,46 @@ public class TreeService : IService<Tree>
                 await _context.SaveChangesAsync();
             }
 
+    }
+
+    public void ProgressTree(long userId)
+    {
+        var userPoints = _context.Users
+            .Where(u => u.ID == userId)
+            .Select(u => u.Points)
+            .FirstOrDefault();
+        
+        int[] progressThresholds = new int[] { 0, 50, 200, 500, 1000 };
+        
+        int currentProgress = _context.Trees
+            .Where(t => t.OwnerId == userId)
+            .Select(t => t.Progress)
+            .FirstOrDefault();
+
+        int nextProgress = currentProgress;
+        for (int i = currentProgress; i < progressThresholds.Length; i++)
+        {
+            if (userPoints >= progressThresholds[i])
+            {
+                nextProgress = i + 1;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        if (nextProgress != currentProgress)
+        {
+            var tree = _context.Trees
+                .FirstOrDefault(t => t.OwnerId == userId);
+
+            if (tree != null)
+            {
+                _context.Trees.Attach(tree);
+                tree.Progress = nextProgress;
+                _context.SaveChanges();
+            }
+        }
     }
 }
