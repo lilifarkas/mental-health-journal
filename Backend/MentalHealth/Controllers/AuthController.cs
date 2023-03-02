@@ -15,7 +15,7 @@ public class AuthController : ControllerBase
 {
     private readonly UserService _service;
     private readonly IConfiguration _configuration;
-    public static User? User = new User();
+    
     
     public AuthController(UserService service, IConfiguration configuration)
     {
@@ -26,14 +26,15 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<ActionResult<User>> Register([FromBody] RegisterDTO registerDto)
     {
-        User.Name = registerDto.Name;
-        User.Email = registerDto.Email;
-        User.Password = registerDto.Password;
-
-        if (!await _service.UserExistsByEmail(User.Email))
+        User user = new User();
+        user.Name = registerDto.Name;
+        user.Email = registerDto.Email;
+        user.Password = registerDto.Password;
+        
+        if (!await _service.UserExistsByEmail(user.Email))
         {
-            await _service.Add(User);
-            return Ok(User);
+            await _service.Add(user);
+            return Ok(user);
         }
         return BadRequest( new RegisterErrorDTO{Error = "User exists"});
     }
