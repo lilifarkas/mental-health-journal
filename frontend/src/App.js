@@ -19,9 +19,9 @@ function App() {
     const token = localStorage.getItem("jwtToken");
     if (token) {
       const decodedToken = jwt_decode(token);
-    console.log(decodedToken.userID);
       setUser(decodedToken);
       setToken(token)
+      navigate('/main', { replace: true });
     }
   }, []);
 
