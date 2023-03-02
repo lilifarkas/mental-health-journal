@@ -2,10 +2,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MentalHealth.Models.Entities;
 using MentalHealth.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MentalHealth.Controllers;
 
+[Authorize]
 [ApiController, Route("/tree")]
 public class TreeController : Controller
 {
