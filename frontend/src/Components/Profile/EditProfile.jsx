@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {NavLink, useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import './EditProfile.css'
 import jwt_decode from "jwt-decode"; 
 
@@ -31,7 +31,7 @@ function EditProfile( ) {
     const onSubmit = async (e) => {
         e.preventDefault();
 
-        await fetch(`https://localhost:7270/users/update/2`, {
+        await fetch(`https://localhost:7270/users/update/${userID}`, {
             method: "PUT",
             body: JSON.stringify(user),
             headers: {
