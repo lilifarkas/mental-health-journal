@@ -34,7 +34,7 @@ function Profile( {id} ) {
     const deleteUser = async (e) => {
         e.preventDefault();
         setShowModal(true);
-        
+
         await fetch(`https://localhost:7270/users/delete/${userID}`, {
             method: "DELETE",
             headers: {
@@ -86,7 +86,7 @@ function Profile( {id} ) {
             >
                 <h2 className="titles">Are you sure you want to delete your profile?</h2>
                 <div className="d-flex flex-row gap-5 mt-3">
-                    <button className="button" onClick={handleDelete}>YES</button>
+                    <button className="button" onClick={deleteUser}>YES</button>
                     <button className="button" onClick={handleCancel}>NO</button>
                 </div>
             </Modal>
