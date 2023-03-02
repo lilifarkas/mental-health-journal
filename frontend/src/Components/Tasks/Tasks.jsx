@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import jwt_decode from "jwt-decode"; 
 
 const Task = ({task, deleteTask})=>(
     <tr>
@@ -19,13 +20,19 @@ const Task = ({task, deleteTask})=>(
 
 const Tasks = () => {
     const [tasks, setTasks] = useState([]);
-    const url = "https://localhost:7270/users/1/allTasks";
-
+    const jwtToken = localStorage.getItem("JwtToken");
+    const userID = jwt_decode(jwtToken).userID;
+    const url = `https://localhost:7270/users/${userID}/allTasks`;
+    
     useEffect(() => {
         async function getTasks() {
-          const response = await fetch(url);      
+          const response = await fetch(url, {
+            method : 'GET',
+            headers: {
+              "Authorization": `Bearer ${jwtToken}`
+            }
+          });      
           const fetchedTasks = await response.json();
-          console.log(fetchedTasks);
           setTasks(fetchedTasks);
         }
       
@@ -35,8 +42,11 @@ const Tasks = () => {
       }, [tasks.length]);
 
     async function deleteTask(id) {
-        await fetch(`https://localhost:7270/usertask/${id}`, {
-          method: "DELETE"
+        await fetch(`https://localhost:7270/usertask/${userID}`, {
+          method: "DELETE",
+          headers : {
+            'Authorization' : `Bearer ${jwtToken}`
+          }
         });
         
         const newTasks = tasks["$values"].filter((t) => t.id !== id);
