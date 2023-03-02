@@ -24,10 +24,16 @@ export default function UsersList() {
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [sortedUsers, setSortedUsers] = useState([]);
     const [sortedIsChanged, setSortedIsChanged] = useState(false);
+    const jwtToken = localStorage.getItem("jwtToken");
 
     useEffect(() => {
         async function getUsers() {
-            const response = await fetch(`https://localhost:7270/users`);
+            const response = await fetch(`https://localhost:7270/users`, {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${jwtToken}`
+                }
+            });
 
             if (!response.ok) {
                 const message = `An error occurred: ${response.statusText}`;
