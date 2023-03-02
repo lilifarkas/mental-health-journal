@@ -22,10 +22,7 @@ public class TreeService : IService<Tree>
 
     public async Task<Tree> Get(long id)
     {
-        await using (_context)
-        {
-            return await _context.Trees.FindAsync(id);
-        }
+        return await _context.Trees.FindAsync(id);
     }
     
     public async Task<IEnumerable<Tree>> GetByUser(long id)
