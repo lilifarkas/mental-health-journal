@@ -58,11 +58,13 @@ const Garden = () => {
   };
   
   function TreeCard(props) {
+    let type = props.type == 1 ? "Oak" : props.type == 2 ? "Spruce" : "Birch";
+    let progress = props.progress < 2 ? "Seed" : props.progress == 2 ? "Sprout" : props.progress == 3 ? "Sapling" : "Mature Tree"
     return (
       <div className='tree-card'>
         <h1>{props.name}</h1>
-        <h2>{props.type}</h2>
-        <h2>{props.progress}</h2>
+        <h1>{type}</h1>
+        <h1>{progress}</h1>
       </div>
     )
   };
@@ -83,8 +85,11 @@ const Garden = () => {
         <>
           <h3 className="ratingHeader">Take care of your trees!</h3>
           <div className='plant-card-container'>
+
             <div onClick={togglePlantModal} className='plant-card'>+</div>
+
             {treeCards}
+            
           </div>
         </>
       )}
