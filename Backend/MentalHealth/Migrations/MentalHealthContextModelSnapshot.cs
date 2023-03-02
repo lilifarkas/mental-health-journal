@@ -33,7 +33,12 @@ namespace MentalHealth.Migrations
                     b.Property<int>("Description")
                         .HasColumnType("int");
 
+                    b.Property<long?>("UserID")
+                        .HasColumnType("bigint");
+
                     b.HasKey("ID");
+
+                    b.HasIndex("UserID");
 
                     b.ToTable("MoodTracker");
 
@@ -100,6 +105,9 @@ namespace MentalHealth.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OwnerId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Progress")
                         .HasColumnType("int");
@@ -194,6 +202,13 @@ namespace MentalHealth.Migrations
                     b.ToTable("UserUserTask");
                 });
 
+            modelBuilder.Entity("MentalHealth.Models.Entities.MoodTracker", b =>
+                {
+                    b.HasOne("MentalHealth.Models.Entities.User", null)
+                        .WithMany("Moods")
+                        .HasForeignKey("UserID");
+                });
+
             modelBuilder.Entity("MentalHealth.Models.Entities.MoodTrackerUserJoin", b =>
                 {
                     b.HasOne("MentalHealth.Models.Entities.MoodTracker", "MoodTracker")
@@ -233,6 +248,11 @@ namespace MentalHealth.Migrations
                         .HasForeignKey("UsersID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MentalHealth.Models.Entities.User", b =>
+                {
+                    b.Navigation("Moods");
                 });
 #pragma warning restore 612, 618
         }
