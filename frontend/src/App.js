@@ -26,10 +26,13 @@ function App() {
     }
   }, []);
 
-  const handleLogin = (token) => {
-    localStorage.setItem("jwtToken", token);
-    setUser(jwt_decode(token));
-    navigate('/main', { replace: true });
+  const handleLogin = (responeToken) => {
+
+    if (responeToken) {
+      localStorage.setItem("jwtToken", responeToken);
+      setUser(jwt_decode(responeToken));
+      navigate('/main', { replace: true });
+    }
   };
   const handleLogout = () => {
     localStorage.removeItem("jwtToken");
