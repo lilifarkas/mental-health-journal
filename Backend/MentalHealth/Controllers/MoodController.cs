@@ -13,16 +13,23 @@ namespace MentalHealth.Controllers
 	public class MoodController : ControllerBase
 	{
 		private readonly MoodTrackerService _repository;
+		private readonly UserService _userService;
 
-		public MoodController(MoodTrackerService repository)
+		public MoodController(MoodTrackerService repository, UserService userService)
 		{
 			_repository = repository;
+			_userService = userService;
 		}
 
-		[HttpPost]
-		public async Task<MoodTracker> AddNew([FromBody] MoodTracker newMoodTracker)
+		[HttpPost("/mood/{id}")]
+		public async Task<MoodTracker> AddNew([FromBody] MoodTracker newMoodTracker, long id)
 		{
+			Console.WriteLine(id);
 			await _repository.Add(newMoodTracker);
+			var finUserToAddMood = await _userService.Get(id);
+			Console.WriteLine(finUserToAddMood.Name);
+			Console.WriteLine(newMoodTracker.Description);
+			await _userService.UpdateWithNewMood(finUserToAddMood, newMoodTracker);
 			return newMoodTracker;
 		}
 

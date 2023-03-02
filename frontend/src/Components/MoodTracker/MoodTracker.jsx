@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom';
 import "./MoodTracker.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -36,10 +36,10 @@ const MoodTracker = ({user}) => {
   }
   console.log(now.getDate(), lastShownDate.getDate(), shouldShow, now.toDateString(), lastShownDateString);
 
-  // function handleRatingChange(event) {
-  //   setRating(parseInt(props.value));
-  //   console.log((event.target.props.value));
-  // }
+  // const jwtToken = localStorage.getItem("JwtToken");
+  // const userID = jwt_decode(jwtToken).userID;
+  const url = `https://localhost:7270/mood/1`;
+  const [user, setUser] = useState(null);
 
   function getChildProps(value) {
     setRating(value);
@@ -47,20 +47,50 @@ const MoodTracker = ({user}) => {
     console.log(value)
   }
 
+  useEffect(() => {
+    async function getUsers() {
+      const response = await fetch(`https://localhost:7270/users/1`);
+
+      if (!response.ok) {
+        const message = `An error occurred: ${response.statusText}`;
+        window.alert(message);
+        return;
+      }
+      const result = await response.json();
+      setUser(result);
+      console.log(result.moods)
+    }
+
+    getUsers();
+
+    return;
+  }, []);
+
   async function handleSubmit(event) {
     event.preventDefault();
+
+    const newMood = {
+      "description": rating 
+    };
+    console.log(user.moods)
+    const updatedUser = {
+      ...user,
+      moods: [...user.moods.$values, newMood] 
+    };
+    console.log(updatedUser)
+    setUser(updatedUser);
+    
     loader.style.visibility = 'visible';
     text.style.visibility = 'hidden';
     setTimeout(async () => {
       try {
-        let response = await fetch("https://localhost:7270/mood", {
-          body: JSON.stringify({ "description": rating }),
+        let response = await fetch(url, {
+          body: JSON.stringify(newMood),
           method: "POST",
           headers: { 
             "Content-Type": "application/json",
             "Authorization": `Bearer ${localStorage.getItem("JwtToken")}`
           }
-
         });
         let result = await response.json();
         if (response.ok) {
