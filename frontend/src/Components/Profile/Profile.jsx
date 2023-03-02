@@ -43,7 +43,8 @@ function Profile( {id} ) {
         e.preventDefault();
         setShowModal(true);
 
-
+    }
+    
     const handleDelete = async () => {
        
         await fetch(`https://localhost:7270/users/delete/${userID}`, {
