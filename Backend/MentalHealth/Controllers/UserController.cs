@@ -27,7 +27,7 @@ public class UserController: ControllerBase
         return await _service.GetAll();
     }
     
-    [HttpPut("/users/update/")]
+    [HttpPut("/users/update/{id}")]
     public async Task UpdateUser(long id, [FromBody] User user)
     {
         await _service.Update(user);

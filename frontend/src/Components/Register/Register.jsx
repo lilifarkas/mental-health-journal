@@ -52,7 +52,7 @@ export default function Register() {
       setEyeType(eye)
     }
   }
-
+  //Validate button not shows after editing inputs
   let timeoutId;
   let loaderTimeoutId;
   function AbortFunction() {
@@ -95,7 +95,8 @@ export default function Register() {
         pwError.innerHTML = 'Please make sure you password contains at least 8 characters';
       }
       else {
-        let format = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$_!%*#?&])[A-Za-z\d@$_!%*#?&]{8,}$/;
+        let format = /^(?=.*\d).{8,}$/;
+        //let format = /^(?=.*[a-zA-Z0-9]).{8,}$/g;
         if (format.test(password) === true) {
           pwError.style.visibility = 'hidden';
           passwordInput.classList.value = 'form-control correct';
@@ -106,7 +107,7 @@ export default function Register() {
           pwError.style.visibility = 'visible';
           passwordInput.classList.value = 'form-control error';
           passwordInput2.classList.value = 'form-control error';
-          pwError.innerHTML = `Password not containing numbers, capital letters or special characters`;
+          pwError.innerHTML = `Please make sure your password contains at least one decimal number`;
         }
       }
     }
@@ -114,12 +115,14 @@ export default function Register() {
       submitBtn.disabled = false;
       ValidateBtn.style.display = 'none';
     }
+
     return false;
   }
   useEffect(() => {
     const submitBtnRendered = document.querySelector('#RegSubmitBtn');
     setTimeout(async () => {
       submitBtnRendered.disabled = true;
+      ValidateBtn.style.display = 'inline-block';
     }, 10);
   }, [userName, email, password])
 
@@ -239,18 +242,21 @@ export default function Register() {
             <label className='input-label' htmlFor="floatingInput">Email address</label>
           </div>
           <span className='pwError'>.</span>
-          <div className='password-fields'>
-            <div className="form-floating mb-3 pw">
-              <input onChange={(e) => setPassword(e.target.value)} type={pwType} className="form-control pw-input" id="pwInput" placeholder="Password" />
-              <label className='input-label' htmlFor="button-addon1">Password</label>
+          <div className='flex-row'>
+            <div className='reg-password-fields'>
+              <div className="form-floating mb-1 pw">
+                <input onChange={(e) => setPassword(e.target.value)} type={pwType} className="form-control pw-input" id="pwInput" placeholder="Password" />
+                <label className='input-label' htmlFor="button-addon1">Password</label>
+              </div>
+              <div className="input-group form-floating mb-1 pw">
+                <input onChange={(e) => setPasswordConfirm(e.target.value)} type={pwType} className="form-control pw-input" id="ConfPwInput" placeholder="Confirm Password" />
+                <label className='input-label' htmlFor="button-addon1">Confirm Password</label>
+
+              </div>
             </div>
-            <div className="input-group form-floating mb-3 pw">
-              <input onChange={(e) => setPasswordConfirm(e.target.value)} type={pwType} className="form-control pw-input" id="ConfPwInput" placeholder="Confirm Password" />
-              <label className='input-label' htmlFor="button-addon1">Confirm Password</label>
-              <span className="input-group-text" id="basic-addon1">
-                <button type='button' className="btn" onClick={(e) => ChangePasswordType(e)}><img src={eyeType} alt={"eye"} /></button>
-              </span>
-            </div>
+            <span className="input-group-text eyeIcon mb-3" id="basic-addon1">
+              <button type='button' className="btn eyeBtn" onClick={(e) => ChangePasswordType(e)}><img className='eye' src={eyeType} alt={"eye"} /></button>
+            </span>
           </div>
 
           <button type="submit" id='RegSubmitBtn' className="btn btn-success" disabled>
