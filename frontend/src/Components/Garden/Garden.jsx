@@ -117,8 +117,8 @@ const Garden = () => {
             <option value="2">Spruce</option>
             <option value="3">Birch</option>
           </select>
-          <button type='submit'>Plant!</button>
-          <button className='back-btn' onClick={togglePlantModal}>Back</button>
+          <button className='btn btn-success' type='submit'>Plant!</button>
+          <button className='back-btn btn btn-success' onClick={togglePlantModal}>Back</button>
         </form>
       )}
     </div>
