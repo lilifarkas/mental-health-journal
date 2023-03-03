@@ -1,12 +1,13 @@
 import React, { useRef } from 'react';
 import { NavLink } from "react-router-dom";
 import { BiLogOut } from 'react-icons/bi';
-import {FaBars, FaTimes} from 'react-icons/fa';
+import {FaBars, FaTimes, FaUser} from 'react-icons/fa';
 import './NavBar.css';
 
 function NavBar({handleLogout, user}) {
     const navRef = useRef();
-
+    console.log(user);
+    let name = user['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
     const showNavbar = () => {
         navRef.current.classList.toggle("responsive_nav");
     }
@@ -32,6 +33,10 @@ function NavBar({handleLogout, user}) {
                   <button className='logout' onClick={handleLogout}>
                                 <BiLogOut />
                             </button>
+                  </li> }
+                  {user !== null && <li className='nav-item px-4 userContainer'>
+                    <span className='userIcon'><FaUser/></span>
+                    <span className='userName'>{name}</span>
                   </li> }
 
                   </ul>
