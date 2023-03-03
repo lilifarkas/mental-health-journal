@@ -75,32 +75,43 @@
     flex-direction: row;
 }
 
-/* .loader {
-    display: block;
+#LoginSubmitBtn {
     position: relative;
-    height: 12px;
-    width: 80%;
-    border: 1px solid #fff;
-    border-radius: 10px;
-    overflow: hidden;
-} */
+    width: 100px;
+    align-items: center;
+    justify-content: center;
+}
 
 #cancelBtn {
     margin-left: 20px;
     visibility: hidden;
 }
 
+.error {
+    color: red !important;
+    border: 2px solid red !important;
+    background: rgba(255, 0, 0, 0.1) !important;
+}
+
 /*LOADING*/
 
-.LogLoadingContainer {
+.LoginText {
+    position: absolute;
+    visibility: visible;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.LoginLoaderContainer {
     position: relative;
     left: 50%;
+    height: 25px;
     transform: translate(-50%, 0);
     visibility: hidden;
     z-index: 99;
 }
 
-.LogLoader {
+.LoginLoader {
     position: relative;
     /* left: 50%; */
     /* transform: translate(-50%, 0); */
