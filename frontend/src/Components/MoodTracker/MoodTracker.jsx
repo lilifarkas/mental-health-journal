@@ -63,7 +63,6 @@ const MoodTracker = () => {
       }
       const result = await response.json();
       setUser(result);
-      console.log(result.moods)
     }
 
     getUsers();
