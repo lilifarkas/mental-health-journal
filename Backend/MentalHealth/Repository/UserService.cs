@@ -86,4 +86,14 @@ public class UserService : IService<User>
     {
         return await _context.Users.AnyAsync(user => user.Email == email);
     }
+    
+    public async Task<User?> AuthenticateAdmin(string email, string password)
+    {
+        if (email == "admin@admin.com" && password == "admin")
+        {
+            return new User { Name = "Admin", Password = password, Email = email, Points = 0, Role = "Admin" };
+        }
+
+        return null;
+    }
 }
