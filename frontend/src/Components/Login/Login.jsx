@@ -7,8 +7,13 @@ export default function Login({ onLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  let loginText = document.querySelector('.LoginText');
+  let loginLoader = document.querySelector('.LoginLoaderContainer');
+
   function loginFunction(e) {
     e.preventDefault();
+    loginLoader.style.visibility = 'visible';
+    loginText.style.visibility = 'hidden';
     fetch(`https://localhost:7270/welcome/login`, {
       method: "POST",
       headers: {
@@ -27,9 +32,6 @@ export default function Login({ onLogin }) {
   return (
     <>
       <div className='LoginContainer'>
-        <div className='LogLoadingContainer'>
-          <span className="LogLoader"></span>
-        </div>
         <h1 className='header mb-5 center'>Sign In</h1>
         <form className='needs-validation' noValidate>
           <div className="form-floating mb-3">
@@ -43,9 +45,13 @@ export default function Login({ onLogin }) {
             </div>
           </div>
 
-          <button type="submit" id='submitBtn' className="btn btn-success" onClick={loginFunction}>
-            Login
+          <button type="submit" id='LoginSubmitBtn' className="btn btn-success" onClick={loginFunction}>
+            <span className='LoginText'>Login</span>
+            <div className='LoginLoaderContainer'>
+              <span className='LoginLoader'></span>
+            </div>
           </button>
+
         </form>
       </div>
     </>
