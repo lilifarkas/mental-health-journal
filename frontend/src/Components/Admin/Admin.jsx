@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import {BiLogOut} from "react-icons/bi";
 
 const User = (props) => (
     <tr>
@@ -19,7 +20,7 @@ const User = (props) => (
     </tr>
 );
 
-export default function UsersList() {
+export default function UsersList({handleLogout}) {
 
     const [users, setUsers] = useState([]);
     const [filteredUsers, setFilteredUsers] = useState([]);
@@ -46,7 +47,6 @@ export default function UsersList() {
             setUsers(result.$values);
             setFilteredUsers(result.$values);
             setSortedUsers(result.$values);
-            console.log(result.$values)
         }
 
         getUsers();
@@ -120,7 +120,12 @@ export default function UsersList() {
 
     return (
         <div className="bg-light">
-            <h3>Users List</h3>
+            <div className="d-flex flex-column justify-content-center align-items-center">
+                <button className='logout' onClick={handleLogout}>
+                    <BiLogOut color="black"/>
+                </button>
+                <h3 className="mt-5">Users List</h3>
+            </div>
             <div className="d-flex flex-row justify-content-center align-items-center gap-2">
                 <select className="d-inline-flex mt-3" id="arrange" onChange={(e) => {
                     if (e.target.value === "By Name") {

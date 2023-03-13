@@ -30,6 +30,7 @@ public class AuthController : ControllerBase
         user.Name = registerDto.Name;
         user.Email = registerDto.Email;
         user.Password = registerDto.Password;
+        user.Role = "User";
         
         if (!await _service.UserExistsByEmail(user.Email))
         {
@@ -42,6 +43,14 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public async Task<ActionResult<LoginResultDTO>> Login([FromBody] LoginDTO loginDto)
     {
+        var admin = await _service.AuthenticateAdmin(loginDto.Email, loginDto.Password);
+
+        if (admin != null)
+        {
+            string token = CreateToken(admin);
+            return Ok(new LoginResultDTO { Token = token });
+        }
+        
         var user = await _service.GetByLogin(loginDto.Email, loginDto.Password);
         if (user != null)
         {

@@ -11,7 +11,7 @@ public class User
     public string Password { get; set; }
     public string Email { get; set; }
     public int Points { get; set; }
-    public string Role { get; set; } = "User";
+    public string Role { get; set; } 
     public virtual ICollection<Tree>? Trees { get; set; } = new List<Tree>();
     public virtual ICollection<MoodTracker>? Moods { get; set; } = new List<MoodTracker>();
     public virtual ICollection<UserTask>? UserTasks { get; set; } = new List<UserTask>();

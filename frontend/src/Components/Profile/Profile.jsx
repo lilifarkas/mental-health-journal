@@ -5,7 +5,7 @@ import "./Profile.css"
 import Modal from 'react-modal';
 
 
-function Profile( {id} ) {
+function Profile(  ) {
 
     const navigate = useNavigate()
     const [user, setUser] = useState(null);
@@ -121,15 +121,15 @@ function Profile( {id} ) {
             <div className="titles d-inline-flex flex-column mt-lg-5">
                 <div className="d-inline-flex d-flex flex-row gap-5">
                     <p className="d-inline-flex">Name:</p>
-                    <p className="d-inline-flex">{user && user.name}</p>
+                    <p className="d-inline-flex">{user.name}</p>
                 </div>
                 <div className="d-inline-flex d-flex flex-row gap-5">
                     <p className="d-inline-flex">Email:</p>
-                    <p className="d-inline-flex">{user && user.email}</p> 
+                    <p className="d-inline-flex">{user.email}</p> 
                 </div>
                 <div className="d-inline-flex d-flex flex-row gap-5">
                     <p className="d-inline-flex">Points:</p>
-                    <p className="d-inline-flex">{user && user.points}</p>
+                    <p className="d-inline-flex">{user.points}</p>
                 </div>
                 <div className="d-inline-flex d-flex flex-column">
                     <p className="d-inline-flex">Average mood in the last 7 days:</p>

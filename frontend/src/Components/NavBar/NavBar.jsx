@@ -12,7 +12,7 @@ function NavBar({ handleLogout, user }) {
     const showNavbar = () => {
         navRef.current.classList.toggle("responsive_nav");
     }
-    function nav(){
+    function nav() {
         navigate("/profile");
     }
     return (
@@ -29,9 +29,6 @@ function NavBar({ handleLogout, user }) {
                         </li>
                         <li className="nav-item px-4">
                             <NavLink className="nav-link" to={'/profile'}>Profile</NavLink>
-                        </li>
-                        <li className="nav-item px-4">
-                            <NavLink className="nav-link" to={'/admin'}>Admin</NavLink>
                         </li>
                         {user != null && <li className="nav-item px-4">
                             <button className='logout' onClick={handleLogout}>
