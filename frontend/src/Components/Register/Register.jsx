@@ -20,11 +20,8 @@ export default function Register() {
   let emailInput = document.querySelector('#email-input');
   let passwordInput = document.querySelector('#pwInput');
   let passwordInput2 = document.querySelector('#ConfPwInput');
-  //let nameError = document.querySelector('.nameError');
   let emailError = document.querySelector('.emailError');
   let pwError = document.querySelector('.pwError');
-  //let ValidateText = document.querySelector('.ValidateText');
-  //let ValidateLoader = document.querySelector('.ValidateLoader');
   let ValidateBtn = document.querySelector('#ValidateBtn');
 
   const navigate = useNavigate();
@@ -36,7 +33,6 @@ export default function Register() {
   const [eyeType, setEyeType] = useState(eye);
   const [valid, setValid] = useState(false);
 
-  //let isNameOK = false;
   let isEmailOK = false;
   let isPwOK = false;
   let controller = new AbortController();
@@ -111,26 +107,6 @@ export default function Register() {
       submitBtnRendered.disabled = true;
     }, 10);
   }, [email, password])
-
-  // function validateName(result) {
-  //   for (const user of result.$values) {
-  //     if (userName === '') {
-  //       nameInput.classList.value = 'form-control error';
-  //       nameError.style.visibility = 'visible';
-  //       nameError.innerHTML = 'Please enter a valid username';
-  //       return false;
-  //     }
-  //     else if (user.name === userName) {
-  //       nameInput.classList.value = 'form-control error';
-  //       nameError.style.visibility = 'visible';
-  //       nameError.innerHTML = 'An account is already registered with this username';
-  //       return false;
-  //     }
-  //   }
-  //   nameInput.classList.value = 'form-control correct';
-  //   nameError.style.visibility = 'hidden';
-  //   return true;
-  // }
 
   function validateEmail() {
     let emailFormat = /^[a-zA-Z0-9._+-]+@([a-zA-Z0-9]+\.)+[a-zA-Z]{2,}$/;
@@ -253,7 +229,6 @@ export default function Register() {
             <span className='ValidateLoader'></span>
           </button>
           {valid === true && navigate("/login")}
-          {/* {valid === true && navigate("/login")} */}
           <button type='button' onClick={() => AbortFunction()} id='cancelBtn' className='btn btn-secondary'>Cancel</button>
         </form>
       </div>
