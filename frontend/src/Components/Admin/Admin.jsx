@@ -5,7 +5,6 @@ const User = (props) => (
         <td>{props.record.id}</td>
         <td>{props.record.name}</td>
         <td>{props.record.email}</td>
-        <td>{props.record.role}</td>
         <td>{props.record.points}</td>
         {/*<td>*/}
         {/*    <button className="btn btn-link"*/}
@@ -136,7 +135,6 @@ export default function UsersList() {
                         <th>ID</th>
                         <th>UserName</th>
                         <th>Email</th>
-                        <th>Role</th>
                         <th>Points</th>
                     </tr>
                 </thead>
