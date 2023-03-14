@@ -81,7 +81,7 @@ const Garden = () => {
         <h1>{progress}</h1>
       </div>
     )
-  };
+  }
 
   const treeCards = trees.map((tree, index) => (
     <TreeCard key={index} name={tree.name} type={tree.type} progress={tree.progress} />

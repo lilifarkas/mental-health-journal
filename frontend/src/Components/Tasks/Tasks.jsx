@@ -54,7 +54,7 @@ const Tasks = () => {
         const newTasks = tasks["$values"].filter((t) => t.id !== id);
         setTasks(newTasks);
       
-    };
+    }
     
   async function addTask() {
     let taskDTO = {TaskDescription : task}
@@ -96,8 +96,8 @@ const Tasks = () => {
           {taskList()}
         </tbody>
       </table>
-      <div class="input-group pt-5">
-      <input type="text" class="form-control border border-success bg-opacity" 
+      <div className="input-group pt-5">
+      <input type="text" className="form-control border border-success bg-opacity" 
       placeholder='Description' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
       value={task} onChange={handleTaskChange}/>
       <button className='btn btn-success' onClick={addTask}>Add task</button>
