@@ -29,7 +29,10 @@ jobs:
         with:
           node-version: '14.x'
       - name: Install dependencies
-        run: npm install
+        run: |
+          cd /home/runner/work/mental-health-journal/mental-health-journal/frontend
+          npm install
+          npm ci
       - name: Print current working directory
         run: pwd
       - name: Run lint tests
