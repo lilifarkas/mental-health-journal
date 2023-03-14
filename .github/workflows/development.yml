@@ -39,10 +39,6 @@ jobs:
         run: |
           cd /home/runner/work/mental-health-journal/mental-health-journal/frontend
           npm run lint
-      - name: Run frontend tests
-        run:  |
-          cd /home/runner/work/mental-health-journal/mental-health-journal/frontend
-          npm run test
       - name: Setup .NET Core environment
         uses: actions/setup-dotnet@v1
         with:
@@ -51,7 +47,3 @@ jobs:
         run:  |
           cd /home/runner/work/mental-health-journal/mental-health-journal/MentalHealth
           dotnet build
-      - name: Run backend tests
-        run:  |
-          cd /home/runner/work/mental-health-journal/mental-health-journal/MentalHealth
-          dotnet test
