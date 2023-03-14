@@ -30,9 +30,11 @@ jobs:
           node-version: '14.x'
       - name: Install dependencies
         run: npm install
+      - name: Print current working directory
+        run: pwd
       - name: Run lint tests
         run: |
-          cd /home/runner/work/mental-health-journal/mental-health-journal/frontend/package.json
+          cd /frontend/package.json
           npm run lint
       - name: Run frontend tests
         run: npm run test
