@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: CI-development
 
 # Controls when the workflow will run
 on:
@@ -31,7 +31,9 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Run lint tests
-        run: npm run lint
+        run: |
+          cd /home/runner/work/mental-health-journal/frontend/package.json
+          npm run lint
       - name: Run frontend tests
         run: npm run test
       - name: Setup .NET Core environment
