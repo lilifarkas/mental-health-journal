@@ -30,6 +30,7 @@ jobs:
           node-version: '14.x'
       - name: Install dependencies
         run: |
+          cd /home/runner/work/mental-health-journal/mental-health-journal/frontend
           npm install
           npm ci
       - name: Print current working directory
