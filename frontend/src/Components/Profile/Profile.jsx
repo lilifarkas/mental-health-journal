@@ -1,4 +1,4 @@
-import {Link, NavLink, useNavigate} from "react-router-dom";
+import { NavLink, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import jwt_decode from "jwt-decode"; 
 import "./Profile.css"
@@ -51,19 +51,19 @@ function Profile(  ) {
         setShowModal(true);
     }
 
-    const handleDelete = async () => {
-       
-        await fetch(`https://localhost:7270/users/delete/${userID}`, {
-            method: "DELETE",
-            headers: {
-                "Authorization": `Bearer ${jwtToken}`
-              }
-
-        });
-        // close the modal and navigate to home page
-        setShowModal(false);
-        navigate("/");
-    }
+    // const handleDelete = async () => {
+    //   
+    //     await fetch(`https://localhost:7270/users/delete/${userID}`, {
+    //         method: "DELETE",
+    //         headers: {
+    //             "Authorization": `Bearer ${jwtToken}`
+    //           }
+    //
+    //     });
+    //     // close the modal and navigate to home page
+    //     setShowModal(false);
+    //     navigate("/");
+    // }
 
     const handleCancel = () => {
         // close the modal and stay on the profile page

@@ -21,7 +21,6 @@ const MoodTracker = () => {
   let errorMessage = document.querySelector('.MoodErrorMessage');
 
   const [rating, setRating] = useState(0);
-  const [rated, setRated] = useState(false);
   const [selectedEmoji, setSelectedEmoji] = useState(null);
   const [shouldShow, setShouldShow] = useState(true);
 

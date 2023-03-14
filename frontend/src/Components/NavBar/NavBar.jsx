@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { NavLink, useNavigate } from "react-router-dom";
 import { BiLogOut } from 'react-icons/bi';
-import { FaBars, FaTimes, FaUser } from 'react-icons/fa';
+import { FaUser } from 'react-icons/fa';
 import './NavBar.css';
 
 function NavBar({ handleLogout, user }) {
@@ -9,9 +9,6 @@ function NavBar({ handleLogout, user }) {
     const navRef = useRef();
     console.log(user);
     let name = user['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
-    const showNavbar = () => {
-        navRef.current.classList.toggle("responsive_nav");
-    }
     function nav() {
         navigate("/profile");
     }
