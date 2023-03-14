@@ -6,8 +6,7 @@ import Modal from 'react-modal';
 
 
 function Profile(  ) {
-
-    const navigate = useNavigate()
+    
     const [user, setUser] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [moods, setMoods] = useState([]);
