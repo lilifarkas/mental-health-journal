@@ -24,22 +24,37 @@ const MoodTracker = () => {
   const [rated, setRated] = useState(false);
   const [selectedEmoji, setSelectedEmoji] = useState(null);
   const [shouldShow, setShouldShow] = useState(true);
-
-  // const lastShownDateString = localStorage.getItem('lastShownDate');
-  // const lastShownDate = lastShownDateString ? new Date(lastShownDateString) : null;
-
-  // const now = new Date();
-  // const shouldShowToday = !lastShownDate || now.getDate() !== lastShownDate.getDate();
-
-  // if (shouldShowToday) {
-  //   localStorage.setItem('lastShownDate', now.toDateString());
-  // }
-  // console.log(now.getDate(), lastShownDate.getDate(), shouldShow, now.toDateString(), lastShownDateString);
-
+  //USER
   const jwtToken = localStorage.getItem("jwtToken");
   const userID = jwt_decode(jwtToken).userID;
   const url = `https://localhost:7270/mood/${userID}`;
   const [user, setUser] = useState(null);
+  const [showComponent, setShowComponent] = useState(false);
+
+  useEffect(() => {
+    // Get the current date
+    const currentDate = new Date().toDateString();
+
+    // Check if the user has already seen the component today
+    const hasSeenComponent = hasUserSeenComponentToday(userID, currentDate);
+
+    // If the user has not seen the component today, show the component
+    if (!hasSeenComponent) {
+      setShowComponent(true);
+
+      // Store the user ID and current date as the last shown date for the user
+      setLastShownDateForUser(userID, currentDate);
+    }
+  }, []);
+
+  const setLastShownDateForUser = (id, date) => {
+    localStorage.setItem(`lastShownDate_${id}`, date);
+  };
+
+  function hasUserSeenComponentToday(id, date) {
+    let lastShownDate = localStorage.getItem(`lastShownDate_${id}`, date);
+    return lastShownDate === date;
+  }
 
   function getChildProps(value) {
     setRating(value);
@@ -53,7 +68,7 @@ const MoodTracker = () => {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${jwtToken}`
-        } 
+        }
       });
 
       if (!response.ok) {
@@ -106,7 +121,7 @@ const MoodTracker = () => {
             setShouldShow(false);
             //console.log(now.getDate(), lastShownDate.getDate(), shouldShow, now.toDateString(), lastShownDateString);
             //}
-            navigate("/profile");
+            navigate("/tasks");
           }, 1000)
         }
         else {
@@ -170,7 +185,7 @@ const MoodTracker = () => {
             
             <button onClick={handleEdit}>Edit</button>
           </>)} */}
-      {shouldShow && (
+      {showComponent && (
         <div className='mood-container'>
           <h3 className="ratingHeader">How are you feeling today?</h3>
 
