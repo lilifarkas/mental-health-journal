@@ -15,6 +15,7 @@
 
 .LoginContainer {
     top: 15%;
+    background-color: rgba(255, 255, 250, 0.816);
     position: absolute;
     left: 50%;
     margin: 20px;
@@ -24,6 +25,21 @@
     border-radius: 7px 7px 7px 7px;
     padding: 60px;
     backdrop-filter: blur(7px);
+}
+
+.LogCheck {
+    width: 25px;
+    height: 25px;
+    visibility: hidden;
+}
+
+.LogCheck>svg {
+    color: #1cd628;
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
 }
 
 
@@ -48,7 +64,6 @@
 
 .form-control {
     border: 1px dashed green;
-
 }
 
 .form-control:hover {
@@ -64,6 +79,12 @@
     outline: none !important;
     border: 2px solid green;
     background-color: rgba(255, 255, 255, 0.711);
+}
+
+.inputError{
+    color: red;
+    position: relative;
+    visibility: hidden;
 }
 
 #LoginPwInput {
@@ -92,7 +113,11 @@
     border: 2px solid red !important;
     background: rgba(255, 0, 0, 0.1) !important;
 }
-
+.correct {
+    color: green;
+    border: 2px solid green !important;
+    background-color: rgba(0, 128, 0, 0.1);
+}
 /*LOADING*/
 
 .LoginText {
@@ -103,9 +128,8 @@
 }
 
 .LoginLoaderContainer {
-    position: relative;
+    position: absolute;
     left: 50%;
-    height: 25px;
     transform: translate(-50%, 0);
     visibility: hidden;
     z-index: 99;
