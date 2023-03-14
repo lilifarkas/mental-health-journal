@@ -1,0 +1,242 @@
+body {
+    background: url('./img/background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.header {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+    color: rgb(82, 82, 82) !important;
+    text-align: center;
+}
+
+.RegisterContainer {
+    top: 15%;
+    background-color: rgba(255, 255, 250, 0.816);
+    position: absolute;
+    left: 50%;
+    margin: 20px;
+    transform: translate(-50%, 0);
+    width: 40%;
+    border: 2px solid green;
+    border-radius: 7px 7px 7px 7px;
+    padding: 60px;
+    /* backdrop-filter: blur(7px); */
+    backdrop-filter: grayscale(0.3) blur(5px) saturate(0.6) contrast(0.6) opacity(0.7);
+}
+
+
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.form-contol:focus,
+.form-contol:active:focus,
+.form-contol.active:focus,
+.form-contol.focus,
+.form-contol:active.focus,
+.form-contol.active.focus {
+    outline: none;
+}
+
+.form-control {
+    border: 1px dashed green;
+
+}
+
+.form-control:hover {
+    border: 2px solid green;
+}
+
+.form-control:focus+.input-label {
+    color: green;
+}
+
+.form-control:focus {
+    outline: none !important;
+    border: 2px solid green;
+    background-color: rgba(255, 255, 255, 0.711);
+}
+
+.pw {
+    width: 100%;
+}
+
+.reg-password-fields{
+    display: flex;
+    flex-direction: row;
+}
+.felx-row{
+    display: flex;
+    flex-direction: row;
+}
+.eyeIcon{
+    height: 30px;
+    position: relative;
+}
+.eyeBtn{
+    width: 100%;
+}
+.eye{
+    top: 0;
+    position: relative;
+    height: 25px;
+}
+
+/*ERRORS*/
+.nameError,
+.emailError,
+.pwError {
+    color: red;
+    visibility: hidden;
+}
+
+.input-group-text{
+    padding: 0 !important;
+}
+
+.error {
+    color: red !important;
+    border: 2px solid red !important;
+    background: rgba(255, 0, 0, 0.1) !important;
+}
+
+.empty {
+    color: orange;
+    border: 2px solid orange;
+    background-color: rgba(255, 166, 0, 0.1);
+}
+
+.correct {
+    color: green;
+    border: 2px solid green !important;
+    background-color: rgba(0, 128, 0, 0.1);
+}
+.btn.eyeBtn{
+    padding: 0 !important;
+}
+
+
+#RegSubmitBtn {
+    position: relative;
+    width: 100px;
+    align-items: center;
+    justify-content: center;
+}
+
+.RegSubmitText {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    display: inline-block;
+}
+
+.RegCheck {
+    width: 25px;
+    height: 25px;
+    visibility: hidden;
+}
+
+.RegCheck>svg {
+    color: #1cd628;
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+#cancelBtn {
+    margin-left: 20px;
+    visibility: hidden;
+}
+
+/*LOADING*/
+
+.RegLoadingContainer {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    visibility: hidden;
+    z-index: 99;
+}
+
+.RegLoader {
+    position: relative;
+    /* left: 50%; */
+    /* transform: translate(-50%, 0); */
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: inline-block;
+    border-top: 3px solid #1cd628;
+    border-right: 3px solid transparent;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/*VALIDATE*/
+#ValidateBtn {
+    width: 80px;
+}
+
+.ValidateText {
+    position: absolute;
+    visibility: visible;
+}
+
+.ValidateLoader {
+    top: 0;
+    border-radius: 5px;
+    visibility: hidden;
+    width: 100%;
+    height: 5px;
+    display: inline-block;
+    position: relative;
+    background: rgba(255, 255, 255, 0.15);
+    overflow: hidden;
+}
+
+.ValidateLoader::after {
+    content: '';
+    border-radius: 5px;
+    width: 20px;
+    height: 4.8px;
+    background: #ffffff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    animation: animloader 1s linear infinite;
+}
+
+@keyframes animloader {
+    0% {
+        left: 0;
+        transform: translateX(-100%);
+    }
+
+    100% {
+        left: 100%;
+        transform: translateX(0%);
+    }
+}

@@ -1,0 +1,125 @@
+.navbar header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+    padding: 0 2rem;
+    background: rgb(50, 58, 73);
+    width: 100%;
+}
+
+.navbar nav a {
+    margin: 0 2rem;
+    text-decoration: none;
+    color: whitesmoke;
+    font-family: 'Courier New', Courier, monospace;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 38px;
+}
+ 
+.navbar nav a:hover {
+    color: aquamarine;
+}
+.logout{
+    justify-self: left;
+    left: 5%;
+    position: absolute;
+    background: transparent;
+    outline: none;
+    border: none;
+    width: 35px;
+    height: 35px;
+}
+.logout > svg{
+    top: 7%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    position: absolute;
+    height: 35px;
+    width: 35px;
+    color: white;
+}
+.logout > svg:hover{
+    color: red;
+}
+.userContainer{
+    display: flex;
+    justify-self: right;
+    right: 5%;
+    position: absolute;
+    background: transparent;
+    outline: none;
+    border: none;
+    width: 35px;
+    height: 35px;
+}
+.userName{
+    color: rgb(48, 165, 95);
+    margin-left: 10px;
+    font-size: x-large;
+    position: relative;
+}
+
+.userName:hover{
+    cursor: pointer;
+}
+
+.userIcon{
+    position: relative;
+    top: 10% !important;
+}
+.userIcon > svg{
+    width: 30px !important;
+    height: 30px;
+}
+
+.navbar header .nav-btn {
+    padding: 5px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #17a86e;
+    visibility: hidden;
+    opacity: 0;
+    font-size: 1.8rem;
+}
+
+@media only screen and (max-width: 1024px){
+    .navbar header .nav-btn {
+        visibility: visible;
+        opacity: 1;
+    }
+    
+    .navbar header nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+        background-color: #282c34;
+        transition: 0.5s;
+        transform: translateY(-100vh);
+    }
+    
+    .navbar header .responsive_nav {
+        transform: none;
+    }
+    
+    .navbar nav .nav-close-btn {
+        position: absolute;
+        top: 2rem;
+        right: 2rem;
+    }
+    
+    .navbar nav a {
+        font-size: 1.5rem;
+    }
+}

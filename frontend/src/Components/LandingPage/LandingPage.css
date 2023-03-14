@@ -1,0 +1,76 @@
+@import url('https://fonts.cdnfonts.com/css/garuda');
+@import url('https://fonts.cdnfonts.com/css/gloria-hallelujah');
+body {
+   background: url('background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position:center -30vh;
+}
+
+.button {
+    background: -webkit-linear-gradient(to right, #7A89A9, #A39772); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #7A89A9, #A39772); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    width: 100px;
+}
+
+.button-text{
+    color: black;
+}
+
+.title{
+    font-family: 'GARUDA';
+    font-size: 50px;
+    background: -webkit-linear-gradient(left, #7A89A9, #A39772);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.slogan{
+    font-family: 'Gloria Hallelujah', sans-serif;
+}
+
+.text{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    width: 50%;
+    margin-top: 2%;
+}
+
+.buttons{
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    justify-content: left;
+    margin-top: 10%;
+    margin-left: 10%;
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    width: 70%;
+    gap: 30px;
+}
+
+.header-one{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10%;
+    margin-right: 50%;
+    /* margin-left: 5%; */
+}
+
+.header-two{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.container1{
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+}
