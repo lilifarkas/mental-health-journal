@@ -32,7 +32,7 @@ jobs:
         run: npm install
       - name: Run lint tests
         run: |
-          cd /home/runner/work/mental-health-journal/frontend/package.json
+          cd /home/runner/work/mental-health-journal/mental-health-journal/frontend/package.json
           npm run lint
       - name: Run frontend tests
         run: npm run test
