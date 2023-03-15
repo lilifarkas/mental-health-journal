@@ -35,6 +35,12 @@ public class UserController: ControllerBase
         await _service.Update(user);
     }
     
+    [HttpPut("/users/addPoints/{id}")]
+    public async Task UpdatePointsUser(long id, [FromBody] int point)
+    {
+        await _service.UpdatePoint(id, point);
+    }
+    
     [HttpDelete("/users/delete/{id}")]
     public async Task DeleteUser(long id)
     {

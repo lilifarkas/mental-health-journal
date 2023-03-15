@@ -48,6 +48,18 @@ public class UserService : IService<User>
             }
         
     }
+    
+    public async Task UpdatePoint(long id, int point)
+    {
+        var user = await _context.Users.FindAsync(id);
+        if (user != null)
+        {
+            user.Points += point;
+
+            await _context.SaveChangesAsync();
+        }
+        
+    }
 
     public async Task Delete(long id)
     {
