@@ -30,20 +30,17 @@ const MoodTracker = () => {
   const url = `https://localhost:7270/mood/${userID}`;
   const [user, setUser] = useState(null);
   const [showComponent, setShowComponent] = useState(false);
+  const currentDate = new Date().toDateString();
 
   useEffect(() => {
     // Get the current date
-    const currentDate = new Date().toDateString();
-
+    console.log(currentDate);
     // Check if the user has already seen the component today
     const hasSeenComponent = hasUserSeenComponentToday(userID, currentDate);
 
     // If the user has not seen the component today, show the component
     if (!hasSeenComponent) {
       setShowComponent(true);
-
-      // Store the user ID and current date as the last shown date for the user
-      setLastShownDateForUser(userID, currentDate);
     }
   }, []);
 
@@ -57,6 +54,7 @@ const MoodTracker = () => {
   }
 
   function getChildProps(value) {
+    submitBtn.disabled = false;
     setRating(value);
     setSelectedEmoji(value);
     console.log(value)
@@ -113,6 +111,8 @@ const MoodTracker = () => {
         });
         let result = await response.json();
         if (response.ok) {
+          // Store the user ID and current date as the last shown date for the user
+          setLastShownDateForUser(userID, currentDate);
           check.style.visibility = 'visible';
           loader.style.visibility = 'hidden';
           console.log(result);
@@ -222,7 +222,7 @@ const MoodTracker = () => {
                 <label className='inpLabel' htmlFor="4">Very Good</label>
               </div>
             </div>
-            <button id='moodSubmitBtn' className='btn btn-success' type="submit">
+            <button id='moodSubmitBtn' className='btn btn-success' type="submit" disabled>
               <span className='MoodSubmitText'>Submit</span>
               <div className='MoodLoadingContainer'>
                 <span className="MoodLoader"></span>
