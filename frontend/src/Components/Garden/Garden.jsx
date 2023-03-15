@@ -8,6 +8,7 @@ const Garden = () => {
   const [treeName, setTreeName] = useState("");
   const [treeType, setTreeType] = useState(1);
   const [trees, setTrees] = useState([]);
+  const [user,setUser] = useState(null);
 
   const jwtToken = localStorage.getItem("jwtToken");
   const currentUserId = jwt_decode(jwtToken).userID;
@@ -16,10 +17,7 @@ const Garden = () => {
     setMenuModal(!menuModal);
   };
 
-  const togglePlantModal = () => {
-    setPlantModal(!plantModal);
-    toggleMenuModal();
-  };
+ 
 
   useEffect(() => {
     const getTrees = async () => {
@@ -38,7 +36,25 @@ const Garden = () => {
       });
       return treesArray;
     };
+    const getUser = async () => {
+      const response = await fetch(`https://localhost:7270/users/${currentUserId}`, {
+        method : 'GET',
+        headers: {
+          "Authorization": `Bearer ${jwtToken}`
+        }
 
+      });
+        const result = await response.json();
+        console.log(result);
+
+        return result;
+    }
+
+    getUser().then(result => {
+        setUser(result);
+    }).catch(error => {
+        console.error(error);
+    });
     getTrees().then(result => {
       setTrees(result);
     }).catch(error => {
@@ -73,25 +89,43 @@ const Garden = () => {
   
   function TreeCard(props) {
     let type = props.type === 1 ? "Oak" : props.type === 2 ? "Spruce" : "Birch";
-    let progress = props.progress === 0 ? "Seed" : props.progress === 1 ? "Sprout" : props.progress === 2 ? "Sapling" : "Mature Tree";
+    let progress = props.progress === 0 ? "Seed" : props.progress === 1 ? "Sprout" : props.progress === 2 ? "Sapling" : props.progress === 3 ? "Small Tree" : "Mature Tree";
+    const handleDelete = async (e) => {
+      e.preventDefault();
+      let response = await fetch(`https://localhost:7270/tree/${props.id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${jwtToken}`
+      }
+    })
+    let result = await response.text();
+    
+    }
     return (
       <div className='tree-card'>
         <h1>{props.name}</h1>
         <h1>{type}</h1>
         <h1>{progress}</h1>
+        <button onClick={handleDelete}>Delete</button>
       </div>
     )
   };
 
   const treeCards = trees.map((tree, index) => (
-    <TreeCard key={index} name={tree.name} type={tree.type} progress={tree.progress} />
+    <TreeCard key={index} id={tree.id} name={tree.name} type={tree.type} progress={tree.progress} />
   ));
 
   if (!Array.isArray(trees)) {
     return <div>Loading data...</div>;
   }
 
-
+  const togglePlantModal = () => {
+    if(trees.length === 0){
+      setPlantModal(!plantModal);
+      toggleMenuModal();
+    }
+  };
 
   return (
     <div className='garden-container'>
