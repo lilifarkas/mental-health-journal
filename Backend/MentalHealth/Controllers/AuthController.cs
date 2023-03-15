@@ -25,6 +25,16 @@ public class AuthController : ControllerBase
         _configuration = configuration;
         _passwordHasher = passwordHasher;
     }
+
+    [HttpPost("validate")]
+    public async Task<ActionResult<bool>> ValidateEmail([FromBody] RegisterDTO registerDto)
+    {
+        if (!await _service.UserExistsByEmail(registerDto.Email))
+        {
+            return Ok();
+        }
+        return BadRequest(new RegisterErrorDTO { Error = "User exists" });
+    }
     
     [HttpPost("register")]
     public async Task<ActionResult<User>> Register([FromBody] RegisterDTO registerDto)
@@ -37,12 +47,12 @@ public class AuthController : ControllerBase
         var hashedPassword = _passwordHasher.HashPassword(user, registerDto.Password);
         user.Password = hashedPassword;
 
-        if (!await _service.UserExistsByEmail(user.Email))
-        {
+        //if (!await _service.UserExistsByEmail(user.Email))
+        //{
             await _service.Add(user);
             return Ok(user);
-        }
-        return BadRequest( new RegisterErrorDTO{Error = "User exists"});
+        //}
+        //return BadRequest( new RegisterErrorDTO{Error = "User exists"});
     }
 
     [HttpPost("login")]
