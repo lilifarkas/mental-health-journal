@@ -42,6 +42,39 @@
     transform: translate(-50%, 0);
 }
 
+.LogSubmitError {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    visibility: hidden;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.LogSubmitError>svg {
+    color: rgb(255, 217, 217);
+    width: 25px;
+    height: 25px;
+    position: relative;
+    /* left: 50%; */
+    /* transform: translate(-50%, 0); */
+}
+
+.LogSubmitErrorMessage {
+    background-color: #ff0d002e;
+    padding: 3px;
+    color: rgb(170, 9, 9);
+    width: 400px;
+    display: block;
+    position: relative;
+    text-align: center;
+    visibility: hidden;
+    margin-top: 2px;
+    font-weight: 500;
+    border-radius: 4px;
+}
+
 
 .btn:focus,
 .btn:active:focus,

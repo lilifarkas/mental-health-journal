@@ -2,7 +2,8 @@ import React, { useEffect } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Login.css';
 import { useState } from 'react';
-import {HiCheck} from 'react-icons/hi';
+import { HiCheck } from 'react-icons/hi';
+import { MdOutlineReportGmailerrorred } from 'react-icons/md';
 
 export default function Login({ onLogin }) {
   const [email, setEmail] = useState('');
@@ -14,6 +15,10 @@ export default function Login({ onLogin }) {
   let pwInput = document.querySelector('#login-pw-input');
   let errorText = document.querySelector('.inputError');
   let check = document.querySelector('.LogCheck');
+  let submitBtn = document.querySelector('#LoginSubmitBtn');
+  let submitError = document.querySelector('.LogSubmitError');
+  let submitErrorMessage = document.querySelector('.LogSubmitErrorMessage');
+
 
   async function loginFunction(e) {
     e.preventDefault();
@@ -37,7 +42,7 @@ export default function Login({ onLogin }) {
         emailInput.classList.value = 'form-control correct'
         pwInput.classList.value = 'form-control correct'
         check.style.visibility = 'visible';
-        setTimeout(()=>{
+        setTimeout(() => {
           onLogin(result.token);
         }, 1000)
       }
@@ -48,12 +53,20 @@ export default function Login({ onLogin }) {
         loginLoader.style.visibility = 'hidden';
         loginText.style.visibility = 'visible';
       }
-      else {
-        console.warn('error', result.error);
-      }
     }
     catch (error) {
-      console.error(error);
+      loginLoader.style.visibility = 'hidden';
+      submitBtn.classList.value = 'btn btn-danger';
+      submitError.style.visibility = 'visible';
+      submitErrorMessage.style.visibility = 'visible';
+      submitBtn.disabled = true;
+      setTimeout(() => {
+        submitBtn.disabled = false;
+        submitBtn.classList.value = 'btn btn-success';
+        submitError.style.visibility = 'hidden';
+        submitErrorMessage.style.visibility = 'hidden';
+        loginText.style.visibility = 'visible';
+      }, 2000)
     }
     // .then(response => response.json())
     // .then(data => onLogin(data.token))
@@ -93,7 +106,11 @@ export default function Login({ onLogin }) {
             <div className='LogCheck'>
               <HiCheck />
             </div>
+            <div className='LogSubmitError'>
+              <MdOutlineReportGmailerrorred />
+            </div>
           </button>
+          <span className='LogSubmitErrorMessage'>Unable to reach the server! Please try again later! </span>
 
         </form>
       </div>
