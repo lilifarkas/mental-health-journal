@@ -71,22 +71,26 @@ body {
     width: 100%;
 }
 
-.reg-password-fields{
+.reg-password-fields {
     display: flex;
     flex-direction: row;
 }
-.felx-row{
+
+.felx-row {
     display: flex;
     flex-direction: row;
 }
-.eyeIcon{
+
+.eyeIcon {
     height: 30px;
     position: relative;
 }
-.eyeBtn{
+
+.eyeBtn {
     width: 100%;
 }
-.eye{
+
+.eye {
     top: 0;
     position: relative;
     height: 25px;
@@ -100,7 +104,7 @@ body {
     visibility: hidden;
 }
 
-.input-group-text{
+.input-group-text {
     padding: 0 !important;
 }
 
@@ -121,7 +125,8 @@ body {
     border: 2px solid green !important;
     background-color: rgba(0, 128, 0, 0.1);
 }
-.btn.eyeBtn{
+
+.btn.eyeBtn {
     padding: 0 !important;
 }
 
@@ -158,6 +163,39 @@ body {
 #cancelBtn {
     margin-left: 20px;
     visibility: hidden;
+}
+
+.RegSubmitError {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    visibility: hidden;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.RegSubmitError>svg {
+    color: rgb(255, 217, 217);
+    width: 25px;
+    height: 25px;
+    position: relative;
+    /* left: 50%; */
+    /* transform: translate(-50%, 0); */
+}
+
+.RegSubmitErrorMessage {
+    background-color: #ff0d002e;
+    padding: 3px;
+    color: rgb(170, 9, 9);
+    width: 400px;
+    display: block;
+    position: relative;
+    text-align: center;
+    visibility: hidden;
+    margin: 2px;
+    font-weight: 500;
+    border-radius: 4px;
 }
 
 /*LOADING*/

@@ -6,6 +6,7 @@ import './Register.css';
 import eye from './img/eye.svg';
 import eyeslash from './img/eye-slash.svg';
 import { HiCheck } from 'react-icons/hi';
+import { MdOutlineReportGmailerrorred } from 'react-icons/md';
 
 
 export default function Register() {
@@ -23,6 +24,8 @@ export default function Register() {
   let emailError = document.querySelector('.emailError');
   let pwError = document.querySelector('.pwError');
   let ValidateBtn = document.querySelector('#ValidateBtn');
+  let submitError = document.querySelector('.RegSubmitError');
+  let submitErrorText = document.querySelector('.RegSubmitErrorMessage');
 
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
@@ -173,7 +176,19 @@ export default function Register() {
         }
 
         else {
+          loader.style.visibility = 'hidden';
+          submitBtn.classList.value = 'btn btn-danger';
+          submitBtn.disabled = true;
+          submitError.style.visibility = 'visible';
+          submitErrorText.style.visibility = 'visible';
           console.error(`ERROR: ${error}`);
+          setTimeout(()=>{
+            submitBtn.disabled = false;
+            submitErrorText.style.visibility = 'hidden';
+            submitBtn.classList.value = 'btn btn-success';
+            submitError.style.visibility = 'hidden';
+            text.style.visibility = "visible";
+          }, 2000)
         }
       }
       cancelButton.style.visibility = 'hidden';
@@ -223,6 +238,9 @@ export default function Register() {
             <div className='RegCheck'>
               <HiCheck />
             </div>
+            <div className='RegSubmitError'>
+                <MdOutlineReportGmailerrorred />
+              </div>
           </button>
           <button type='button' id='ValidateBtn' className='btn btn-secondary' onClick={() => ValidateInputs()}>
             <span className='ValidateText'>Validate</span>
@@ -230,6 +248,7 @@ export default function Register() {
           </button>
           {valid === true && navigate("/login")}
           <button type='button' onClick={() => AbortFunction()} id='cancelBtn' className='btn btn-secondary'>Cancel</button>
+          <span className='RegSubmitErrorMessage'>Unable to reach the server! Please try again later! </span>
         </form>
       </div>
     </>
