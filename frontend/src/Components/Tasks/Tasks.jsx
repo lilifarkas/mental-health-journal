@@ -45,6 +45,7 @@ const Tasks = () => {
   };
 
   async function deleteTask(id) {
+
     await fetch(`https://localhost:7270/usertask/${id}`, {
       method: "DELETE",
       headers: {

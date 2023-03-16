@@ -13,7 +13,6 @@ import jwt_decode from "jwt-decode";
 
 const MoodTracker = ({toggleMenu}) => {
   const [rating, setRating] = useState(0);
-  const [rated, setRated] = useState(false);
   const [selectedEmoji, setSelectedEmoji] = useState(null);
   const [isDisabled, setIsDisabled] = useState(true);
 
