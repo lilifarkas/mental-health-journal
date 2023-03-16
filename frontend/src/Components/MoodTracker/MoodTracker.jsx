@@ -11,239 +11,127 @@ import { HiCheck } from 'react-icons/hi';
 import { MdOutlineReportGmailerrorred } from 'react-icons/md';
 import jwt_decode from "jwt-decode";
 
-const MoodTracker = () => {
-  let navigate = useNavigate();
-  let loader = document.querySelector('.MoodLoadingContainer');
-  let check = document.querySelector('.MoodCheck');
-  let text = document.querySelector('.MoodSubmitText');
-  let submitBtn = document.querySelector('#moodSubmitBtn');
-  let error = document.querySelector('.MoodSubmitError');
-  let errorMessage = document.querySelector('.MoodErrorMessage');
-
+const MoodTracker = ({toggleMenu}) => {
   const [rating, setRating] = useState(0);
   const [selectedEmoji, setSelectedEmoji] = useState(null);
-  const [shouldShow, setShouldShow] = useState(true);
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [rated, setRated] = useState(false);
+
   //USER
   const jwtToken = localStorage.getItem("jwtToken");
   const userID = jwt_decode(jwtToken).userID;
-  const url = `https://localhost:7270/mood/${userID}`;
+  const currentDate = new Date();
   const [user, setUser] = useState(null);
-  const [showComponent, setShowComponent] = useState(false);
-  const currentDate = new Date().toDateString();
-
-  useEffect(() => {
-    // Get the current date
-    console.log(currentDate);
-    // Check if the user has already seen the component today
-    const hasSeenComponent = hasUserSeenComponentToday(userID, currentDate);
-
-    // If the user has not seen the component today, show the component
-    if (!hasSeenComponent) {
-      setShowComponent(true);
-    }
-  }, []);
-
-  const setLastShownDateForUser = (id, date) => {
-    localStorage.setItem(`lastShownDate_${id}`, date);
-  };
-
-  function hasUserSeenComponentToday(id, date) {
-    let lastShownDate = localStorage.getItem(`lastShownDate_${id}`, date);
-    return lastShownDate === date;
-  }
+  const url = `https://localhost:7270/users/${userID}`;
 
   function getChildProps(value) {
-    submitBtn.disabled = false;
     setRating(value);
     setSelectedEmoji(value);
-    console.log(value)
+    setIsDisabled(false);
+  }
+    
+  async function getUser() {
+    const response = await fetch(url, {
+      method : 'GET',
+      headers: {
+        "Authorization": `Bearer ${jwtToken}`
+      }
+    });      
+    const fetchedUser = await response.json();
+    setUser(fetchedUser);
   }
 
   useEffect(() => {
-    async function getUsers() {
-      const response = await fetch(`https://localhost:7270/users/${userID}`, {
-        method: "GET",
-        headers: {
-          "Authorization": `Bearer ${jwtToken}`
-        }
-      });
-
-      if (!response.ok) {
-        const message = `An error occurred: ${response.statusText}`;
-        console.warn(message);
-        return;
-      }
-      const result = await response.json();
-      setUser(result);
-    }
-
-    getUsers();
-
+    getUser();
     return;
-  }, []);
+    }, []);
 
-  async function handleSubmit(event) {
+  useEffect(()=>{
+    if (user != null) {
+      let userDate = new Date(user["lastMoodDate"])
+      let current = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
+      let userStrDate = `${userDate.getFullYear()}-${userDate.getMonth() + 1}-${userDate.getDate()}`
+      if (current === userStrDate) {
+        setRated(true);
+      }
+      
+    }
+  }, [user])
+  
+  async function addMood(event) {
     event.preventDefault();
 
-    const newMood = {
-      "description": rating
-    };
-    console.log(user.moods)
-    const updatedUser = {
-      ...user,
-      moods: [...user.moods.$values, newMood]
-    };
-    console.log(updatedUser)
-    setUser(updatedUser);
-
-    loader.style.visibility = 'visible';
-    text.style.visibility = 'hidden';
-    setTimeout(async () => {
-      try {
-        let response = await fetch(url, {
-          body: JSON.stringify(newMood),
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${jwtToken}`
-          }
-        });
-        let result = await response.json();
-        if (response.ok) {
-          // Store the user ID and current date as the last shown date for the user
-          setLastShownDateForUser(userID, currentDate);
-          check.style.visibility = 'visible';
-          loader.style.visibility = 'hidden';
-          console.log(result);
-          setTimeout(async () => {
-            //if (shouldShowToday) {
-            setShouldShow(false);
-            //console.log(now.getDate(), lastShownDate.getDate(), shouldShow, now.toDateString(), lastShownDateString);
-            //}
-            navigate("/tasks");
-          }, 1000)
-        }
-        else {
-          submitBtn.classList.remove('btn-success');
-          submitBtn.classList.add('btn-danger');
-          error.style.visibility = 'visible';
-          setTimeout(async () => {
-            submitBtn.classList.remove('btn-danger');
-            submitBtn.classList.add('btn-success');
-            error.style.visibility = 'hidden';
-            text.style.visibility = 'visible';
-          }, 1000);
-          console.error('Error')
-        }
-      } catch (err) {
-        console.error(`ERROR: ${err}`);
-        errorMessage.style.visibility = 'visible';
-        check.style.visibility = 'hidden';
-        loader.style.visibility = 'hidden';
-        submitBtn.classList.value = 'btn btn-danger';
-        submitBtn.disabled = true;
-        error.style.visibility = 'visible';
-        setTimeout(async () => {
-          submitBtn.disabled = false;
-          errorMessage.style.visibility = 'hidden';
-          submitBtn.classList.value = 'btn btn-success'
-          error.style.visibility = 'hidden';
-          text.style.visibility = 'visible';
-        }, 3000);
+    let moodDTO = {  MoodValue : rating,
+                     DateCreated : currentDate };
+    await fetch(`https://localhost:7270/users/${userID}/addMood`, {
+      method: "POST",
+      body: JSON.stringify(moodDTO),
+      headers : {
+        'Authorization' : `Bearer ${jwtToken}`,
+        'Content-Type' : 'application/json'
       }
-    }, 1000)
+    });
+
+    toggleMenu();
   }
 
-  // function handleEdit(event) {
-  //   event.preventDefault();
-  //   if (isEditing) {
-  //     setIsEditing(false);
-  //   } else setIsEditing(true);
-  // }
-  return (
-    <>
-      {/* {isEditing ? (<>
-          <form onSubmit={handleSubmit}>
-          <input type="radio" name="rating" value="0" onChange={handleRatingChange} />
-            <input type="radio" name="rating" value="1" onChange={handleRatingChange} />
-            <input type="radio" name="rating" value="2" onChange={handleRatingChange} />
-            <input type="radio" name="rating" value="3" onChange={handleRatingChange} /> 
-            <input type="radio" name="rating" value="4" onChange={handleRatingChange} />
-            </form>
-            
-            <button type="submit" onClick={handleEdit}>Submit</button>
-            </>
-            ) : (<>
-          <form>
-            <input type="radio" disabled="disabled" name="rating" value="1" onChange={handleRatingChange} />
-            <input type="radio" disabled="disabled" name="rating" value="2" onChange={handleRatingChange} /> 
-            <input type="radio" disabled="disabled" name="rating" value="3" onChange={handleRatingChange} />
-            <input type="radio" disabled="disabled" name="rating" value="4" onChange={handleRatingChange} /> 
-            <input type="radio" disabled="disabled" name="rating" value="5" onChange={handleRatingChange} />
-            </form>
-            
-            <button onClick={handleEdit}>Edit</button>
-          </>)} */}
-      {showComponent && (
-        <div className='mood-container'>
-          <h3 className="ratingHeader">How are you feeling today?</h3>
 
-          <form className='ratingForm' onSubmit={(event) => handleSubmit(event)}>
-            <div className='inputs'>
-              <div className={`inputWrapper`}>
-                <div id="angry-emoji-wrapper" className={`emoji-wrapper angry ${selectedEmoji === 0 ? 'selected' : ''}`}>
-                  <EmojiAngry passedProp={getChildProps} value={0} />
-                </div>
-                <label className='inpLabel' htmlFor="0">Very Bad</label>
-              </div>
-              <div className={`inputWrapper`}>
-                <div id="frown-emoji-wrapper" className={`emoji-wrapper frown ${selectedEmoji === 1 ? 'selected' : ''}`}>
-                  <EmojiFrown passedProp={getChildProps} value={1} />
-                </div>
-                <label className='inpLabel' htmlFor="1">Bad</label>
-              </div>
-              <div className={`inputWrapper`}>
-                <div id='neutral-emoji-wrapper' className={`emoji-wrapper neutral ${selectedEmoji === 2 ? 'selected' : ''}`}>
-                  <EmojiNeutral passedProp={getChildProps} value={2} />
-                </div>
-                <label className='inpLabel' htmlFor="2">Average</label>
-              </div>
-              <div className={`inputWrapper`}>
-                <div id='smile-emoji-wrapper' className={`emoji-wrapper smile ${selectedEmoji === 3 ? 'selected' : ''}`}>
-                  <EmojiSmile passedProp={getChildProps} value={3} />
-                </div>
-                <label className='inpLabel' htmlFor="3">Good</label>
-              </div>
-              <div className={`inputWrapper`}>
-                <div id='laughing-emoji-wrapper' className={`emoji-wrapper laugh ${selectedEmoji === 4 ? 'selected' : ''}`}>
-                  <EmojiLaughing passedProp={getChildProps} value={4} />
-                </div>
-                <label className='inpLabel' htmlFor="4">Very Good</label>
-              </div>
+  return (
+        <div className='mood-container'>
+          <div className='mood-back'>
+            <button className='btn btn-success btn-lg' onClick={toggleMenu}>Back</button>
+          </div>
+          {!rated && <>
+            <div>
+              <h3>Rate your mood for today.</h3>
             </div>
-            <button id='moodSubmitBtn' className='btn btn-success' type="submit" disabled>
-              <span className='MoodSubmitText'>Submit</span>
-              <div className='MoodLoadingContainer'>
-                <span className="MoodLoader"></span>
+
+            <form className='ratingForm' onSubmit={(event) => addMood(event)}>
+              <div className='inputs'>
+                <div className={`inputWrapper`}>
+                  <div id="angry-emoji-wrapper" className={`emoji-wrapper angry ${selectedEmoji === 0 ? 'selected' : ''}`}>
+                    <EmojiAngry passedProp={getChildProps} value={0} />
+                  </div>
+                  <label className='inpLabel' htmlFor="0">Very Bad</label>
+                </div>
+                <div className={`inputWrapper`}>
+                  <div id="frown-emoji-wrapper" className={`emoji-wrapper frown ${selectedEmoji === 1 ? 'selected' : ''}`}>
+                    <EmojiFrown passedProp={getChildProps} value={1} />
+                  </div>
+                  <label className='inpLabel' htmlFor="1">Bad</label>
+                </div>
+                <div className={`inputWrapper`}>
+                  <div id='neutral-emoji-wrapper' className={`emoji-wrapper neutral ${selectedEmoji === 2 ? 'selected' : ''}`}>
+                    <EmojiNeutral passedProp={getChildProps} value={2} />
+                  </div>
+                  <label className='inpLabel' htmlFor="2">Average</label>
+                </div>
+                <div className={`inputWrapper`}>
+                  <div id='smile-emoji-wrapper' className={`emoji-wrapper smile ${selectedEmoji === 3 ? 'selected' : ''}`}>
+                    <EmojiSmile passedProp={getChildProps} value={3} />
+                  </div>
+                  <label className='inpLabel' htmlFor="3">Good</label>
+                </div>
+                <div className={`inputWrapper`}>
+                  <div id='laughing-emoji-wrapper' className={`emoji-wrapper laugh ${selectedEmoji === 4 ? 'selected' : ''}`}>
+                    <EmojiLaughing passedProp={getChildProps} value={4} />
+                  </div>
+                  <label className='inpLabel' htmlFor="4">Very Good</label>
+                </div>
               </div>
-              <div className='MoodCheck'>
-                <HiCheck />
-              </div>
-              <div className='MoodSubmitError'>
-                <MdOutlineReportGmailerrorred />
-              </div>
-            </button>
-            <span className='MoodErrorMessage'>Unable to reach the server! Please try again later! </span>
-          </form>
+              <button id='moodSubmitBtn' className='btn btn-success btn-lg' type="submit" disabled={isDisabled}>
+                Submit
+              </button>
+            </form>
+          </>}
+          {rated && 
+          <div className="rated-message">
+            <h2>Already rated your mood for today.</h2>
+            <h2> Please rate again tomorrow!</h2>
+          </div>
+          }
         </div>
       )
-      }
-      {/* {!shouldShow && (<div className='NoMoreUse'>
-        <p className='nousetext'>You can set your mood only once a day!</p>
-        <button className='btn btn-success backBtn' onClick={() => navigate('/profile')}>Back</button>
-      </div>)} */}
-    </>
-  );
 }
 
 export default MoodTracker

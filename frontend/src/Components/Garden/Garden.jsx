@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import "./Garden.css";
 import jwt_decode from "jwt-decode";
+import "./Garden.css";
 
 const Garden = () => {
   const [menuModal, setMenuModal] = useState(true);
@@ -56,7 +56,7 @@ const Garden = () => {
       type:treeType,
       progress:0
     };
-
+    console.log(jwtToken)
     let response = await fetch('https://localhost:7270/tree', {
       method: 'POST',
       body: JSON.stringify(tree),
@@ -97,29 +97,48 @@ const Garden = () => {
     <div className='garden-container'>
       {menuModal && (
         <>
-          <h3 className="ratingHeader">Take care of your trees!</h3>
+          <div className="garden-container-title">
+            <h3>Grow your tree!</h3>
+          </div>
+          
           <div className='plant-card-container'>
 
-            <div onClick={togglePlantModal} className='plant-card'>+</div>
+            <div className="plant-card-image">
+              <img src="https://img.freepik.com/premium-vector/planting-tree-spring-semi-flat-color-vector-object-full-sized-item-white-tree-seedling-concern-environment-isolated-modern-cartoon-style-illustration-graphic-design-animation_151150-7017.jpg?w=2000" alt="" height="200px"/>
+              <p>Progress: 50/100</p>
+            </div>
 
-            {treeCards}
-
+            <div className='plant-card-button-container'><button className='btn btn-success btn-lg' onClick={togglePlantModal}>Plant a new tree</button></div>
           </div>
         </>
       )}
       {plantModal && (
-        <form onSubmit={(e) => { fetchTree(e) }} className='plant-tree-modal'>
-          <label htmlFor="">Tree name:</label>
-          <input onChange={(e) => setTreeName(e.target.value)} type="text" value={treeName} />
-          <label htmlFor="">Tree type:</label>
-          <select onChange={(e) => setTreeType(Number(e.target.value))} id="tree-type">
-            <option value="1">Oak</option>
-            <option value="2">Spruce</option>
-            <option value="3">Birch</option>
-          </select>
-          <button className='btn btn-success' type='submit'>Plant!</button>
-          <button className='back-btn btn btn-success' onClick={togglePlantModal}>Back</button>
-        </form>
+        <div className='plant-tree-modal'>
+          <div className='plant-tree-back'>
+            <button className='btn btn-success btn-lg' onClick={togglePlantModal}>Back</button>
+          </div>
+          <form onSubmit={(e) => { fetchTree(e) }} className='plant-tree-form'>
+            <div className="plant-tree-input-group">
+                <div className="input-group mb-3">
+                  <span className="input-group-text">Tree name:</span>
+                  <input type="text" className="form-control" placeholder="Tree name..." aria-label="Username" aria-describedby="basic-addon1" onChange={(e) => setTreeName(e.target.value)} value={treeName}/>
+                </div>
+                <div className="input-group mb-3">
+                  <label className="input-group-text" htmlFor="tree-type">Tree type:</label>
+                  <select className="form-select" onChange={(e) => setTreeType(Number(e.target.value))} id="tree-type">
+                    <option selected>Choose...</option>
+                    <option value="1">Oak</option>
+                    <option value="2">Spruce</option>
+                    <option value="3">Birch</option>
+                  </select>
+                </div>
+              </div>
+                <div className='plant-tree-submit'>
+                  <button className='btn btn-success btn-lg' type='submit' onClick={togglePlantModal}>Plant!</button>
+                </div>
+            
+          </form>
+        </div>
       )}
     </div>
   )

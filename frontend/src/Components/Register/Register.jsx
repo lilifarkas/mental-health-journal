@@ -246,7 +246,7 @@ export default function Register() {
   }
 
   return (
-    <>
+    <div className='register-background'>
       <div className='RegisterContainer'>
         <h1 className='header mb-5 center'>Create Account</h1>
         <form className='needs-validation' onSubmit={(e) => RegisterUser(e)}>
@@ -299,6 +299,6 @@ export default function Register() {
           <span className='RegSubmitErrorMessage'>Unable to reach the server! Please try again later! </span>
         </form>
       </div>
-    </>
+    </div>
   )
 }
