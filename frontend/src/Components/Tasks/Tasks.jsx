@@ -78,7 +78,7 @@ const Tasks = () => {
       }); 
 
       getTasks();
-  };
+  }
   async function addPoints(point){
     await fetch(`https://localhost:7270/users/addPoints/${userID}`, {
       body: point,
