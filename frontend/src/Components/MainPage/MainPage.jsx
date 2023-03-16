@@ -70,9 +70,7 @@ function MainPage() {
                 <div className='mainpage-container-row'>
                     {checkin && <CheckIn CheckIn={CheckInModal}/>}
                     {!checkin &&
-                        <div>
-                            <MoodTracker/>
-                        </div>
+                            <MoodTracker toggleMenu={CheckInModal}/>
                     }
                     < Garden />
                 </div>
