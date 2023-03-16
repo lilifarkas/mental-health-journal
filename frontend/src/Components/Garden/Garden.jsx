@@ -118,14 +118,14 @@ const Garden = () => {
             <button className='btn btn-success btn-lg' onClick={togglePlantModal}>Back</button>
           </div>
           <form onSubmit={(e) => { fetchTree(e) }} className='plant-tree-form'>
-            <div class="plant-tree-input-group">
-                <div class="input-group mb-3">
-                  <span class="input-group-text">Tree name:</span>
-                  <input type="text" class="form-control" placeholder="Tree name..." aria-label="Username" aria-describedby="basic-addon1" onChange={(e) => setTreeName(e.target.value)} value={treeName}/>
+            <div className="plant-tree-input-group">
+                <div className="input-group mb-3">
+                  <span className="input-group-text">Tree name:</span>
+                  <input type="text" className="form-control" placeholder="Tree name..." aria-label="Username" aria-describedby="basic-addon1" onChange={(e) => setTreeName(e.target.value)} value={treeName}/>
                 </div>
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="tree-type">Tree type:</label>
-                  <select class="form-select" onChange={(e) => setTreeType(Number(e.target.value))} id="tree-type">
+                <div className="input-group mb-3">
+                  <label className="input-group-text" for="tree-type">Tree type:</label>
+                  <select className="form-select" onChange={(e) => setTreeType(Number(e.target.value))} id="tree-type">
                     <option selected>Choose...</option>
                     <option value="1">Oak</option>
                     <option value="2">Spruce</option>
