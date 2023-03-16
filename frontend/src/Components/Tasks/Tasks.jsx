@@ -1,21 +1,45 @@
-import React, { useState, useEffect } from "react";
+
+import React, { useState, useEffect } from 'react';
 import jwt_decode from "jwt-decode";
-import "./Tasks.css"
-const Task = ({ task, deleteTask }) => (
-  <tr>
-    <td className="td-color">{task.taskName}</td>
-    <td className="d-flex justify-content-end">
-      <button
-        className="btn btn-success"
-        onClick={() => {
-          deleteTask(task.id);
-        }}
-      >
-        Delete
-      </button>
-    </td>
-  </tr>
-);
+import "./Tasks.css";
+
+const Task = ({task, finishTask, startTask})=>{
+
+  console.log(task)
+
+  if(task.status === "Not started"){
+    return (
+      <tr>
+          <td>{task.description}</td>
+          <td className='d-flex justify-content-end'>
+              <button className="btn btn-success"
+              onClick={() => {
+                  startTask(task.id)
+              }}
+              >
+              Start
+              </button>
+          </td>
+      </tr>
+    )
+  }else
+  if(task.status === "In progress")
+  return (
+    <tr>
+        <td>{task.description}</td>
+        <td>You get {task.point} points for completing</td>
+        <td className='d-flex justify-content-end'>
+            <button className="btn btn-success"
+            onClick={() => {
+                finishTask(task.id,task.point);
+            }}
+            >
+            Finish
+            </button>
+        </td>
+    </tr>
+  )
+}
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
@@ -35,32 +59,60 @@ const Tasks = () => {
     setTasks(fetchedTasks);
   }
 
+
   useEffect(() => {
     getTasks();
     return;
   }, [tasks.length]);
 
-  const handleTaskChange = (event) => {
-    setTask(event.target.value);
-  };
+      const handleTaskChange = (event) => {
+        setTask(event.target.value);
+      }
+
+  async function startTask(id) {
+      await fetch(`https://localhost:7270/usertask/${id}`, {
+        method: "PUT",
+        headers : {
+          'Authorization' : `Bearer ${jwtToken}`
+        }
+      }); 
+
+      getTasks();
+  }
+  async function addPoints(point){
+    await fetch(`https://localhost:7270/users/addPoints/${userID}`, {
+      body: point,
+      method: "PUT",
+      headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${jwtToken}`
+      }
+    });
+  }
+
+  function finishTask(id,point){
+    deleteTask(id);
+    addPoints(point);
+  }
 
   async function deleteTask(id) {
 
-    await fetch(`https://localhost:7270/usertask/${id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${jwtToken}`,
-      },
-    });
+        await fetch(`https://localhost:7270/usertask/${id}`, {
+          method: "DELETE",
+          headers : {
+            'Authorization' : `Bearer ${jwtToken}`
+          }
+        });
 
-    const newTasks = tasks["$values"].filter((t) => t.id !== id);
-    setTasks(newTasks);
-  }
-
+        const newTasks = tasks["$values"].filter((t) => t.id !== id);
+        setTasks(newTasks);
+    }
+    
   async function addTask() {
-    let taskDTO = { TaskDescription: task };
-    console.log(taskDTO);
-    await fetch(`https://localhost:7270/users/${userID}/addtask`, {
+    let taskDTO = {TaskDescription : task}
+    
+    await fetch(`https://localhost:7270/users/addTask/${userID}`, {
+
       method: "POST",
       body: JSON.stringify(taskDTO),
       headers: {
@@ -73,10 +125,19 @@ const Tasks = () => {
   }
 
   const taskList = () => {
-    return tasks["$values"]?.map((t) => {
-      return <Task task={t} deleteTask={() => deleteTask(t.id)} key={t.id} />;
-    });
-  };
+
+    return tasks['$values']?.map(t => {
+      return (
+        <Task
+          task={t}
+          finishTask={() => finishTask(t.id,t.point)}
+          startTask={() => startTask(t.id)}
+          key={t.id}
+        />
+      )
+    })
+  }
+
 
   return (
     <div className="task-background">

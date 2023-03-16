@@ -6,7 +6,9 @@ import './NavBar.css';
 
 function NavBar({ handleLogout, user }) {
     let navigate = useNavigate();
+
     console.log(user);
+
     let name = user['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
     function nav() {
         navigate("/profile");

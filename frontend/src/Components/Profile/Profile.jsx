@@ -25,7 +25,6 @@ function Profile(  ) {
 
           });
             const result = await response.json();
-            console.log(result);
 
             return result;
         }
@@ -72,7 +71,7 @@ function Profile(  ) {
     const averageMood = () =>{
         
         const allMoods = moods.$values;
-        console.log(allMoods)
+        
         
         
          let moodMessage;

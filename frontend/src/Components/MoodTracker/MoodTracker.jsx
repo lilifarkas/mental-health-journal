@@ -61,6 +61,7 @@ const MoodTracker = ({toggleMenu}) => {
   async function addMood(event) {
     event.preventDefault();
 
+
     let moodDTO = {  MoodValue : rating,
                      DateCreated : currentDate };
     await fetch(`https://localhost:7270/users/${userID}/addMood`, {
@@ -71,10 +72,18 @@ const MoodTracker = ({toggleMenu}) => {
         'Content-Type' : 'application/json'
       }
     });
+    
+    await fetch(`https://localhost:7270/users/addPoints/${userID}`, {
+            body: 50,
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${jwtToken}`
+      }
+    });
 
     toggleMenu();
   }
-
 
   return (
         <div className='mood-container'>
