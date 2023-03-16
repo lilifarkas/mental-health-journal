@@ -8,6 +8,7 @@ const Garden = () => {
   const [treeName, setTreeName] = useState("");
   const [treeType, setTreeType] = useState(1);
   const [trees, setTrees] = useState([]);
+  const [user,setUser] = useState(null);
 
   const jwtToken = localStorage.getItem("jwtToken");
   const currentUserId = jwt_decode(jwtToken).userID;
@@ -16,10 +17,7 @@ const Garden = () => {
     setMenuModal(!menuModal);
   };
 
-  const togglePlantModal = () => {
-    setPlantModal(!plantModal);
-    toggleMenuModal();
-  };
+ 
 
   useEffect(() => {
     const getTrees = async () => {
@@ -38,7 +36,24 @@ const Garden = () => {
       });
       return treesArray;
     };
+    const getUser = async () => {
+      const response = await fetch(`https://localhost:7270/users/${currentUserId}`, {
+        method : 'GET',
+        headers: {
+          "Authorization": `Bearer ${jwtToken}`
+        }
 
+      });
+        const result = await response.json();
+        
+        return result;
+    }
+
+    getUser().then(result => {
+        setUser(result);
+    }).catch(error => {
+        console.error(error);
+    });
     getTrees().then(result => {
       setTrees(result);
     }).catch(error => {
@@ -48,16 +63,14 @@ const Garden = () => {
   }, []);
 
   const fetchTree = async (e) => {
-    e.preventDefault();
-
     let tree = {
       name: treeName,
       ownerid:currentUserId,
       type:treeType,
       progress:0
     };
-    console.log(jwtToken)
-    let response = await fetch('https://localhost:7270/tree', {
+
+    await fetch('https://localhost:7270/tree', {
       method: 'POST',
       body: JSON.stringify(tree),
       headers: {
@@ -65,15 +78,14 @@ const Garden = () => {
         'Authorization': `Bearer ${jwtToken}`
       }
     })
-    let result = await response.text();
-    console.log(result);
   };
   
   
   
   function TreeCard(props) {
     let type = props.type === 1 ? "Oak" : props.type === 2 ? "Spruce" : "Birch";
-    let progress = props.progress === 0 ? "Seed" : props.progress === 1 ? "Sprout" : props.progress === 2 ? "Sapling" : "Mature Tree";
+    let progress = props.progress === 0 ? "Seed" : props.progress === 1 ? "Sprout" : props.progress === 2 ? "Sapling" : props.progress === 3 ? "Small Tree" : "Mature Tree";
+    
     return (
       <div className='tree-card'>
         <h1>{props.name}</h1>
@@ -84,14 +96,17 @@ const Garden = () => {
   }
 
   const treeCards = trees.map((tree, index) => (
-    <TreeCard key={index} name={tree.name} type={tree.type} progress={tree.progress} />
+    <TreeCard key={index} id={tree.id} name={tree.name} type={tree.type} progress={tree.progress} />
   ));
 
-  if (!Array.isArray(trees)) {
+  if (user == null) {
     return <div>Loading data...</div>;
   }
 
-
+  const togglePlantModal = () => {
+      setPlantModal(!plantModal);
+      toggleMenuModal();
+  };
 
   return (
     <div className='garden-container'>
@@ -103,10 +118,12 @@ const Garden = () => {
           
           <div className='plant-card-container'>
 
+
             <div className="plant-card-image">
               <img src="https://img.freepik.com/premium-vector/planting-tree-spring-semi-flat-color-vector-object-full-sized-item-white-tree-seedling-concern-environment-isolated-modern-cartoon-style-illustration-graphic-design-animation_151150-7017.jpg?w=2000" alt="" height="200px"/>
               <p>Progress: 50/100</p>
             </div>
+
 
             <div className='plant-card-button-container'><button className='btn btn-success btn-lg' onClick={togglePlantModal}>Plant a new tree</button></div>
           </div>
