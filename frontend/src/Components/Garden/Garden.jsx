@@ -45,8 +45,7 @@ const Garden = () => {
 
       });
         const result = await response.json();
-        console.log(result);
-
+    
         return result;
     }
 

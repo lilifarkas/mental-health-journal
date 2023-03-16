@@ -76,12 +76,12 @@ const MoodTracker = () => {
     const newMood = {
       "description": rating
     };
-    console.log(user.moods)
+    
     const updatedUser = {
       ...user,
       moods: [...user.moods.$values, newMood]
     };
-    console.log(updatedUser)
+    
     setUser(updatedUser);
 
     loader.style.visibility = 'visible';
