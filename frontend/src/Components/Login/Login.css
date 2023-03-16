@@ -1,10 +1,3 @@
-/* body {
-    background: url('./img/background.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-} */
-
 .header {
     position: relative;
     left: 50%;
@@ -13,8 +6,17 @@
     text-align: center;
 }
 
+.login-background{
+    background: url("../../../public/background2.png");
+    min-height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
 .LoginContainer {
     top: 15%;
+    background-color: rgba(255, 255, 250, 0.816);
     position: absolute;
     left: 50%;
     margin: 20px;
@@ -24,6 +26,54 @@
     border-radius: 7px 7px 7px 7px;
     padding: 60px;
     backdrop-filter: blur(7px);
+}
+
+.LogCheck {
+    width: 25px;
+    height: 25px;
+    visibility: hidden;
+}
+
+.LogCheck>svg {
+    color: #1cd628;
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.LogSubmitError {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    visibility: hidden;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.LogSubmitError>svg {
+    color: rgb(255, 217, 217);
+    width: 25px;
+    height: 25px;
+    position: relative;
+    /* left: 50%; */
+    /* transform: translate(-50%, 0); */
+}
+
+.LogSubmitErrorMessage {
+    background-color: #ff0d002e;
+    padding: 3px;
+    color: rgb(170, 9, 9);
+    width: 400px;
+    display: block;
+    position: relative;
+    text-align: center;
+    visibility: hidden;
+    margin-top: 2px;
+    font-weight: 500;
+    border-radius: 4px;
 }
 
 
@@ -48,7 +98,6 @@
 
 .form-control {
     border: 1px dashed green;
-
 }
 
 .form-control:hover {
@@ -64,6 +113,12 @@
     outline: none !important;
     border: 2px solid green;
     background-color: rgba(255, 255, 255, 0.711);
+}
+
+.inputError{
+    color: red;
+    position: relative;
+    visibility: hidden;
 }
 
 #LoginPwInput {
@@ -92,7 +147,11 @@
     border: 2px solid red !important;
     background: rgba(255, 0, 0, 0.1) !important;
 }
-
+.correct {
+    color: green;
+    border: 2px solid green !important;
+    background-color: rgba(0, 128, 0, 0.1);
+}
 /*LOADING*/
 
 .LoginText {
@@ -103,9 +162,8 @@
 }
 
 .LoginLoaderContainer {
-    position: relative;
+    position: absolute;
     left: 50%;
-    height: 25px;
     transform: translate(-50%, 0);
     visibility: hidden;
     z-index: 99;

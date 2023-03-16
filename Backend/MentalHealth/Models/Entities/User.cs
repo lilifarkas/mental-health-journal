@@ -15,4 +15,5 @@ public class User
     public virtual ICollection<Tree>? Trees { get; set; } = new List<Tree>();
     public virtual ICollection<MoodTracker>? Moods { get; set; } = new List<MoodTracker>();
     public virtual ICollection<UserTask>? UserTasks { get; set; } = new List<UserTask>();
+    public DateTime? LastMoodDate { get; set; } = null;
 }
