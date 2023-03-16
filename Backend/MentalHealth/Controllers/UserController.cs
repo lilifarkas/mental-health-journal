@@ -66,7 +66,7 @@ public class UserController: ControllerBase
         return Ok();
     }
     
-    [HttpPost]
+    [HttpPost("/users/addDefaultTask/{userID}")]
     public async Task AddDefaultUserTask(long userId)
     {
         await _service.AddDefault(userId);
