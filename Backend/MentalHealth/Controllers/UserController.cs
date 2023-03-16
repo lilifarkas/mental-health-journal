@@ -53,12 +53,22 @@ public class UserController: ControllerBase
         return await _service.IncludeUserTasks(userID);
     }
 
-    [HttpPost("{userID}/addTask")]
+    [HttpPost("/users/addTask/{userID}")]
     public async Task<ActionResult> AddTask( long userID, [FromBody] AddTaskDTO taskDto)
     {
         UserTask task = new UserTask();
-        task.TaskName = taskDto.TaskDescription;
-        await _service.AddTask(task, userID);
+        task.Description = taskDto.TaskDescription;
+        task.Status = "Not started";
+        task.UserId = userID;
+        task.Point = 50;
+        task.DueDate = DateTime.Now.AddHours(1);
+        await _service.AddTask(task,userID);
         return Ok();
+    }
+    
+    [HttpPost]
+    public async Task AddDefaultUserTask(long userId)
+    {
+        await _service.AddDefault(userId);
     }
 }

@@ -94,6 +94,24 @@ public class UserService : IService<User>
         await _context.SaveChangesAsync();
     }
     
+    public async Task AddDefault(long userId)
+    {
+        await foreach (var defaultTask in _context.DefaultTasks)
+        {
+            var task = new UserTask
+            {
+                UserId = userId,
+                Description = defaultTask.Description,
+                Point = defaultTask.Point,
+                Status = "Not started",
+                DueDate = DateTime.Now.AddHours(1)
+            };
+            await AddTask(task,userId);
+        }
+
+        await _context.SaveChangesAsync();
+    }
+    
     public async Task<bool> UserExistsByEmail(string email)
     {
         return await _context.Users.AnyAsync(user => user.Email == email);
