@@ -1,9 +1,10 @@
-body {
-    background: url('./img/background.png');
+.register-background{
+    background: url("../../../public/background1.png");
+    min-height: 100vh;
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center center;
-}
+    background-attachment: fixed;
+  }
 
 .header {
     position: relative;
