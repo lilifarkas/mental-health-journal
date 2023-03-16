@@ -124,9 +124,22 @@ const Garden = () => {
               <p>Progress: 50/100</p>
             </div>
 
-
-            <div className='plant-card-button-container'><button className='btn btn-success btn-lg' onClick={togglePlantModal}>Plant a new tree</button></div>
-          </div>
+            {(trees.length === 0 || (user.points - (trees.length * 1000) > 0)) && (
+              <div className='plant-card-button-container'>
+                <button className='btn btn-success btn-lg' onClick={togglePlantModal}>Plant a new tree</button>
+              </div>
+            )}
+            {((user.points - (trees.length * 1000) < 0)) && (
+              <>
+                <div className='plant-card-button-container'>
+                  <div className='plant-card-button-error'>
+                    <p>You can plant new tree when you finished growing the previous</p>
+                  </div>
+                  <button className='btn btn-success btn-lg' >Plant a new tree</button>
+                </div>
+              </>
+            )}
+            </div>
         </>
       )}
       {plantModal && (
@@ -151,7 +164,7 @@ const Garden = () => {
                 </div>
               </div>
                 <div className='plant-tree-submit'>
-                  <button className='btn btn-success btn-lg' type='submit' onClick={togglePlantModal}>Plant!</button>
+                  <button className='btn btn-success btn-lg' type='submit'>Plant!</button>
                 </div>
             
           </form>
