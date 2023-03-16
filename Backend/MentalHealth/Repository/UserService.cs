@@ -95,6 +95,13 @@ public class UserService : IService<User>
         await _context.SaveChangesAsync();
     }
     
+    public async Task AddMood( MoodTracker mood, long userID)
+    {
+        var user = await Get(userID);
+        user.Moods.Add(mood);
+        await _context.SaveChangesAsync();
+    }
+    
     public async Task<bool> UserExistsByEmail(string email)
     {
         return await _context.Users.AnyAsync(user => user.Email == email);
