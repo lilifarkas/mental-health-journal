@@ -22,6 +22,14 @@ public class UserController: ControllerBase
     {
         return await _service.Get(id);
     }
+
+    [HttpPut("/users/updaterole/{id}")]
+    public async Task UpdateUserRole(long id, [FromBody] User user)
+    {
+        var UpdateUser = await _service.Get(id);
+        UpdateUser.Role = user.Role;
+        await _service.Update(UpdateUser);
+    }
     
     [HttpGet]
     public async Task<IEnumerable<User>> GetAllUser()
