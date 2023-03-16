@@ -45,7 +45,7 @@ const Garden = () => {
 
       });
         const result = await response.json();
-    
+        
         return result;
     }
 
@@ -63,8 +63,6 @@ const Garden = () => {
   }, []);
 
   const fetchTree = async (e) => {
-    e.preventDefault();
-
     let tree = {
       name: treeName,
       ownerid:currentUserId,
@@ -106,10 +104,8 @@ const Garden = () => {
   }
 
   const togglePlantModal = () => {
-    if(trees.length === 0){
       setPlantModal(!plantModal);
       toggleMenuModal();
-    }
   };
 
   return (
@@ -118,7 +114,7 @@ const Garden = () => {
         <>
           <h3 className="ratingHeader">Take care of your trees!</h3>
           <div className='plant-card-container'>
-            {(user.trees.length === 0 || (user.points - (user.trees.length * 1000) < 1000)) && (
+            {(trees.length === 0 || (user.points - (trees.length * 1000) > 0)) && (
             <div onClick={togglePlantModal} className='plant-card'>+</div>
             )}
             
