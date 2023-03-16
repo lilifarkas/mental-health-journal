@@ -44,19 +44,21 @@ function App() {
   return (
     <>
       {user && <NavBar handleLogout={handleLogout} user={user}/>}
-      <Routes>        
-        <Route element={<ProtectedRoute user={user}/>}>
-          <Route path='/main' element = {<MainPage/>}/>
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/profile/edit" element={<EditProfile />} />
-          <Route path='/tasks' element={<Tasks user={user} jwtToken={token} />}/>
-          <Route path='/admin' element={<Admin />} />
-        </Route>     
-        
-      {!user && (<><Route path='/login' element={<Login onLogin={handleLogin}/>} />
-        <Route path = '/' element ={<LandingPage />} />
-        <Route path='/registration' element={<Register />} /></>)}
-      </Routes>
+      <div className='container-fluid p-0'>
+        <Routes>        
+          <Route element={<ProtectedRoute user={user}/>}>
+            <Route path='/main' element = {<MainPage/>}/>
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/edit" element={<EditProfile />} />
+            <Route path='/tasks' element={<Tasks user={user} jwtToken={token} />}/>
+            <Route path='/admin' element={<Admin />} />
+          </Route>     
+          
+        {!user && (<><Route path='/login' element={<Login onLogin={handleLogin}/>} />
+          <Route path = '/' element ={<LandingPage />} />
+          <Route path='/registration' element={<Register />} /></>)}
+        </Routes>
+      </div>
     </>
   );
 }
