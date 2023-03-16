@@ -42,7 +42,7 @@ function Profile(  ) {
 
     
     if(user == null){
-        return <div className="mt-5 loading">Loading...</div>;
+        return <div className="profile-background"></div>;
     }
     
     const deleteUser = async (e) => {
@@ -142,6 +142,7 @@ function Profile(  ) {
                     </NavLink>
                     <button onClick={() => setShowModal(true)} className="button">DELETE PROFILE</button>
                 </div>
+                
                 <Modal
                     isOpen={showModal}
                     onRequestClose={() => setShowModal(false)}
