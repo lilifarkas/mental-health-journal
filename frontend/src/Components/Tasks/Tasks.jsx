@@ -26,7 +26,7 @@ const Task = ({task, finishTask, startTask})=>{
   return (
     <tr>
         <td>{task.description}</td>
-        <td>You can finish at:{task.dueDate}</td>
+        <td>You get {task.point} points for completing</td>
         <td className='d-flex justify-content-end'>
             <button className="btn btn-success"
             onClick={() => {
@@ -56,25 +56,23 @@ const Tasks = () => {
       });      
       const fetchedTasks = await response.json();
       setTasks(fetchedTasks);
-      
     }
 
-    async function addDefaultTasks(){
-        await fetch(`https://localhost:7270/users/addDefaultTask/${userID}`, {
-          method: "POST",
-          headers : {
-          'Authorization' : `Bearer ${jwtToken}`,
-          'Content-Type' : 'application/json'
-          }
-        });
-        setTask("");
-        getTasks();
-    }
+    // async function addDefaultTasks(){
+    //     await fetch(`https://localhost:7270/users/addDefaultTask/${userID}`, {
+    //       method: "POST",
+    //       headers : {
+    //       'Authorization' : `Bearer ${jwtToken}`,
+    //       'Content-Type' : 'application/json'
+    //       }
+    //     });
+    // }
+
     useEffect(() => {
         getTasks();
-        if(tasks.length === 0){
-          addDefaultTasks();
-        }
+        // if(tasks.length === 0){
+        //   addDefaultTasks();
+        // }
         return;
       }, [tasks.length]);
 
