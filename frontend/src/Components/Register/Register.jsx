@@ -138,6 +138,17 @@ export default function Register() {
       method: "POST",
       headers: { 'Content-Type': 'application/json' }
     });
+    if (response.status === 500) {
+      submitErrorText.style.visibility = 'visible';
+      submitError.style.visibility = 'visible';
+      submitBtn.classList.value = 'btn btn-danger';
+      validateLoader.tyle.visibility = 'hidden';
+      setTimeout(() => {
+        submitErrorText.style.visibility = 'hidden';
+        submitError.style.visibility = 'hidden';
+        submitBtn.classList.value = 'btn btn-success';
+      }, 2000)
+    }
 
     let emailFormat = /^[a-zA-Z0-9._+-]+@([a-zA-Z0-9]+\.)+[a-zA-Z]{2,}$/;
     if (email === '') {
