@@ -100,7 +100,17 @@ const MoodTracker = () => {
         if (response.ok) {
           check.style.visibility = 'visible';
           loader.style.visibility = 'hidden';
-          console.log(result);
+
+          let response = await fetch(`https://localhost:7270/users/addPoints/${userID}`, {
+            body: 50,
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${jwtToken}`
+            }
+          });
+
+          
           setTimeout(async () => {
             //if (shouldShowToday) {
             setShouldShow(false);
@@ -140,36 +150,10 @@ const MoodTracker = () => {
     }, 1000)
   }
 
-  // function handleEdit(event) {
-  //   event.preventDefault();
-  //   if (isEditing) {
-  //     setIsEditing(false);
-  //   } else setIsEditing(true);
-  // }
+  
   return (
     <>
-      {/* {isEditing ? (<>
-          <form onSubmit={handleSubmit}>
-          <input type="radio" name="rating" value="0" onChange={handleRatingChange} />
-            <input type="radio" name="rating" value="1" onChange={handleRatingChange} />
-            <input type="radio" name="rating" value="2" onChange={handleRatingChange} />
-            <input type="radio" name="rating" value="3" onChange={handleRatingChange} /> 
-            <input type="radio" name="rating" value="4" onChange={handleRatingChange} />
-            </form>
-            
-            <button type="submit" onClick={handleEdit}>Submit</button>
-            </>
-            ) : (<>
-          <form>
-            <input type="radio" disabled="disabled" name="rating" value="1" onChange={handleRatingChange} />
-            <input type="radio" disabled="disabled" name="rating" value="2" onChange={handleRatingChange} /> 
-            <input type="radio" disabled="disabled" name="rating" value="3" onChange={handleRatingChange} />
-            <input type="radio" disabled="disabled" name="rating" value="4" onChange={handleRatingChange} /> 
-            <input type="radio" disabled="disabled" name="rating" value="5" onChange={handleRatingChange} />
-            </form>
-            
-            <button onClick={handleEdit}>Edit</button>
-          </>)} */}
+      
       {shouldShow && (
         <div className='mood-container'>
           <h3 className="ratingHeader">How are you feeling today?</h3>
