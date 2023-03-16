@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import MoodTracker from '../MoodTracker/MoodTracker';
 import Garden from '../Garden/Garden';
 import "./MainPage.css";
-import { Navigate } from "react-router-dom";
 
 const CheckIn = ({CheckIn}) => {
     return (
