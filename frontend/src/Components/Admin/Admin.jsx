@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import {BiLogOut} from "react-icons/bi";
 
 const User = (props) => (
     <tr>
         <td>{props.record.id}</td>
         <td>{props.record.name}</td>
         <td>{props.record.email}</td>
+        <td>{props.record.role}</td>
         <td>{props.record.points}</td>
         {/*<td>*/}
         {/*    <button className="btn btn-link"*/}
@@ -18,7 +20,7 @@ const User = (props) => (
     </tr>
 );
 
-export default function UsersList() {
+export default function UsersList({handleLogout}) {
 
     const [users, setUsers] = useState([]);
     const [filteredUsers, setFilteredUsers] = useState([]);
@@ -45,7 +47,6 @@ export default function UsersList() {
             setUsers(result.$values);
             setFilteredUsers(result.$values);
             setSortedUsers(result.$values);
-            console.log(result.$values)
         }
 
         getUsers();
@@ -72,6 +73,18 @@ export default function UsersList() {
 
     function sortByPoints() {
         const sorted = [...sortedUsers].sort((a, b) => (a.points > b.points) ? 1 : ((b.points > a.points) ? -1 : 0));
+        setSortedUsers(sorted);
+        setSortedIsChanged(true);
+    }
+
+    function filterRoles(e){
+        const value = e.toLowerCase();
+        const filtered = users.filter(x => x.role.toLowerCase().includes(value));
+        setFilteredUsers(filtered);
+    }
+
+    function sortByRole(){
+        const sorted = [...sortedUsers].sort((a, b) => (a.role > b.role) ? 1 : ((b.role > a.role) ? -1 : 0));
         setSortedUsers(sorted);
         setSortedIsChanged(true);
     }
@@ -107,7 +120,12 @@ export default function UsersList() {
 
     return (
         <div className="bg-light">
-            <h3>Users List</h3>
+            <div className="d-flex flex-column justify-content-center align-items-center">
+                <button className='logout' onClick={handleLogout}>
+                    <BiLogOut color="black"/>
+                </button>
+                <h3 className="mt-5">Users List</h3>
+            </div>
             <div className="d-flex flex-row justify-content-center align-items-center gap-2">
                 <select className="d-inline-flex mt-3" id="arrange" onChange={(e) => {
                     if (e.target.value === "By Name") {
@@ -116,11 +134,14 @@ export default function UsersList() {
                         sortByPoints();
                     } else if (e.target.value === "Arrange") {
                         notSorted();
+                    } else if(e.target.value === "By Role") {
+                        sortByRole();
                     }
                 }}>
                     <option> Arrange </option>
                     <option> By Name </option>
                     <option> By Points </option>
+                    <option> By Role </option>
                 </select>
                 <input className="d-inline-flex mt-3" id="filterName" type="text"
                     placeholder="Filter name" onChange={(e) => filterName(e.target.value)}></input>
@@ -128,6 +149,8 @@ export default function UsersList() {
                     placeholder="Filter points" onChange={(e) => filterPoints(e.target.value)}></input>
                 <input className="d-inline-flex mt-3" id="filterId" type="text"
                     placeholder="Filter ID" onChange={(e) => filterId(e.target.value)}></input>
+                <input className="d-inline-flex mt-3" id="filterRole" type="text"
+                    placeholder="Filter roles" onChange={(e) => filterRoles(e.target.value)}></input>
             </div>
             <table className="table table-striped" style={{ marginTop: 20 }}>
                 <thead>
@@ -135,6 +158,7 @@ export default function UsersList() {
                         <th>ID</th>
                         <th>UserName</th>
                         <th>Email</th>
+                        <th>Role</th>
                         <th>Points</th>
                     </tr>
                 </thead>

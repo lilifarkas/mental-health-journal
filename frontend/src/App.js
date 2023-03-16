@@ -22,16 +22,22 @@ function App() {
       const decodedToken = jwt_decode(token);
       setUser(decodedToken);
       setToken(token)
-      navigate('/main', { replace: true });
-    }
+    } 
   }, []);
 
   const handleLogin = (responeToken) => {
 
     if (responeToken) {
       localStorage.setItem("jwtToken", responeToken);
-      setUser(jwt_decode(responeToken));
-      navigate('/main', { replace: true });
+      const decodedToken = jwt_decode(responeToken);
+      const role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+      setUser(decodedToken);
+      
+      if (decodedToken && role === "Admin") { 
+        navigate('/admin', { replace: true });
+      } else {
+        navigate('/main', { replace: true });
+      }
     }
   };
   const handleLogout = () => {
@@ -43,22 +49,25 @@ function App() {
 
   return (
     <>
-      {user && <NavBar handleLogout={handleLogout} user={user}/>}
-      <div className='container-fluid p-0'>
-        <Routes>        
-          <Route element={<ProtectedRoute user={user}/>}>
-            <Route path='/main' element = {<MainPage/>}/>
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/profile/edit" element={<EditProfile />} />
-            <Route path='/tasks' element={<Tasks user={user} jwtToken={token} />}/>
-            <Route path='/admin' element={<Admin />} />
-          </Route>     
-          
-        {!user && (<><Route path='/login' element={<Login onLogin={handleLogin}/>} />
-          <Route path = '/' element ={<LandingPage />} />
-          <Route path='/registration' element={<Register />} /></>)}
-        </Routes>
-      </div>
+      {user && user['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === "Admin" && (
+          <Routes>
+            <Route path='/admin' element={<Admin handleLogout={handleLogout} />} />
+          </Routes>
+      )}
+        
+      {user && user['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] !== "Admin" && <NavBar handleLogout={handleLogout} user={user}/>}
+      <Routes>      
+        <Route element={<ProtectedRoute isAllowed={user}/>}>
+          <Route path='/main' element = {<MainPage/>}/>
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/edit" element={<EditProfile />} />
+          <Route path='/tasks' element={<Tasks user={user} jwtToken={token} />}/>
+        </Route>
+        
+      {!user && (<><Route path='/login' element={<Login onLogin={handleLogin}/>} />
+        <Route path = '/' element ={<LandingPage />} />
+        <Route path='/registration' element={<Register />} /></>)}
+      </Routes>
     </>
   );
 }

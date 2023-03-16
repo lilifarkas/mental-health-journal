@@ -6,6 +6,7 @@ import './Register.css';
 import eye from './img/eye.svg';
 import eyeslash from './img/eye-slash.svg';
 import { HiCheck } from 'react-icons/hi';
+import { MdOutlineReportGmailerrorred } from 'react-icons/md';
 
 
 export default function Register() {
@@ -20,12 +21,13 @@ export default function Register() {
   let emailInput = document.querySelector('#email-input');
   let passwordInput = document.querySelector('#pwInput');
   let passwordInput2 = document.querySelector('#ConfPwInput');
-  //let nameError = document.querySelector('.nameError');
   let emailError = document.querySelector('.emailError');
+  let nameError = document.querySelector('.nameError');
   let pwError = document.querySelector('.pwError');
-  //let ValidateText = document.querySelector('.ValidateText');
-  //let ValidateLoader = document.querySelector('.ValidateLoader');
   let ValidateBtn = document.querySelector('#ValidateBtn');
+  let validateLoader = document.querySelector('.ValidateLoader');
+  let submitError = document.querySelector('.RegSubmitError');
+  let submitErrorText = document.querySelector('.RegSubmitErrorMessage');
 
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
@@ -36,11 +38,10 @@ export default function Register() {
   const [eyeType, setEyeType] = useState(eye);
   const [valid, setValid] = useState(false);
 
-  //let isNameOK = false;
+  let isNameOK = false;
   let isEmailOK = false;
   let isPwOK = false;
   let controller = new AbortController();
-
 
   function ChangePasswordType() {
     if (pwType === 'password') {
@@ -66,7 +67,8 @@ export default function Register() {
 
   async function ValidateInputs() {
     nameInput.classList.value = 'form-control correct';
-    isEmailOK = validateEmail();
+    isEmailOK = await validateEmail();
+    isNameOK = validateName();
     if (password !== passwordConfirm) {
       pwError.style.visibility = 'visible';
       passwordInput.classList.value = 'form-control error';
@@ -97,7 +99,7 @@ export default function Register() {
         }
       }
     }
-    if (isEmailOK && isPwOK) {
+    if (isEmailOK && isPwOK && isNameOK) {
       submitBtn.disabled = false;
       ValidateBtn.style.display = 'none';
     }
@@ -112,40 +114,54 @@ export default function Register() {
     }, 10);
   }, [email, password])
 
-  // function validateName(result) {
-  //   for (const user of result.$values) {
-  //     if (userName === '') {
-  //       nameInput.classList.value = 'form-control error';
-  //       nameError.style.visibility = 'visible';
-  //       nameError.innerHTML = 'Please enter a valid username';
-  //       return false;
-  //     }
-  //     else if (user.name === userName) {
-  //       nameInput.classList.value = 'form-control error';
-  //       nameError.style.visibility = 'visible';
-  //       nameError.innerHTML = 'An account is already registered with this username';
-  //       return false;
-  //     }
-  //   }
-  //   nameInput.classList.value = 'form-control correct';
-  //   nameError.style.visibility = 'hidden';
-  //   return true;
-  // }
+  function validateName() {
+    if (/^\s*$/.test(userName.trim()) || userName.includes(" ")) {
+      // Username contains spaces
+      nameInput.classList.value = 'form-control error';
+      nameError.innerHTML = 'Please provide a valid username (no space allowed)';
+      nameError.style.visibility = 'visible';
+      return false;
+    }
+    nameInput.classList.value = 'form-control correct';
+    nameError.style.visibility = 'hidden';
+    return true;
+  }
 
-  function validateEmail() {
+  async function validateEmail() {
+    validateLoader.style.visibility = 'visible';
+    let response = await fetch('https://localhost:7270/welcome/validate', {
+      body: JSON.stringify({
+        "Name": userName,
+        "Password": password,
+        "Email": email.toLowerCase()
+      }),
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' }
+    });
+
     let emailFormat = /^[a-zA-Z0-9._+-]+@([a-zA-Z0-9]+\.)+[a-zA-Z]{2,}$/;
     if (email === '') {
+      validateLoader.style.visibility = 'hidden';
       emailError.style.visibility = 'visible';
       emailInput.classList.value = 'form-control error';
       emailError.innerHTML = 'Please enter a valid email address';
       return false;
     }
     else if (emailFormat.test(email) === false) {
+      validateLoader.style.visibility = 'hidden';
       emailError.style.visibility = 'visible';
       emailInput.classList.value = 'form-control error';
       emailError.innerHTML = 'Please make sure you use the correct format (example@email.com)';
       return false;
     }
+    else if (response.status === 400) {
+      validateLoader.style.visibility = 'hidden';
+      emailError.style.visibility = 'visible';
+      emailInput.classList.value = 'form-control error';
+      emailError.innerHTML = 'An account is already registered with this email';
+      return false;
+    }
+    validateLoader.style.visibility = 'hidden';
     emailError.style.visibility = 'hidden';
     emailInput.classList.value = 'form-control correct';
     return true;
@@ -197,7 +213,19 @@ export default function Register() {
         }
 
         else {
+          loader.style.visibility = 'hidden';
+          submitBtn.classList.value = 'btn btn-danger';
+          submitBtn.disabled = true;
+          submitError.style.visibility = 'visible';
+          submitErrorText.style.visibility = 'visible';
           console.error(`ERROR: ${error}`);
+          setTimeout(() => {
+            submitBtn.disabled = false;
+            submitErrorText.style.visibility = 'hidden';
+            submitBtn.classList.value = 'btn btn-success';
+            submitError.style.visibility = 'hidden';
+            text.style.visibility = "visible";
+          }, 2000)
         }
       }
       cancelButton.style.visibility = 'hidden';
@@ -247,14 +275,17 @@ export default function Register() {
             <div className='RegCheck'>
               <HiCheck />
             </div>
+            <div className='RegSubmitError'>
+              <MdOutlineReportGmailerrorred />
+            </div>
           </button>
           <button type='button' id='ValidateBtn' className='btn btn-secondary' onClick={() => ValidateInputs()}>
             <span className='ValidateText'>Validate</span>
             <span className='ValidateLoader'></span>
           </button>
           {valid === true && navigate("/login")}
-          {/* {valid === true && navigate("/login")} */}
           <button type='button' onClick={() => AbortFunction()} id='cancelBtn' className='btn btn-secondary'>Cancel</button>
+          <span className='RegSubmitErrorMessage'>Unable to reach the server! Please try again later! </span>
         </form>
       </div>
     </>

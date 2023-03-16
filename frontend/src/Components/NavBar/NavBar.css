@@ -44,6 +44,36 @@
 .logout > svg:hover{
     color: red;
 }
+.userContainer{
+    display: flex;
+    justify-self: right;
+    right: 0%;
+    position: absolute;
+    background: transparent;
+    outline: none;
+    border: none;
+    width: min-content;
+    height: 35px;
+}
+.userName{
+    color: rgb(48, 165, 95);
+    margin-left: 10px;
+    font-size: x-large;
+    position: relative;
+}
+
+.userName:hover{
+    cursor: pointer;
+}
+
+.userIcon{
+    position: relative;
+    top: 10% !important;
+}
+.userIcon > svg{
+    width: 30px !important;
+    height: 30px;
+}
 
 .navbar header .nav-btn {
     padding: 5px;
