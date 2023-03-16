@@ -4,6 +4,7 @@ using MentalHealth;
 using MentalHealth.Models.Entities;
 using MentalHealth.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -31,6 +32,7 @@ builder.Services.AddScoped<MoodTrackerService>();
 builder.Services.AddScoped<TreeService>();
 builder.Services.AddScoped<TaskService>();
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<PasswordHasher<User>>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {

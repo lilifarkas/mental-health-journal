@@ -1,5 +1,6 @@
 using MentalHealth.Models.DTOs;
 using MentalHealth.Models.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace MentalHealth.Repository;
@@ -8,10 +9,12 @@ public class UserService : IService<User>
 {
     private readonly MentalHealthContext _context;
     private readonly TaskService _service;
-    public UserService(MentalHealthContext context, TaskService service)
+    private readonly PasswordHasher<User> _passwordHasher;
+    public UserService(MentalHealthContext context, TaskService service, PasswordHasher<User> passwordHasher)
     {
         _context = context;
         _service = service;
+        _passwordHasher = passwordHasher;
     }
     
     public async Task Add(User entity)
@@ -84,7 +87,17 @@ public class UserService : IService<User>
 
     public async Task<User?> GetByLogin(string email, string password)
     {
-        return await _context.Users.FirstOrDefaultAsync(user => user.Email == email && user.Password == password);
+        var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+        if (user != null)
+        {
+            var result = _passwordHasher.VerifyHashedPassword(user, user.Password, password);
+            if (result == PasswordVerificationResult.Success)
+            {
+                return user;
+            }
+            return null;
+        }
+        return null;
     }
 
     public async Task AddTask( UserTask task, long userID)

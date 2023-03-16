@@ -6,6 +6,7 @@ using MentalHealth.Models.Entities;
 using MentalHealth.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Identity;
 
 namespace MentalHealth.Controllers;
 
@@ -15,12 +16,24 @@ public class AuthController : ControllerBase
 {
     private readonly UserService _service;
     private readonly IConfiguration _configuration;
+    private readonly PasswordHasher<User> _passwordHasher;
     
     
-    public AuthController(UserService service, IConfiguration configuration)
+    public AuthController(UserService service, IConfiguration configuration, PasswordHasher<User> passwordHasher)
     {
         _service = service;
         _configuration = configuration;
+        _passwordHasher = passwordHasher;
+    }
+
+    [HttpPost("validate")]
+    public async Task<ActionResult<bool>> ValidateEmail([FromBody] RegisterDTO registerDto)
+    {
+        if (!await _service.UserExistsByEmail(registerDto.Email))
+        {
+            return Ok();
+        }
+        return BadRequest(new RegisterErrorDTO { Error = "User exists" });
     }
     
     [HttpPost("register")]
@@ -31,13 +44,15 @@ public class AuthController : ControllerBase
         user.Email = registerDto.Email;
         user.Password = registerDto.Password;
         user.Role = "User";
-        
-        if (!await _service.UserExistsByEmail(user.Email))
-        {
+        var hashedPassword = _passwordHasher.HashPassword(user, registerDto.Password);
+        user.Password = hashedPassword;
+
+        //if (!await _service.UserExistsByEmail(user.Email))
+        //{
             await _service.Add(user);
             return Ok(user);
-        }
-        return BadRequest( new RegisterErrorDTO{Error = "User exists"});
+        //}
+        //return BadRequest( new RegisterErrorDTO{Error = "User exists"});
     }
 
     [HttpPost("login")]
@@ -54,8 +69,8 @@ public class AuthController : ControllerBase
         var user = await _service.GetByLogin(loginDto.Email, loginDto.Password);
         if (user != null)
         {
-            string token = CreateToken(user);
-            return Ok(new LoginResultDTO{Token = token});
+                string token = CreateToken(user);
+                return Ok(new LoginResultDTO{Token = token});
         }
 
         return BadRequest( new LoginResultDTO{Error = "Email or password is incorrect"});

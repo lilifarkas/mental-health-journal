@@ -41,3 +41,12 @@
 .loading{
     font-size: 30px;
 }
+
+.profile-background{
+    background: url("../../../public/background4.png");
+    min-height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: white;
+}
