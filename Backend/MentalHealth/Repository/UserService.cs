@@ -51,6 +51,18 @@ public class UserService : IService<User>
             }
 
     }
+    
+    public async Task UpdatePoint(long id, int point)
+    {
+        var user = await _context.Users.FindAsync(id);
+        if (user != null)
+        {
+            user.Points += point;
+
+            await _context.SaveChangesAsync();
+        }
+        
+    }
 
     public async Task Delete(long id)
     {
@@ -92,6 +104,24 @@ public class UserService : IService<User>
     {
         var user = await Get(userID);
         user.UserTasks.Add(task);
+        await _context.SaveChangesAsync();
+    }
+    
+    public async Task AddDefault(long userId)
+    {
+        await foreach (var defaultTask in _context.DefaultTasks)
+        {
+            var task = new UserTask
+            {
+                UserId = userId,
+                Description = defaultTask.Description,
+                Point = defaultTask.Point,
+                Status = "Not started",
+                DueDate = DateTime.Now.AddHours(1)
+            };
+            await AddTask(task,userId);
+        }
+
         await _context.SaveChangesAsync();
     }
     

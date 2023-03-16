@@ -43,6 +43,12 @@ public class UserController: ControllerBase
         await _service.Update(user);
     }
     
+    [HttpPut("/users/addPoints/{id}")]
+    public async Task UpdatePointsUser(long id, [FromBody] int point)
+    {
+        await _service.UpdatePoint(id, point);
+    }
+    
     [HttpDelete("/users/delete/{id}")]
     public async Task DeleteUser(long id)
     {
@@ -55,12 +61,22 @@ public class UserController: ControllerBase
         return await _service.IncludeUserTasks(userID);
     }
 
-    [HttpPost("{userID}/addTask")]
+    [HttpPost("/users/addTask/{userID}")]
     public async Task<ActionResult> AddTask( long userID, [FromBody] AddTaskDTO taskDto)
     {
         UserTask task = new UserTask();
-        task.TaskName = taskDto.TaskDescription;
-        await _service.AddTask(task, userID);
+        task.Description = taskDto.TaskDescription;
+        task.Status = "Not started";
+        task.UserId = userID;
+        task.Point = 50;
+        task.DueDate = DateTime.Now.AddHours(1);
+        await _service.AddTask(task,userID);
         return Ok();
+    }
+    
+    [HttpPost("/users/addDefaultTask/{userID}")]
+    public async Task AddDefaultUserTask(long userId)
+    {
+        await _service.AddDefault(userId);
     }
 }
