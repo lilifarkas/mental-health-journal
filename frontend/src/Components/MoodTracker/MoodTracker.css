@@ -5,9 +5,13 @@
   justify-content: center;
   backdrop-filter: blur(5px);
   border: 2px solid green;
-  border-radius: 7px 7px 7px 7px;
   background-color: rgba(255, 255, 250, 0.9);
   user-select: none;
+  min-width: 38%;
+  height: 50vh;
+  border-radius: 30px;
+  box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  gap: 2rem;
 }
 
 .mood-container p {
@@ -16,6 +20,9 @@
   font-weight: 500;
 }
 
+.mood-back{
+  width: 80%;
+}
 
 .inputs {
   display: flex;
@@ -91,6 +98,7 @@ svg {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  gap: 2rem;
 }
 
 .ratingHeader {
@@ -123,16 +131,6 @@ svg {
   text-align: center;
   transform: translate(-50%, 0);
   width: 100%;
-}
-.backBtn{
-  width: 200px;
-  transform: translate(-50%, 0);
-}
-
-#moodSubmitBtn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .MoodCheck {
