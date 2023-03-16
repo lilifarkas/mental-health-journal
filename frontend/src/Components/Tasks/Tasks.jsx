@@ -90,10 +90,10 @@ const Tasks = () => {
           </thead>
           <tbody>{taskList()}</tbody>
         </table>
-        <div class="input-group pt-5">
+        <div className="input-group pt-5">
           <input
             type="text"
-            class="form-control border border-success bg-opacity"
+            className="form-control border border-success bg-opacity"
             placeholder="Description"
             aria-label="Sizing example input"
             aria-describedby="inputGroup-sizing-default"

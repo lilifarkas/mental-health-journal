@@ -124,7 +124,7 @@ const Garden = () => {
                   <input type="text" className="form-control" placeholder="Tree name..." aria-label="Username" aria-describedby="basic-addon1" onChange={(e) => setTreeName(e.target.value)} value={treeName}/>
                 </div>
                 <div className="input-group mb-3">
-                  <label className="input-group-text" for="tree-type">Tree type:</label>
+                  <label className="input-group-text" htmlFor="tree-type">Tree type:</label>
                   <select className="form-select" onChange={(e) => setTreeType(Number(e.target.value))} id="tree-type">
                     <option selected>Choose...</option>
                     <option value="1">Oak</option>

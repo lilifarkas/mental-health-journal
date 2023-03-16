@@ -15,6 +15,7 @@ const MoodTracker = ({toggleMenu}) => {
   const [rating, setRating] = useState(0);
   const [selectedEmoji, setSelectedEmoji] = useState(null);
   const [isDisabled, setIsDisabled] = useState(true);
+  const [rated, setRated] = useState(false);
 
   //USER
   const jwtToken = localStorage.getItem("jwtToken");

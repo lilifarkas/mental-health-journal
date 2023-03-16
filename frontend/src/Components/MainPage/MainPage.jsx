@@ -28,7 +28,7 @@ const MotivationalQuote = () => {
         });      
         const fetchedQuote = await response.json();
         setQuote(fetchedQuote[0]);
-      };
+    }
   
     useEffect(() => {
         getQuote();
