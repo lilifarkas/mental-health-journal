@@ -72,7 +72,7 @@ const Garden = () => {
       progress:0
     };
 
-    let response = await fetch('https://localhost:7270/tree', {
+    await fetch('https://localhost:7270/tree', {
       method: 'POST',
       body: JSON.stringify(tree),
       headers: {
@@ -80,8 +80,6 @@ const Garden = () => {
         'Authorization': `Bearer ${jwtToken}`
       }
     })
-    let result = await response.text();
-    console.log(result);
   };
   
   
@@ -89,24 +87,12 @@ const Garden = () => {
   function TreeCard(props) {
     let type = props.type === 1 ? "Oak" : props.type === 2 ? "Spruce" : "Birch";
     let progress = props.progress === 0 ? "Seed" : props.progress === 1 ? "Sprout" : props.progress === 2 ? "Sapling" : props.progress === 3 ? "Small Tree" : "Mature Tree";
-    const handleDelete = async (e) => {
-      e.preventDefault();
-      let response = await fetch(`https://localhost:7270/tree/${props.id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${jwtToken}`
-      }
-    })
-    let result = await response.text();
     
-    }
     return (
       <div className='tree-card'>
         <h1>{props.name}</h1>
         <h1>{type}</h1>
         <h1>{progress}</h1>
-        <button onClick={handleDelete}>Delete</button>
       </div>
     )
   };
@@ -115,7 +101,7 @@ const Garden = () => {
     <TreeCard key={index} id={tree.id} name={tree.name} type={tree.type} progress={tree.progress} />
   ));
 
-  if (!Array.isArray(trees)) {
+  if (user == null) {
     return <div>Loading data...</div>;
   }
 
@@ -132,9 +118,10 @@ const Garden = () => {
         <>
           <h3 className="ratingHeader">Take care of your trees!</h3>
           <div className='plant-card-container'>
-
+            {(user.trees.length === 0 || (user.points - (user.trees.length * 1000) < 1000)) && (
             <div onClick={togglePlantModal} className='plant-card'>+</div>
-
+            )}
+            
             {treeCards}
 
           </div>
