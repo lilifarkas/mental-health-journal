@@ -78,7 +78,7 @@ const Tasks = () => {
 
       const handleTaskChange = (event) => {
         setTask(event.target.value);
-      };
+      }
 
   async function startTask(id) {
       await fetch(`https://localhost:7270/usertask/${id}`, {
@@ -116,7 +116,7 @@ const Tasks = () => {
 
         const newTasks = tasks["$values"].filter((t) => t.id !== id);
         setTasks(newTasks);
-    };
+    }
     
   async function addTask() {
     let taskDTO = {TaskDescription : task}
