@@ -47,12 +47,12 @@
 .userContainer{
     display: flex;
     justify-self: right;
-    right: 5%;
+    right: 0%;
     position: absolute;
     background: transparent;
     outline: none;
     border: none;
-    width: 35px;
+    width: min-content;
     height: 35px;
 }
 .userName{
