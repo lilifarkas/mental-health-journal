@@ -1,0 +1,11 @@
+.task-background{
+    background: url("../../../public/background3.png");
+    min-height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: white;
+  }
+.table, .td-color{
+    color: white;
+}
