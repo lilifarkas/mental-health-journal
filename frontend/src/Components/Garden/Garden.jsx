@@ -12,6 +12,10 @@ const Garden = () => {
 
   const jwtToken = localStorage.getItem("jwtToken");
   const currentUserId = jwt_decode(jwtToken).userID;
+  const sprout = require("./img/oaksprout.png");
+  const seedling = require("./img/oakseedling.jpg");
+  const sapling = require("./img/oaksapling.jpg");
+  const mature = require("./img/oakmature.png");
 
   const toggleMenuModal = () => {
     setMenuModal(!menuModal);
@@ -89,14 +93,17 @@ const Garden = () => {
     let progress;
     let userPoint;
     let progressMessage;
+    let treeImg;
     if(trees.length > 0){
       progress = trees[trees.length-1].progress === 0 ? 50 : trees[trees.length-1].progress === 1 ? 200 : trees[trees.length-1].progress === 2 ? 500 : trees[trees.length-1].progress === 3 ? 1000 : 1000;
       userPoint = trees.length === 1 ? user.points : trees.length > 1 ? user.points - ((trees.length-1)*1000) : user.points;
       progressMessage = `${userPoint} / ${progress}`
+
+      treeImg = trees[trees.length-1].progress === 0 ? sprout : trees[trees.length-1].progress === 1 ? sprout : trees[trees.length-1].progress === 2 ? seedling : trees[trees.length-1].progress === 3 ? sapling : mature;
     }
     return (
       <div className='plant-card-image'>
-        <img src="https://img.freepik.com/premium-vector/planting-tree-spring-semi-flat-color-vector-object-full-sized-item-white-tree-seedling-concern-environment-isolated-modern-cartoon-style-illustration-graphic-design-animation_151150-7017.jpg?w=2000" alt="" height="200px"/>
+        <img src={treeImg !== null ? treeImg : sprout} alt="" height="200px"/>
         <p>{progressMessage}</p>
       </div>
     )
