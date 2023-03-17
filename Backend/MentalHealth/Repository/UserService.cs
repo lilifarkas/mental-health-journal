@@ -46,10 +46,10 @@ public class UserService : IService<User>
                 user.Password = entity.Password;
                 user.Email = entity.Email;
                 user.Points = entity.Points;
-
+                user.Role = entity.Role;
                 await _context.SaveChangesAsync();
             }
-        
+
     }
     
     public async Task UpdatePoint(long id, int point)

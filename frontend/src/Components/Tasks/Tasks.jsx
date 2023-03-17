@@ -4,9 +4,6 @@ import jwt_decode from "jwt-decode";
 import "./Tasks.css";
 
 const Task = ({task, finishTask, startTask})=>{
-
-  console.log(task)
-
   if(task.status === "Not started"){
     return (
       <tr>
