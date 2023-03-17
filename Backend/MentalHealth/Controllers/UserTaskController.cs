@@ -40,6 +40,12 @@ public class UserTaskController : ControllerBase
         await _service.Update(task);
     }
     
+    [HttpPut("{taskID}")]
+    public async Task StartUserTask(long taskId)
+    {
+        await _service.Start(taskId);
+    }
+    
     [HttpDelete("{taskID}")]
     public async Task DeleteUserTask(long taskID)
     {

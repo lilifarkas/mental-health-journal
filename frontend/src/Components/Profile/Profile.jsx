@@ -25,7 +25,6 @@ function Profile(  ) {
 
           });
             const result = await response.json();
-            console.log(result);
 
             return result;
         }
@@ -42,7 +41,7 @@ function Profile(  ) {
 
     
     if(user == null){
-        return <div className="mt-5 loading">Loading...</div>;
+        return <div className="profile-background"></div>;
     }
     
     const deleteUser = async (e) => {
@@ -72,7 +71,7 @@ function Profile(  ) {
     const averageMood = () =>{
         
         const allMoods = moods.$values;
-        console.log(allMoods)
+        
         
         
          let moodMessage;
@@ -142,6 +141,7 @@ function Profile(  ) {
                     </NavLink>
                     <button onClick={() => setShowModal(true)} className="button">DELETE PROFILE</button>
                 </div>
+                
                 <Modal
                     isOpen={showModal}
                     onRequestClose={() => setShowModal(false)}
