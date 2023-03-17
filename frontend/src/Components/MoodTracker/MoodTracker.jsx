@@ -49,10 +49,13 @@ const MoodTracker = ({toggleMenu}) => {
   useEffect(()=>{
     if (user != null) {
       let userDate = new Date(user["lastMoodDate"])
+      
       let current = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
       let userStrDate = `${userDate.getFullYear()}-${userDate.getMonth() + 1}-${userDate.getDate()}`
+      console.log(current);
       if (current === userStrDate) {
         setRated(true);
+        console.log("asd")
       }
       
     }
@@ -65,7 +68,7 @@ const MoodTracker = ({toggleMenu}) => {
     let moodDTO = {  MoodValue : rating,
                      DateCreated : currentDate };
     await fetch(`https://localhost:7270/users/${userID}/addMood`, {
-      method: "POST",
+      method: "PUT",
       body: JSON.stringify(moodDTO),
       headers : {
         'Authorization' : `Bearer ${jwtToken}`,

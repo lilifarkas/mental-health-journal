@@ -107,6 +107,12 @@ public class UserService : IService<User>
         await _context.SaveChangesAsync();
     }
     
+    public async Task AddMood( MoodTracker mood, long userID)
+    {
+        var user = await Get(userID);
+        user.Moods.Add(mood);
+    }
+    
     public async Task AddDefault(long userId)
     {
         await foreach (var defaultTask in _context.DefaultTasks)
