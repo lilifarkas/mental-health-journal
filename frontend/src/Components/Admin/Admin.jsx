@@ -1,57 +1,105 @@
 import React, { useEffect, useState } from "react";
-import {BiLogOut} from "react-icons/bi";
+import { BiLogOut } from "react-icons/bi";
+import './Admin.css';
+const User = (props) => {
+    return (
+        <tr>
+            <td>{props.record.id}</td>
+            <td>{props.record.name}</td>
+            <td>{props.record.email}</td>
+            <td>
+                <select name="roles" id="adminRoleEdit" onChange={(e) => UpdateUserRole(e, props.record)}>
+                    <option value={props.record.role}>{props.record.role}</option>
+                    <option value="User">User</option>
+                    <option value="Admin">Admin</option>
+                </select>
+                <span className={`AdminLoader`}></span>
+            </td>
+            <td>{props.record.points}</td>
+            {/* <td>
+            <button className="btn btn-link"
+            onClick={() =>
+                props.deleteUser(props.record.id)}>
+                Delete
+                </button>
+            </td> */}
+        </tr>)
+};
 
-const User = (props) => (
-    <tr>
-        <td>{props.record.id}</td>
-        <td>{props.record.name}</td>
-        <td>{props.record.email}</td>
-        <td>{props.record.role}</td>
-        <td>{props.record.points}</td>
-        {/*<td>*/}
-        {/*    <button className="btn btn-link"*/}
-        {/*            onClick={() => {*/}
-        {/*                props.deleteUser(props.record.id);*/}
-        {/*            }}*/}
-        {/*    >*/}
-        {/*        Delete*/}
-        {/*    </button>*/}
-        {/*</td>*/}
-    </tr>
-);
+async function UpdateUserRole(e, record) {
+    let row = e.target.parentNode;
+    let loader = row.querySelector('.AdminLoader');
+    let token = localStorage.getItem('jwtToken');
+    const user = GetUser(e, record);
+    let body;
+    if (user) {
+        body = JSON.stringify(user);
+    }
+    else {
+        console.error('EMPTY USER FILE');
+    }
+    loader.style.visibility = "visible";
+    let response = await fetch(`https://localhost:7270/users/updaterole/${record.id}`, {
+        method: 'PUT',
+        body,
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    });
+    if (response.ok) {
+        loader.style.visibility = "hidden";
+    }
+    else {
+        loader.style.visibility = "hidden";
+    }
+}
 
-export default function UsersList({handleLogout}) {
+function GetUser(e, record) {
+    return {
+        email: record.email,
+        id: record.id,
+        moods: record.moods,
+        name: record.name,
+        password: record.password,
+        points: record.points,
+        role: e.target.value,
+        trees: record.trees,
+        userTasks: record.userTasks
+    }
+}
 
+export default function UsersList({ handleLogout }) {
     const [users, setUsers] = useState([]);
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [sortedUsers, setSortedUsers] = useState([]);
     const [sortedIsChanged, setSortedIsChanged] = useState(false);
     const jwtToken = localStorage.getItem("jwtToken");
-
+    
     useEffect(() => {
-        async function getUsers() {
-            const response = await fetch(`https://localhost:7270/users`, {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${jwtToken}`
-                }
-            });
-
-            if (!response.ok) {
-                const message = `An error occurred: ${response.statusText}`;
-                console.warn(message);
-                return;
+        
+        getUsers();
+        
+    }, []);
+    async function getUsers() {
+        const response = await fetch(`https://localhost:7270/users`, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${jwtToken}`
             }
+        });
 
-            const result = await response.json();
-            setUsers(result.$values);
-            setFilteredUsers(result.$values);
-            setSortedUsers(result.$values);
+        if (!response.ok) {
+            const message = `An error occurred: ${response.statusText}`;
+            console.warn(message);
+            return;
         }
 
-        getUsers();
-
-    }, []);
+        const result = await response.json();
+        setUsers(result.$values);
+        setFilteredUsers(result.$values);
+        setSortedUsers(result.$values);
+    }
 
     function recordList() {
         const userList = sortedIsChanged === true ? sortedUsers : filteredUsers;
@@ -77,13 +125,13 @@ export default function UsersList({handleLogout}) {
         setSortedIsChanged(true);
     }
 
-    function filterRoles(e){
+    function filterRoles(e) {
         const value = e.toLowerCase();
         const filtered = users.filter(x => x.role.toLowerCase().includes(value));
         setFilteredUsers(filtered);
     }
 
-    function sortByRole(){
+    function sortByRole() {
         const sorted = [...sortedUsers].sort((a, b) => (a.role > b.role) ? 1 : ((b.role > a.role) ? -1 : 0));
         setSortedUsers(sorted);
         setSortedIsChanged(true);
@@ -122,7 +170,7 @@ export default function UsersList({handleLogout}) {
         <div className="bg-light">
             <div className="d-flex flex-column justify-content-center align-items-center">
                 <button className='logout' onClick={handleLogout}>
-                    <BiLogOut color="black"/>
+                    <BiLogOut color="black" />
                 </button>
                 <h3 className="mt-5">Users List</h3>
             </div>
@@ -134,7 +182,7 @@ export default function UsersList({handleLogout}) {
                         sortByPoints();
                     } else if (e.target.value === "Arrange") {
                         notSorted();
-                    } else if(e.target.value === "By Role") {
+                    } else if (e.target.value === "By Role") {
                         sortByRole();
                     }
                 }}>
