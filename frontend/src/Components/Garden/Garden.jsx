@@ -81,27 +81,28 @@ const Garden = () => {
   };
   
   
+  if (user == null) {
+    return <div>Loading data...</div>;
+  }
   
-  function TreeCard(props) {
-    let type = props.type === 1 ? "Oak" : props.type === 2 ? "Spruce" : "Birch";
-    let progress = props.progress === 0 ? "Seed" : props.progress === 1 ? "Sprout" : props.progress === 2 ? "Sapling" : props.progress === 3 ? "Small Tree" : "Mature Tree";
-    
+  function TreeCard() {
+    let progress;
+    let userPoint;
+    let progressMessage;
+    if(trees.length > 0){
+      progress = trees[trees.length-1].progress === 0 ? 50 : trees[trees.length-1].progress === 1 ? 200 : trees[trees.length-1].progress === 2 ? 500 : trees[trees.length-1].progress === 3 ? 1000 : 1000;
+      userPoint = trees.length === 1 ? user.points : trees.length > 1 ? user.points - ((trees.length-1)*1000) : user.points;
+      progressMessage = `${userPoint} / ${progress}`
+    }
     return (
-      <div className='tree-card'>
-        <h1>{props.name}</h1>
-        <h1>{type}</h1>
-        <h1>{progress}</h1>
+      <div className='plant-card-image'>
+        <img src="https://img.freepik.com/premium-vector/planting-tree-spring-semi-flat-color-vector-object-full-sized-item-white-tree-seedling-concern-environment-isolated-modern-cartoon-style-illustration-graphic-design-animation_151150-7017.jpg?w=2000" alt="" height="200px"/>
+        <p>{progressMessage}</p>
       </div>
     )
   }
 
-  const treeCards = trees.map((tree, index) => (
-    <TreeCard key={index} id={tree.id} name={tree.name} type={tree.type} progress={tree.progress} />
-  ));
 
-  if (user == null) {
-    return <div>Loading data...</div>;
-  }
 
   const togglePlantModal = () => {
       setPlantModal(!plantModal);
@@ -118,13 +119,9 @@ const Garden = () => {
           
           <div className='plant-card-container'>
 
+            <TreeCard/>
 
-            <div className="plant-card-image">
-              <img src="https://img.freepik.com/premium-vector/planting-tree-spring-semi-flat-color-vector-object-full-sized-item-white-tree-seedling-concern-environment-isolated-modern-cartoon-style-illustration-graphic-design-animation_151150-7017.jpg?w=2000" alt="" height="200px"/>
-              <p>Progress: 50/100</p>
-            </div>
-
-            {(trees.length === 0 || (user.points - (trees.length * 1000) > 0)) && (
+            {(trees.length === 0 || (user.points - (trees.length * 1000) >= 0)) && (
               <div className='plant-card-button-container'>
                 <button className='btn btn-success btn-lg' onClick={togglePlantModal}>Plant a new tree</button>
               </div>
@@ -135,7 +132,6 @@ const Garden = () => {
                   <div className='plant-card-button-error'>
                     <p>You can plant new tree when you finished growing the previous</p>
                   </div>
-                  <button className='btn btn-success btn-lg' >Plant a new tree</button>
                 </div>
               </>
             )}
