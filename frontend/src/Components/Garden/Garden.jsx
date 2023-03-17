@@ -130,7 +130,7 @@ const Garden = () => {
               <>
                 <div className='plant-card-button-container'>
                   <div className='plant-card-button-error'>
-                    <p>You can plant new tree when you finished growing the previous</p>
+                    <p>You can only plant new tree when you already finished growing the previous one</p>
                   </div>
                 </div>
               </>
