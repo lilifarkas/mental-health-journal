@@ -74,9 +74,9 @@ public class UserController: ControllerBase
         await _service.AddTask(task,userID);
         return Ok();
     }
-    
+
     [HttpPut("{userID}/addMood")]
-    public async Task<ActionResult> AddMood( long userID, [FromBody] AddMoodDTO moodDto)
+    public async Task<ActionResult> AddMood(long userID, [FromBody] AddMoodDTO moodDto)
     {
         var user = await _service.Get(userID);
         user.LastMoodDate = moodDto.DateCreated;
@@ -85,6 +85,7 @@ public class UserController: ControllerBase
         await _service.Update(user);
         await _service.AddMood(moodTracker, userID);
         return Ok();
+    }
 
     [HttpPost("/users/addDefaultTask/{userID}")]
     public async Task AddDefaultUserTask(long userId)
