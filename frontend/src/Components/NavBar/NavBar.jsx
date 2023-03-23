@@ -6,14 +6,15 @@ import './NavBar.css';
 
 function NavBar({ handleLogout, user }) {
     let navigate = useNavigate();
-    console.log(user);
+
+
+
     let name = user['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
     function nav() {
         navigate("/profile");
     }
     return (
-
-        <div>
+        <header>
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav mx-auto">
@@ -36,27 +37,10 @@ function NavBar({ handleLogout, user }) {
                             <span onClick={nav} className='userName'>{name}</span>
                         </li>}
 
-                    </ul>
-                </div>
-            </nav>
-        </div>
-
-        // <div className='navbar'>
-        //     <header>
-        //         <h3>Logo</h3>
-        //         <nav ref={navRef}>
-        //             <a href="/#">Home</a>
-        //             <a href="/#">Journal</a>
-        //             <a href="/profile">Profile</a>
-        //             <button className="nav-btn nav-close-btn" onClick={showNavbar}>
-        //                 <FaTimes />
-        //             </button>
-        //         </nav>
-        //         <button className="nav-btn" onClick={showNavbar}>
-        //             <FaBars />
-        //         </button>
-        //     </header>
-        // </div>
+                  </ul>
+              </div>
+          </nav>
+      </header>
     );
 }
 

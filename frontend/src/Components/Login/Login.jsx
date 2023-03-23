@@ -82,7 +82,7 @@ export default function Login({ onLogin }) {
   }, [email, password])
 
   return (
-    <>
+    <div className='login-background'>
       <div className='LoginContainer'>
         <h1 className='header mb-5 center'>Sign In</h1>
         <span className='inputError'>Incorrect email or password</span>
@@ -114,6 +114,6 @@ export default function Login({ onLogin }) {
 
         </form>
       </div>
-    </>
+    </div>
   )
 }

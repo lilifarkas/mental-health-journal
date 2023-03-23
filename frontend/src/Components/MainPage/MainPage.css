@@ -1,19 +1,92 @@
-.main-container {
+.mainpage-container{
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-}
-
-.navbar {
+  margin: 0 auto;
   padding: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
+  width: 80vw;
+  gap: 2rem;
+}
+
+.mainpage-background{
+  background: url("../../../public/224738196-7e770d6c-6245-4bb5-9f09-ffa028458ad4.png");
+  min-height: 94.2vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.checkin-background{
+  background: url("../../../public/Background.png");
+  height: 50vh;
+  max-width: 38%;
+  background-size:cover;
+  background-position:center;
+  background-repeat: no-repeat;
+  border-radius: 30px;
+  box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.mainpage-container-row{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  gap: 1rem;
+}
+
+.checkin-child{
+  flex: 1;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+}
+
+.checkin-text-height{
+  line-height: 3.5rem;
+}
+
+.checkin{
+  margin-top: 2rem;
+  margin-left: 1rem;
+  max-width: 40%;
+}
+
+.checkin-button{
+  display: flex;
+  max-width: 50%;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3rem;
+}
+
+.quote-background{
+  background: url("../../../public/224738230-cb219c5a-4c5f-4b4a-ac54-3849af0bcd3c.png");
+  margin: 0 auto;
+  height: 35vh;
+  max-width: 86%;
+  background-size:cover;
+  background-position:center;
+  background-repeat: no-repeat;
+  border-radius: 30px;
+  box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.quote-items{
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  color: white;
+}
+
+.quote-title{
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.quote-text{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
 }

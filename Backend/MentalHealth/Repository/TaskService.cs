@@ -38,6 +38,17 @@ public class TaskService : IService<UserTask>
                 await _context.SaveChangesAsync();
             }
     }
+    
+    public async Task Start(long taskId)
+    {
+        var task = await Get(taskId);
+        if (task != null)
+        {
+            task.Status = "In progress";
+            task.DueDate = DateTime.Now.AddHours(1);
+            await _context.SaveChangesAsync();
+        }
+    }
 
     public async Task Delete(long id)
     {

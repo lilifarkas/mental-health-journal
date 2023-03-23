@@ -138,6 +138,17 @@ export default function Register() {
       method: "POST",
       headers: { 'Content-Type': 'application/json' }
     });
+    if (response.status === 500) {
+      submitErrorText.style.visibility = 'visible';
+      submitError.style.visibility = 'visible';
+      submitBtn.classList.value = 'btn btn-danger';
+      validateLoader.tyle.visibility = 'hidden';
+      setTimeout(() => {
+        submitErrorText.style.visibility = 'hidden';
+        submitError.style.visibility = 'hidden';
+        submitBtn.classList.value = 'btn btn-success';
+      }, 2000)
+    }
 
     let emailFormat = /^[a-zA-Z0-9._+-]+@([a-zA-Z0-9]+\.)+[a-zA-Z]{2,}$/;
     if (email === '') {
@@ -235,7 +246,7 @@ export default function Register() {
   }
 
   return (
-    <>
+    <div className='register-background'>
       <div className='RegisterContainer'>
         <h1 className='header mb-5 center'>Create Account</h1>
         <form className='needs-validation' onSubmit={(e) => RegisterUser(e)}>
@@ -288,6 +299,6 @@ export default function Register() {
           <span className='RegSubmitErrorMessage'>Unable to reach the server! Please try again later! </span>
         </form>
       </div>
-    </>
+    </div>
   )
 }

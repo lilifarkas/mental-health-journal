@@ -1,39 +1,29 @@
 .garden-container {
-  position: relative;
   display: flex;
-  margin-top: 100px;
+  flex: 1;
+  max-width: 40%;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
   backdrop-filter: blur(5px);
-  height: 350px;
-  width: 100%;
   border: 2px solid green;
-  border-radius: 7px 7px 7px 7px;
-  padding: 50px;
+  border-radius: 30px;
   background-color: rgba(80, 80, 80, 0.586);
-  user-select: none;
-  top: 50%;
+  box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  color: white;
 }
 
-.garden-container p {
-  color: rgb(220, 220, 220);
-  font-size: x-large;
-  font-weight: 500;
-}
-
-.garden-container h1 {
-  color: rgb(0, 0, 0);
+.garden-container-title{
+  margin-top: 1rem;
+  color:white;
   font-weight: 300;
   font-size: 24px;
 }
 
 .plant-card-container {
   display: flex;
-  width: 100%;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 5rem;
 }
 
 .plant-card {
@@ -41,13 +31,39 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 200px;
-  width: 150px;
-  margin-right: 20px;
   backdrop-filter: blur(10px);
   background-color: rgb(219, 219, 219);
   border-radius: 7px 7px 7px 7px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.plant-card-image{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.plant-card-image img{
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+}
+
+.plant-card-button-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+.plant-card-button-error p{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color:red;
 }
 
 .tree-card {
@@ -72,10 +88,34 @@
 .plant-tree-modal {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  width: 80%;
+  margin-top: 2rem;
+  flex-grow: 1;
+  gap: 2rem;
 }
 
-.back-btn {
-  position: fixed;
-  right: 0;
-  top: 0;
+.plant-tree-form{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.plant-tree-back{
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.plant-tree-input-group{
+  display: flex;
+  flex-direction: column;
+}
+
+.plant-tree-submit{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 4rem;
 }

@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using MentalHealth.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -67,13 +68,29 @@ public class TreeService : IService<Tree>
             .FirstOrDefault();
         
         int[] progressThresholds = new int[] { 50, 200, 500, 1000 };
-        
-        int currentProgress = _context.Trees
-            .Where(t => t.OwnerId == userId)
-            .Select(t => t.Progress)
-            .FirstOrDefault();
+        int currentProgress = 0;
+        int nextProgress = 0;
+        long currentTreeId = 0;
 
-        int nextProgress = currentProgress;
+        var trees = _context.Trees
+            .Where(t => t.OwnerId == userId)
+            .ToList();
+        if (trees.Count() > 1)
+        {
+            userPoints -= (trees.Count - 1) * 1000;
+        }
+        
+        foreach (var tree in trees)
+        {
+            if (tree.Progress != 4)
+            {
+                currentTreeId = tree.ID;
+                currentProgress = tree.Progress;
+                nextProgress = currentProgress;
+                break;
+            }
+        }
+        
         for (int i = currentProgress; i < progressThresholds.Length; i++)
         {
             if (userPoints >= progressThresholds[i])
@@ -89,7 +106,7 @@ public class TreeService : IService<Tree>
         if (nextProgress != currentProgress)
         {
             var tree = _context.Trees
-                .FirstOrDefault(t => t.OwnerId == userId);
+                .FirstOrDefault(t => t.ID == currentTreeId);
 
             if (tree != null)
             {

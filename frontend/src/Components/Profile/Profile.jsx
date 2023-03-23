@@ -25,7 +25,6 @@ function Profile(  ) {
 
           });
             const result = await response.json();
-            console.log(result);
 
             return result;
         }
@@ -42,7 +41,7 @@ function Profile(  ) {
 
     
     if(user == null){
-        return <div className="mt-5 loading">Loading...</div>;
+        return <div className="profile-background"></div>;
     }
     
     const deleteUser = async (e) => {
@@ -72,7 +71,7 @@ function Profile(  ) {
     const averageMood = () =>{
         
         const allMoods = moods.$values;
-        console.log(allMoods)
+        
         
         
          let moodMessage;
@@ -115,44 +114,47 @@ function Profile(  ) {
     const moodMessage = averageMood();
 
     return (
-        <div className="main d-flex flex-column mt-lg-5 justify-content-center">
-            <h3 className="title">PROFILE</h3>
-            <div className="titles d-inline-flex flex-column mt-lg-5">
-                <div className="d-inline-flex d-flex flex-row gap-5">
-                    <p className="d-inline-flex">Name:</p>
-                    <p className="d-inline-flex">{user.name}</p>
+        <div className="profile-background">
+            <div className="main d-flex flex-column justify-content-center">
+                <h3 className="title">PROFILE</h3>
+                <div className="titles d-inline-flex flex-column mt-lg-5">
+                    <div className="d-inline-flex d-flex flex-row gap-5">
+                        <p className="d-inline-flex">Name:</p>
+                        <p className="d-inline-flex">{user.name}</p>
+                    </div>
+                    <div className="d-inline-flex d-flex flex-row gap-5">
+                        <p className="d-inline-flex">Email:</p>
+                        <p className="d-inline-flex">{user.email}</p> 
+                    </div>
+                    <div className="d-inline-flex d-flex flex-row gap-5">
+                        <p className="d-inline-flex">Points:</p>
+                        <p className="d-inline-flex">{user.points}</p>
+                    </div>
+                    <div className="d-inline-flex d-flex flex-column">
+                        <p className="d-inline-flex">Average mood in the last 7 days:</p>
+                        <p>{moodMessage}</p>
+                    </div>
                 </div>
-                <div className="d-inline-flex d-flex flex-row gap-5">
-                    <p className="d-inline-flex">Email:</p>
-                    <p className="d-inline-flex">{user.email}</p> 
+                <div className="d-inline-flex gap-5">
+                    <NavLink to={`/profile/edit`}>
+                    <button className="button">EDIT</button>
+                    </NavLink>
+                    <button onClick={() => setShowModal(true)} className="button">DELETE PROFILE</button>
                 </div>
-                <div className="d-inline-flex d-flex flex-row gap-5">
-                    <p className="d-inline-flex">Points:</p>
-                    <p className="d-inline-flex">{user.points}</p>
-                </div>
-                <div className="d-inline-flex d-flex flex-column">
-                    <p className="d-inline-flex">Average mood in the last 7 days:</p>
-                    <p>{moodMessage}</p>
-                </div>
+                
+                <Modal
+                    isOpen={showModal}
+                    onRequestClose={() => setShowModal(false)}
+                    contentLabel="Delete Profile Modal"
+                    className="modalDelete"
+                >
+                    <h2 className="titles">Are you sure you want to delete your profile?</h2>
+                    <div className="d-flex flex-row gap-5 mt-3">
+                        <button className="button" onClick={deleteUser}>YES</button>
+                        <button className="button" onClick={handleCancel}>NO</button>
+                    </div>
+                </Modal>
             </div>
-            <div className="d-inline-flex gap-5">
-                <NavLink to={`/profile/edit`}>
-                <button className="button">EDIT</button>
-                </NavLink>
-                <button onClick={() => setShowModal(true)} className="button">DELETE PROFILE</button>
-            </div>
-            <Modal
-                isOpen={showModal}
-                onRequestClose={() => setShowModal(false)}
-                contentLabel="Delete Profile Modal"
-                className="modalDelete"
-            >
-                <h2 className="titles">Are you sure you want to delete your profile?</h2>
-                <div className="d-flex flex-row gap-5 mt-3">
-                    <button className="button" onClick={deleteUser}>YES</button>
-                    <button className="button" onClick={handleCancel}>NO</button>
-                </div>
-            </Modal>
         </div>
     );
 }
