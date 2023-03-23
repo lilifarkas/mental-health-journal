@@ -15,6 +15,5 @@ RUN dotnet publish "MentalHealth.csproj" -c Release -o /app/publish /p:UseAppHos
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-RUN apt-get update  && apt-get install wget unzip zip -y
 ENV ASPNETCORE_HTTPS_PORT=443
 ENTRYPOINT ["dotnet", "MentalHealth.dll"]
