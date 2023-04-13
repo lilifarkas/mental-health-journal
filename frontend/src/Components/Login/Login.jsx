@@ -26,7 +26,7 @@ export default function Login({ onLogin }) {
     try {
       loginLoader.style.visibility = 'visible';
       loginText.style.visibility = 'hidden';
-      let response = await fetch(`https://localhost:7270/welcome/login`, {
+      let response = await fetch(`http://localhost:8080/welcome/login`, {
         method: "POST",
         headers: {
           'Content-Type': "application/json"

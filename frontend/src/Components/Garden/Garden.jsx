@@ -25,7 +25,7 @@ const Garden = () => {
 
   useEffect(() => {
     const getTrees = async () => {
-      let response = await fetch(`https://localhost:7270/tree/user${currentUserId}`, {
+      let response = await fetch(`http://localhost:8080/tree/user${currentUserId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ const Garden = () => {
       return treesArray;
     };
     const getUser = async () => {
-      const response = await fetch(`https://localhost:7270/users/${currentUserId}`, {
+      const response = await fetch(`http://localhost:8080/users/${currentUserId}`, {
         method : 'GET',
         headers: {
           "Authorization": `Bearer ${jwtToken}`
@@ -74,7 +74,7 @@ const Garden = () => {
       progress:0
     };
 
-    await fetch('https://localhost:7270/tree', {
+    await fetch('http://localhost:8080/tree', {
       method: 'POST',
       body: JSON.stringify(tree),
       headers: {

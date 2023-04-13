@@ -22,7 +22,7 @@ const MoodTracker = ({toggleMenu}) => {
   const userID = jwt_decode(jwtToken).userID;
   const currentDate = new Date();
   const [user, setUser] = useState(null);
-  const url = `https://localhost:7270/users/${userID}`;
+  const url = `http://localhost:8080/users/${userID}`;
 
   function getChildProps(value) {
     setRating(value);
@@ -67,7 +67,7 @@ const MoodTracker = ({toggleMenu}) => {
 
     let moodDTO = {  MoodValue : rating,
                      DateCreated : currentDate };
-    await fetch(`https://localhost:7270/users/${userID}/addMood`, {
+    await fetch(`http://localhost:8080/users/${userID}/addMood`, {
       method: "PUT",
       body: JSON.stringify(moodDTO),
       headers : {
@@ -76,7 +76,7 @@ const MoodTracker = ({toggleMenu}) => {
       }
     });
     
-    await fetch(`https://localhost:7270/users/addPoints/${userID}`, {
+    await fetch(`http://localhost:8080/users/addPoints/${userID}`, {
             body: 50,
             method: "PUT",
             headers: {

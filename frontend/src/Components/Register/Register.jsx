@@ -129,7 +129,7 @@ export default function Register() {
 
   async function validateEmail() {
     validateLoader.style.visibility = 'visible';
-    let response = await fetch('https://localhost:7270/welcome/validate', {
+    let response = await fetch('http://localhost:8080/welcome/validate', {
       body: JSON.stringify({
         "Name": userName,
         "Password": password,
@@ -189,7 +189,7 @@ export default function Register() {
     loader.style.visibility = 'visible';
     timeoutId = setTimeout(async () => {
       try {
-        const response = await fetch('https://localhost:7270/welcome/register', {
+        const response = await fetch('http://localhost:8080/welcome/register', {
           signal: signal,
           body: JSON.stringify({
             "Name": userName,

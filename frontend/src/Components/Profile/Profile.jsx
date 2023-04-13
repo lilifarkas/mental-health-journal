@@ -13,7 +13,7 @@ function Profile(  ) {
     
     const jwtToken = localStorage.getItem("jwtToken");
     const userID = jwt_decode(jwtToken).userID;
-    const url = `https://localhost:7270/users/${userID}`;
+    const url = `http://localhost:8080/users/${userID}`;
 
     useEffect(() => {
         async function getUser() {
