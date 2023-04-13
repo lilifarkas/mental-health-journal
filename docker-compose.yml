@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+  backend:
+    build:
+      context: ./Backend/MentalHealth
+      dockerfile: Dockerfile
+    # environment:
+    #   - ASPNETCORE_URLS=http://+:7029
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - "1433:1433"
+    environment:
+      - SA_PASSWORD=2Secure*Password2
+      - ACCEPT_EULA=Y
