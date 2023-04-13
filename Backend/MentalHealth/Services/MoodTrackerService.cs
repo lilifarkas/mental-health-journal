@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using MentalHealth.Models.Entities;
+﻿using MentalHealth.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace MentalHealth.Repository
+namespace MentalHealth.Services
 {
 	public class MoodTrackerService : IService<MoodTracker>
 	{

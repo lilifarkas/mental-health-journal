@@ -1,5 +1,6 @@
 ﻿using MentalHealth.Models.Entities;
 using MentalHealth.Repository;
+using MentalHealth.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

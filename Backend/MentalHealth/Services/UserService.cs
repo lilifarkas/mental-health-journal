@@ -1,5 +1,6 @@
 using MentalHealth.Models.DTOs;
 using MentalHealth.Models.Entities;
+using MentalHealth.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

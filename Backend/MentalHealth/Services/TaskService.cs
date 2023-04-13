@@ -1,7 +1,7 @@
 ﻿using MentalHealth.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace MentalHealth.Repository;
+namespace MentalHealth.Services;
 
 public class TaskService : IService<UserTask>
 {

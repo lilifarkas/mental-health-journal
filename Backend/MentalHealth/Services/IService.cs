@@ -1,4 +1,4 @@
-﻿namespace MentalHealth.Repository;
+﻿namespace MentalHealth.Services;
 
 public interface IService<T>
 {

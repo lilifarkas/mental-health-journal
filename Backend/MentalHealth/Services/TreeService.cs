@@ -1,9 +1,7 @@
-using System.Collections.Immutable;
 using MentalHealth.Models.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace MentalHealth.Repository;
+namespace MentalHealth.Services;
 
 public class TreeService : IService<Tree>
 {
