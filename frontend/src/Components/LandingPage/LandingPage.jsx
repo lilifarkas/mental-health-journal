@@ -7,7 +7,7 @@ function LandingPage() {
     return (
         <div className="landing-background">
 
-            <div className=" main">
+            <div className="main">
                 <header className="header-one">
                     <h1 className="title">MINDGARDEN</h1>
                     <p className="slogan">Your personal mental wellness companion</p>
@@ -18,21 +18,20 @@ function LandingPage() {
                             With daily affirmations and a journal for your thoughts
                             we aim to help you prioritize your mental health and self-care.
                             Get started by logging in and begin your journey towards self-discovery and growth.</h1>
-
-                        <p className="buttons">
-                            <NavLink className="button-text" to="/registration">
-                                <button className="btn button">
-                                    SIGN UP
-                                </button>
-                            </NavLink>
-                            <NavLink className="button-text" to="/login">
-                                <button className="btn button">
-                                    SIGN IN
-                                </button>
-                            </NavLink>
-                        </p>
                     </div>
                 </header>
+                <p className="buttons">
+                    <NavLink className="button-text" to="/registration">
+                        <button className="btn button">
+                            SIGN UP
+                        </button>
+                    </NavLink>
+                    <NavLink className="button-text" to="/login">
+                        <button className="btn button">
+                            SIGN IN
+                        </button>
+                    </NavLink>
+                </p>
             </div>
         </div>
     );
