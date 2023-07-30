@@ -7,6 +7,8 @@ import eye from './img/eye.svg';
 import eyeslash from './img/eye-slash.svg';
 import { HiCheck } from 'react-icons/hi';
 import { MdOutlineReportGmailerrorred } from 'react-icons/md';
+import URL from '../Constants/ConstantUrl'
+
 
 
 export default function Register() {
@@ -129,7 +131,7 @@ export default function Register() {
 
   async function validateEmail() {
     validateLoader.style.visibility = 'visible';
-    let response = await fetch('http://localhost:8080/welcome/validate', {
+    let response = await fetch(`${URL}welcome/validate`, {
       body: JSON.stringify({
         "Name": userName,
         "Password": password,
@@ -189,7 +191,7 @@ export default function Register() {
     loader.style.visibility = 'visible';
     timeoutId = setTimeout(async () => {
       try {
-        const response = await fetch('http://localhost:8080/welcome/register', {
+        const response = await fetch(`${URL}welcome/register`, {
           signal: signal,
           body: JSON.stringify({
             "Name": userName,

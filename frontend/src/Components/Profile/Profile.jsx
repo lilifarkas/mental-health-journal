@@ -3,6 +3,8 @@ import {useEffect, useState} from "react";
 import jwt_decode from "jwt-decode"; 
 import "./Profile.css"
 import Modal from 'react-modal';
+import URL from '../Constants/ConstantUrl'
+
 
 
 function Profile(  ) {
@@ -13,7 +15,7 @@ function Profile(  ) {
     
     const jwtToken = localStorage.getItem("jwtToken");
     const userID = jwt_decode(jwtToken).userID;
-    const url = `http://localhost:8080/users/${userID}`;
+    const url = `${URL}users/${userID}`;
 
     useEffect(() => {
         async function getUser() {

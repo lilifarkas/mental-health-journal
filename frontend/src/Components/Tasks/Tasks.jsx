@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import jwt_decode from "jwt-decode";
 import "./Tasks.css";
+import URL from '../Constants/ConstantUrl'
+
 
 const Task = ({task, finishTask, startTask})=>{
   if(task.status === "Not started"){
@@ -43,7 +45,7 @@ const Tasks = () => {
   const [task, setTask] = useState("");
   const jwtToken = localStorage.getItem("jwtToken");
   const userID = jwt_decode(jwtToken).userID;
-  const url = `http://localhost:8080/users/${userID}/allTasks`;
+  const url = `${URL}users/${userID}/allTasks`;
 
   async function getTasks() {
     const response = await fetch(url, {
@@ -67,7 +69,7 @@ const Tasks = () => {
       }
 
   async function startTask(id) {
-      await fetch(`http://localhost:8080/usertask/${id}`, {
+      await fetch(`${URL}usertask/${id}`, {
         method: "PUT",
         headers : {
           'Authorization' : `Bearer ${jwtToken}`
@@ -77,7 +79,7 @@ const Tasks = () => {
       getTasks();
   }
   async function addPoints(point){
-    await fetch(`http://localhost:8080/users/addPoints/${userID}`, {
+    await fetch(`${URL}users/addPoints/${userID}`, {
       body: point,
       method: "PUT",
       headers: {
@@ -94,7 +96,7 @@ const Tasks = () => {
 
   async function deleteTask(id) {
 
-        await fetch(`http://localhost:8080/usertask/${id}`, {
+        await fetch(`${URL}usertask/${id}`, {
           method: "DELETE",
           headers : {
             'Authorization' : `Bearer ${jwtToken}`
@@ -108,7 +110,7 @@ const Tasks = () => {
   async function addTask() {
     let taskDTO = {TaskDescription : task}
     
-    await fetch(`http://localhost:8080/users/addTask/${userID}`, {
+    await fetch(`${URL}users/addTask/${userID}`, {
 
       method: "POST",
       body: JSON.stringify(taskDTO),

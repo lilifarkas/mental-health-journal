@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import jwt_decode from "jwt-decode";
 import "./Garden.css";
+import URL from '../Constants/ConstantUrl';
+
 
 const Garden = () => {
   const [menuModal, setMenuModal] = useState(true);
@@ -25,7 +27,7 @@ const Garden = () => {
 
   useEffect(() => {
     const getTrees = async () => {
-      let response = await fetch(`http://localhost:8080/tree/user${currentUserId}`, {
+      let response = await fetch(`${URL}tree/user${currentUserId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -41,7 +43,7 @@ const Garden = () => {
       return treesArray;
     };
     const getUser = async () => {
-      const response = await fetch(`http://localhost:8080/users/${currentUserId}`, {
+      const response = await fetch(`${URL}users/${currentUserId}`, {
         method : 'GET',
         headers: {
           "Authorization": `Bearer ${jwtToken}`
@@ -74,7 +76,7 @@ const Garden = () => {
       progress:0
     };
 
-    await fetch('http://localhost:8080/tree', {
+    await fetch(`${URL}tree`, {
       method: 'POST',
       body: JSON.stringify(tree),
       headers: {

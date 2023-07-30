@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import './EditProfile.css'
 import jwt_decode from "jwt-decode"; 
+import URL from '../Constants/ConstantUrl'
 
 function EditProfile( ) {
     
@@ -9,7 +10,7 @@ function EditProfile( ) {
     const [user, setUser] = useState([]);
     const jwtToken = localStorage.getItem("jwtToken");
     const userID = jwt_decode(jwtToken).userID;
-    const url = `https://localhost:7270/users/${userID}`;
+    const url = `${URL}users/${userID}`;
 
     useEffect(() => {
         async function getUser() {
@@ -31,7 +32,7 @@ function EditProfile( ) {
     const onSubmit = async (e) => {
         e.preventDefault();
 
-        await fetch(`https://localhost:7270/users/update/${userID}`, {
+        await fetch(`${URL}users/update/${userID}`, {
             method: "PUT",
             body: JSON.stringify(user),
             headers: {

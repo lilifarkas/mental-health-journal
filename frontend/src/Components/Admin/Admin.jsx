@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { BiLogOut } from "react-icons/bi";
 import './Admin.css';
+import URL from '../Constants/ConstantUrl';
+
 const User = (props) => {
     return (
         <tr>
@@ -39,7 +41,7 @@ async function UpdateUserRole(e, record) {
         console.error('EMPTY USER FILE');
     }
     loader.style.visibility = "visible";
-    let response = await fetch(`https://localhost:7270/users/updaterole/${record.id}`, {
+    let response = await fetch(`${URL}users/updaterole/${record.id}`, {
         method: 'PUT',
         body,
         headers: {
@@ -82,7 +84,7 @@ export default function UsersList({ handleLogout }) {
         
     }, []);
     async function getUsers() {
-        const response = await fetch(`https://localhost:7270/users`, {
+        const response = await fetch(`${URL}users`, {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${jwtToken}`

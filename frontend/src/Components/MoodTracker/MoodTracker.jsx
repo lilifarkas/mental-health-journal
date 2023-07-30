@@ -10,6 +10,8 @@ import EmojiLaughing from '../Emojis/EmojiLaughing/EmojiLaughing';
 import { HiCheck } from 'react-icons/hi';
 import { MdOutlineReportGmailerrorred } from 'react-icons/md';
 import jwt_decode from "jwt-decode";
+import URLmain from '../Constants/ConstantUrl';
+
 
 const MoodTracker = ({toggleMenu}) => {
   const [rating, setRating] = useState(0);
@@ -22,7 +24,7 @@ const MoodTracker = ({toggleMenu}) => {
   const userID = jwt_decode(jwtToken).userID;
   const currentDate = new Date();
   const [user, setUser] = useState(null);
-  const url = `http://localhost:8080/users/${userID}`;
+  const url = `${URLmain}users/${userID}`;
 
   function getChildProps(value) {
     setRating(value);
@@ -67,7 +69,7 @@ const MoodTracker = ({toggleMenu}) => {
 
     let moodDTO = {  MoodValue : rating,
                      DateCreated : currentDate };
-    await fetch(`http://localhost:8080/users/${userID}/addMood`, {
+    await fetch(`${URLmain}users/${userID}/addMood`, {
       method: "PUT",
       body: JSON.stringify(moodDTO),
       headers : {
@@ -76,7 +78,7 @@ const MoodTracker = ({toggleMenu}) => {
       }
     });
     
-    await fetch(`http://localhost:8080/users/addPoints/${userID}`, {
+    await fetch(`${URLmain}users/addPoints/${userID}`, {
             body: 50,
             method: "PUT",
             headers: {
